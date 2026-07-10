@@ -234,10 +234,9 @@ button, input, textarea, select { font: inherit; }
 
 .service-media {
   position: relative;
-  background:
-    linear-gradient(135deg, rgba(13,43,78,0.98), rgba(21,101,192,0.7)),
-    repeating-linear-gradient(135deg, rgba(255,255,255,0.09) 0 1px, transparent 1px 20px);
-  background-blend-mode: normal, soft-light;
+  background-color: var(--navy);
+  background-position: center;
+  background-size: cover;
   color: rgba(255,255,255,0.86);
 }
 

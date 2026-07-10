@@ -45,12 +45,12 @@ export default async function HomePage() {
       <section className="bg-[var(--navy)] pb-16">
         <div className="container grid gap-6 md:grid-cols-3">
           {[
-            [Home, "Comprar Imóvel", "Mais de 78 imóveis na Figueira da Foz. Apartamentos, moradias, terrenos e comercial.", "Explorar Imóveis", "/imoveis"],
-            [ShieldCheck, "Vender o Seu Imóvel", "Avaliação gratuita, fotografia profissional, drone e marketing digital avançado.", "Saber Mais", "/contacto?pedido=avaliacao"],
-            [KeyRound, "Arrendar ou Trespassar", "Mediação de arrendamentos e trespasses. Processo simples, documentado e rápido.", "Ver Disponíveis", "/imoveis?negocio=arrendar"]
-          ].map(([Icon, title, desc, cta, href], index) => (
+            [Home, "Comprar Imóvel", "Mais de 78 imóveis na Figueira da Foz. Apartamentos, moradias, terrenos e comercial.", "Explorar Imóveis", "/imoveis", "/services/comprar-imovel.png"],
+            [ShieldCheck, "Vender o Seu Imóvel", "Avaliação gratuita, fotografia profissional, drone e marketing digital avançado.", "Saber Mais", "/contacto?pedido=avaliacao", "/services/vender-imovel.png"],
+            [KeyRound, "Arrendar ou Trespassar", "Mediação de arrendamentos e trespasses. Processo simples, documentado e rápido.", "Ver Disponíveis", "/imoveis?negocio=arrendar", "/services/arrendar-trespassar.png"]
+          ].map(([Icon, title, desc, cta, href, image], index) => (
             <article key={String(title)} className="fade zoom-card rounded-md border border-white/10 bg-[var(--navy2)] text-white transition hover:-translate-y-1 hover:shadow-2xl" style={{ transitionDelay: `${index * 0.1}s` }}>
-              <div className="service-media h-44 overflow-hidden">
+              <div className="service-media h-44 overflow-hidden" style={{ backgroundImage: `linear-gradient(90deg, rgba(5, 20, 38, 0.52), rgba(5, 20, 38, 0.08)), url(${image})` }}>
                 <div className="zoom-layer grid h-full w-full place-items-center">
                   <Icon size={42} strokeWidth={1.6} />
                 </div>
