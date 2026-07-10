@@ -44,7 +44,7 @@ export function VideoFooter() {
             {["Facebook", "Instagram", "YouTube", "WhatsApp"].map((label) => <span key={label} className="grid h-9 min-w-9 place-items-center rounded border border-white/20 px-2 text-xs font-bold">{label}</span>)}
           </div>
         </div>
-        <FooterCol title="Im\u00f3veis" items={footerLinks.imoveis} />
+        <FooterCol title={"Im\u00f3veis"} items={footerLinks.imoveis} />
         <FooterCol title="A Empresa" items={footerLinks.empresa} />
         <div>
           <h3 className="mb-4 font-extrabold">Contacto</h3>
