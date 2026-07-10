@@ -143,6 +143,12 @@ button, input, textarea, select { font: inherit; }
   background: linear-gradient(90deg, rgba(5, 15, 30, 0.22) 0%, rgba(5, 15, 30, 0.1) 58%, rgba(5, 15, 30, 0) 100%);
 }
 
+.about-hero-overlay {
+  background:
+    linear-gradient(90deg, rgba(5, 17, 33, 0.91) 0%, rgba(5, 17, 33, 0.74) 37%, rgba(5, 17, 33, 0.2) 73%, rgba(5, 17, 33, 0.08) 100%),
+    linear-gradient(0deg, rgba(5, 17, 33, 0.28), transparent 48%);
+}
+
 .hero-title,
 .hero-sub {
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.34);
@@ -322,6 +328,9 @@ button, input, textarea, select { font: inherit; }
   .hero-copy-shade {
     width: 100%;
     background: linear-gradient(90deg, rgba(5, 15, 30, 0.2), rgba(5, 15, 30, 0));
+  }
+  .about-hero-overlay {
+    background: linear-gradient(90deg, rgba(5, 17, 33, 0.88), rgba(5, 17, 33, 0.42) 100%);
   }
   .chat-widget {
     right: 14px;
