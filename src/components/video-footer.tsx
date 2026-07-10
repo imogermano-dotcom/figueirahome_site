@@ -28,18 +28,18 @@ export function VideoFooter() {
       </video>
       <div className="absolute inset-0 bg-[rgba(5,15,30,0.58)]" />
       <section className="container relative py-16 text-center">
-        <h2 className="display-font text-3xl font-extrabold md:text-5xl">Quer vender o seu im\u00f3vel ao melhor pre\u00e7o?</h2>
-        <p className="mx-auto mt-5 max-w-2xl text-white/72">Fazemos uma avalia\u00e7\u00e3o gratuita e sem compromisso. A nossa equipa coloca o seu im\u00f3vel \u00e0 frente de compradores ativos na regi\u00e3o.</p>
+        <h2 className="display-font text-3xl font-extrabold md:text-5xl">{"Quer vender o seu im\u00f3vel ao melhor pre\u00e7o?"}</h2>
+        <p className="mx-auto mt-5 max-w-2xl text-white/72">{"Fazemos uma avalia\u00e7\u00e3o gratuita e sem compromisso. A nossa equipa coloca o seu im\u00f3vel \u00e0 frente de compradores ativos na regi\u00e3o."}</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Link href="/contacto?pedido=avaliacao" className="btn btn-gold">Pedir Avalia\u00e7\u00e3o Gratuita</Link>
+          <Link href="/contacto?pedido=avaliacao" className="btn btn-gold">{"Pedir Avalia\u00e7\u00e3o Gratuita"}</Link>
           <Link href="/contacto" className="btn btn-outline-light">Falar com a Equipa</Link>
         </div>
       </section>
       <footer className="container relative grid gap-8 border-t border-white/12 py-12 md:grid-cols-4">
         <div>
-          <div className="mb-3 inline-flex rounded-sm bg-[var(--gold)] px-3 py-1 text-xs font-extrabold">Licen\u00e7a AMI 7968</div>
+          <div className="mb-3 inline-flex rounded-sm bg-[var(--gold)] px-3 py-1 text-xs font-extrabold">{"Licen\u00e7a AMI 7968"}</div>
           <div className="display-font text-2xl font-extrabold">Figueira<span className="text-[var(--gold-l)]">Home</span></div>
-          <p className="mt-3 text-sm leading-7 text-white/65">A sua imobili\u00e1ria de refer\u00eancia na Figueira da Foz. Ondaveloz - Media\u00e7\u00e3o Imobili\u00e1ria Lda, desde 2009.</p>
+          <p className="mt-3 text-sm leading-7 text-white/65">{"A sua imobili\u00e1ria de refer\u00eancia na Figueira da Foz. Ondaveloz - Media\u00e7\u00e3o Imobili\u00e1ria Lda, desde 2009."}</p>
           <div className="mt-4 flex gap-2">
             {["Facebook", "Instagram", "YouTube", "WhatsApp"].map((label) => <span key={label} className="grid h-9 min-w-9 place-items-center rounded border border-white/20 px-2 text-xs font-bold">{label}</span>)}
           </div>
@@ -56,11 +56,11 @@ export function VideoFooter() {
           </div>
         </div>
         <div className="border-t border-white/12 pt-6 text-xs text-white/55 md:col-span-4 md:flex md:items-center md:justify-between">
-          <span>\u00a9 2026 Figueira Home \u00b7 Ondaveloz Media\u00e7\u00e3o Imobili\u00e1ria Lda \u00b7 AMI 7968</span>
+          <span>{"\u00a9 2026 Figueira Home \u00b7 Ondaveloz Media\u00e7\u00e3o Imobili\u00e1ria Lda \u00b7 AMI 7968"}</span>
           <div className="mt-3 flex gap-4 md:mt-0">
-            <Link href="/politica-privacidade">Pol\u00edtica de Privacidade</Link>
-            <Link href="/politica-cookies">Pol\u00edtica de Cookies</Link>
-            <Link href="https://www.livroreclamacoes.pt/">Livro de Reclama\u00e7\u00f5es</Link>
+            <Link href="/politica-privacidade">{"Pol\u00edtica de Privacidade"}</Link>
+            <Link href="/politica-cookies">{"Pol\u00edtica de Cookies"}</Link>
+            <Link href="https://www.livroreclamacoes.pt/">{"Livro de Reclama\u00e7\u00f5es"}</Link>
           </div>
         </div>
       </footer>

@@ -37,8 +37,8 @@ export default async function AboutPage() {
           <div className="container relative z-10 flex min-h-[518px] items-end py-16 md:py-20">
             <div className="max-w-[640px]">
               <p className="mb-5 text-xs font-extrabold uppercase tracking-[0.22em] text-[var(--gold-l)]">Figueira da Foz desde 2009</p>
-              <h1 className="display-font text-[clamp(2.6rem,5vw,4.5rem)] font-extrabold leading-[0.98]">Uma casa \u00e9 mais do que um neg\u00f3cio.</h1>
-              <p className="mt-6 max-w-xl text-lg leading-8 text-white/78">\u00c9 uma decis\u00e3o de vida. A Figueira Home junta experi\u00eancia local, m\u00e9todo e proximidade para tornar cada transa\u00e7\u00e3o mais segura e mais simples.</p>
+              <h1 className="display-font text-[clamp(2.6rem,5vw,4.5rem)] font-extrabold leading-[0.98]">{"Uma casa \u00e9 mais do que um neg\u00f3cio."}</h1>
+              <p className="mt-6 max-w-xl text-lg leading-8 text-white/78">{"\u00c9 uma decis\u00e3o de vida. A Figueira Home junta experi\u00eancia local, m\u00e9todo e proximidade para tornar cada transa\u00e7\u00e3o mais segura e mais simples."}</p>
             </div>
           </div>
           <svg className="absolute bottom-[-1px] left-0 z-10 h-16 w-full" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true">
@@ -49,12 +49,12 @@ export default async function AboutPage() {
         <section className="container py-20 md:py-28">
           <div className="grid gap-12 md:grid-cols-[0.9fr_1.1fr] md:gap-20">
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--blue)]">A nossa hist\u00f3ria</p>
-              <h2 className="section-title mt-4">Imobili\u00e1ria local, com vis\u00e3o atual.</h2>
+              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--blue)]">{"A nossa hist\u00f3ria"}</p>
+              <h2 className="section-title mt-4">{"Imobili\u00e1ria local, com vis\u00e3o atual."}</h2>
             </div>
             <div className="max-w-2xl text-[1.05rem] leading-8 text-[var(--muted)]">
-              <p>A Figueira Home nasceu em 2009 para fazer a diferen\u00e7a no mercado imobili\u00e1rio da regi\u00e3o. Somos uma equipa local, licenciada pelo IMPIC com AMI 7968, que trabalha a compra, venda, arrendamento e avalia\u00e7\u00e3o de im\u00f3veis com acompanhamento pr\u00f3ximo.</p>
-              <p className="mt-5">Aliamos rela\u00e7\u00f5es de confian\u00e7a a ferramentas atuais de apresenta\u00e7\u00e3o e divulga\u00e7\u00e3o. O objetivo \u00e9 simples: dar a cada cliente informa\u00e7\u00e3o clara, exposi\u00e7\u00e3o eficaz e apoio real em cada decis\u00e3o.</p>
+              <p>{"A Figueira Home nasceu em 2009 para fazer a diferen\u00e7a no mercado imobili\u00e1rio da regi\u00e3o. Somos uma equipa local, licenciada pelo IMPIC com AMI 7968, que trabalha a compra, venda, arrendamento e avalia\u00e7\u00e3o de im\u00f3veis com acompanhamento pr\u00f3ximo."}</p>
+              <p className="mt-5">{"Aliamos rela\u00e7\u00f5es de confian\u00e7a a ferramentas atuais de apresenta\u00e7\u00e3o e divulga\u00e7\u00e3o. O objetivo \u00e9 simples: dar a cada cliente informa\u00e7\u00e3o clara, exposi\u00e7\u00e3o eficaz e apoio real em cada decis\u00e3o."}</p>
             </div>
           </div>
 
@@ -76,7 +76,7 @@ export default async function AboutPage() {
           <div className="container">
             <div className="max-w-2xl">
               <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--blue)]">Como trabalhamos</p>
-              <h2 className="section-title mt-4">Cada im\u00f3vel merece uma estrat\u00e9gia \u00e0 medida.</h2>
+              <h2 className="section-title mt-4">{"Cada im\u00f3vel merece uma estrat\u00e9gia \u00e0 medida."}</h2>
             </div>
             <div className="mt-12 grid gap-px overflow-hidden rounded-md border border-[var(--border)] bg-[var(--border)] sm:grid-cols-2 lg:grid-cols-4">
               {principles.map(([Icon, title, description]) => (
@@ -94,7 +94,7 @@ export default async function AboutPage() {
           <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--blue)]">As pessoas</p>
-              <h2 className="section-title mt-4">Uma equipa que conhece o seu pr\u00f3ximo passo.</h2>
+              <h2 className="section-title mt-4">{"Uma equipa que conhece o seu pr\u00f3ximo passo."}</h2>
             </div>
             <Link href="/contacto" className="inline-flex items-center gap-2 font-extrabold text-[var(--blue)] hover:text-[var(--navy)]">Falar connosco <ArrowUpRight size={18} /></Link>
           </div>
