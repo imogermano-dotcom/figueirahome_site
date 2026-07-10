@@ -6,11 +6,8 @@ import { PropertyCard } from "@/components/property-card";
 import { QuickSearch } from "@/components/quick-search";
 import { ScrollEffects } from "@/components/scroll-effects";
 import { VideoFooter } from "@/components/video-footer";
-import { publicAssetExists } from "@/lib/assets";
 
 export default async function HomePage() {
-  const hasHeroVideo = publicAssetExists("/Video/hero-web.mp4");
-  const hasHeroPoster = publicAssetExists("/hero-poster.jpg");
   const [featured, allProperties, agents] = await Promise.all([
     getFeaturedProperties(3),
     getProperties(),
@@ -21,12 +18,9 @@ export default async function HomePage() {
     <>
       <ScrollEffects />
       <section className="hero-section relative -mt-0 min-h-[620px] overflow-hidden bg-[var(--navy)] pt-[72px]">
-        {hasHeroVideo && (
-          <video className="hero-video absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline poster={hasHeroPoster ? "/hero-poster.jpg" : undefined} preload="auto">
-            <source src="/Video/hero-web.mp4" type="video/mp4" />
-          </video>
-        )}
-        {!hasHeroVideo && <div className="media-fallback absolute inset-0" />}
+        <video className="hero-video absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline preload="metadata">
+          <source src="/Video/hero-web.mp4" type="video/mp4" />
+        </video>
         <div className="hero-video-tint absolute inset-0" />
         <div className="hero-copy-shade absolute inset-y-0 left-0" />
         <div className="container relative z-10 flex min-h-[548px] items-center py-16">

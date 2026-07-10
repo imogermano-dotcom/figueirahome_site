@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Mail, MapPin, Phone, Smartphone } from "lucide-react";
-import { publicAssetExists } from "@/lib/assets";
 
 const footerLinks = {
   imoveis: [
@@ -22,17 +21,11 @@ const footerLinks = {
 } as const;
 
 export function VideoFooter() {
-  const hasVideo = publicAssetExists("/Video/hero-web.mp4");
-  const hasPoster = publicAssetExists("/hero-poster.jpg");
-
   return (
     <div className="relative overflow-hidden bg-[var(--navy)] text-white">
-      {hasVideo && (
-        <video className="absolute inset-0 h-full w-full object-cover opacity-70" autoPlay muted loop playsInline poster={hasPoster ? "/hero-poster.jpg" : undefined} preload="metadata">
-          <source src="/Video/hero-web.mp4" type="video/mp4" />
-        </video>
-      )}
-      {!hasVideo && <div className="media-fallback absolute inset-0 opacity-70" />}
+      <video className="absolute inset-0 h-full w-full object-cover opacity-70" autoPlay muted loop playsInline preload="metadata">
+        <source src="/Video/hero-web.mp4" type="video/mp4" />
+      </video>
       <div className="absolute inset-0 bg-[rgba(5,15,30,0.58)]" />
       <section className="container relative py-16 text-center">
         <h2 className="display-font text-3xl font-extrabold md:text-5xl">Quer vender o seu imóvel ao melhor preço?</h2>
