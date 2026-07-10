@@ -1,0 +1,18 @@
+# Dependencies and generated application output
+node_modules/
+.next/
+.open-next/
+out/
+
+# Local configuration and secrets
+.env*.local
+.dev.vars
+
+# Cloudflare-generated types and local state
+cloudflare-env.d.ts
+.wrangler/
+~/
+
+# Diagnostics
+*.log
+test-results/
