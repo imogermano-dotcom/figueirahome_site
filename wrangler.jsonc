@@ -1,5 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
+  "account_id": "6ca9edfaadeca85caaf2e16a50160d93",
   "name": "figueira-home",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-07-10",
