@@ -44,6 +44,7 @@ export type Property = {
 };
 
 export type PropertyFilters = {
+  referencia?: string;
   negocio?: string;
   tipo?: string;
   localizacao?: string;

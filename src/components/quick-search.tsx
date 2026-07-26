@@ -2,7 +2,11 @@ import { Search } from "lucide-react";
 
 export function QuickSearch({ compact = false }: { compact?: boolean }) {
   return (
-    <form action="/imoveis" className={compact ? "grid gap-4 md:grid-cols-6" : "container flex flex-wrap items-end gap-4"}>
+    <form action="/imoveis" className={compact ? "grid gap-4 md:grid-cols-7" : "container flex flex-wrap items-end gap-4"}>
+      <label className="field min-w-[150px] flex-1">
+        <span>Referência</span>
+        <input name="referencia" type="search" placeholder="Ex.: FH-123" />
+      </label>
       {!compact && <h2 className="display-font pb-3 text-lg font-extrabold">Pesquisa Rápida</h2>}
       <SearchField label="Negócio" name="negocio" options={[["comprar", "Comprar"], ["arrendar", "Arrendar"], ["trespassar", "Trespassar"]]} />
       <SearchField label="Localização" name="localizacao" options={[["", "Qualquer zona"], ["Figueira da Foz", "Figueira da Foz"], ["Buarcos", "Buarcos"], ["Quiaios", "Quiaios"], ["Coimbra", "Coimbra"]]} />

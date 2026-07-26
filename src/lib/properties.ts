@@ -158,6 +158,7 @@ function mapImoveis(rows: ImovelRow[]) {
 
 function applyFilters(properties: Property[], filters: PropertyFilters) {
   let rows = properties.filter((property) => property.published);
+  const referencia = normalize(filters.referencia);
   const negocio = normalize(filters.negocio);
   const tipo = normalize(filters.tipo);
   const localizacao = normalize(filters.localizacao);
@@ -165,6 +166,7 @@ function applyFilters(properties: Property[], filters: PropertyFilters) {
   const quartosMin = Number(filters.quartos_min || 0);
   const areaMin = Number(filters.area_min || 0);
 
+  if (referencia) rows = rows.filter((property) => normalize(property.id).includes(referencia));
   if (negocio) rows = rows.filter((property) => property.business === negocio);
   if (tipo) rows = rows.filter((property) => normalize(property.type).includes(tipo));
   if (localizacao) rows = rows.filter((property) => normalize(property.location).includes(localizacao));
