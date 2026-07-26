@@ -28,6 +28,11 @@ export type Property = {
   bedrooms: number | null;
   bathrooms: number | null;
   area_sqm: number | null;
+  energy_certificate?: string | null;
+  has_garage?: boolean;
+  has_balcony?: boolean;
+  map_location?: string | null;
+  video_url?: string | null;
   status: string;
   featured: boolean;
   published: boolean;

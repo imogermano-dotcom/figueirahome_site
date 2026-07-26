@@ -1,11 +1,7 @@
-import type { Agent, Property } from "./types";
+import type { Property } from "./types";
+import { sampleAgents } from "./team";
 
-export const sampleAgents: Agent[] = [
-  { id: "sofia", name: "Sofia Monteiro", role: "Sócia e Gerente", phone: "+351 233 408 130", email: "geral.figueirahome@gmail.com", photo_url: null },
-  { id: "miguel", name: "Miguel Germano", role: "Diretor Comercial", phone: "+351 913 702 002", email: "geral.figueirahome@gmail.com", photo_url: null },
-  { id: "maria", name: "Maria José Boia", role: "Consultora", phone: "+351 233 408 130", email: "geral.figueirahome@gmail.com", photo_url: null },
-  { id: "alexandra", name: "Alexandra Santos", role: "Consultora", phone: "+351 233 408 130", email: "geral.figueirahome@gmail.com", photo_url: null }
-];
+export { sampleAgents } from "./team";
 
 export const sampleProperties: Property[] = [
   {
@@ -44,7 +40,7 @@ export const sampleProperties: Property[] = [
     status: "Moradia",
     featured: true,
     published: true,
-    agent_id: "maria",
+    agent_id: "alexandra",
     created_at: "2026-05-10T10:00:00Z",
     updated_at: "2026-05-10T10:00:00Z",
     agent: sampleAgents[2],
@@ -86,10 +82,10 @@ export const sampleProperties: Property[] = [
     status: "Disponível",
     featured: false,
     published: true,
-    agent_id: "alexandra",
+    agent_id: "alexsandra-ferreira",
     created_at: "2026-06-01T10:00:00Z",
     updated_at: "2026-06-01T10:00:00Z",
-    agent: sampleAgents[3],
+    agent: sampleAgents[4],
     images: [{ url: "", alt: "Apartamento T2 em Buarcos", sort_order: 1, is_primary: true }]
   }
 ];

@@ -5,6 +5,7 @@ import type { Agent, LeadInput, Property, PropertyFilters, PropertyImage } from 
 
 type ImovelRow = {
   imovel_ref: string | null;
+  publicado: boolean | null;
   natureza: string | null;
   disponibilidade: string | null;
   estado: string | null;
@@ -24,8 +25,12 @@ type ImovelRow = {
   data_alteracao: string | null;
   descricao: string | null;
   casas_banho: number | null;
+  certificacao_energetica: string | null;
+  garagem: boolean | null;
+  varanda: boolean | null;
   foto_principal: string | null;
   fotos: string[] | null;
+  video_url: string | null;
   vista_mar: boolean | null;
   vista_praia: boolean | null;
   piscina: boolean | null;
@@ -49,6 +54,10 @@ function locationFromImovel(row: ImovelRow) {
   return [row.zona, row.freguesia, row.concelho].filter(Boolean).join(" - ") || "Figueira da Foz";
 }
 
+function mapLocationFromImovel(row: ImovelRow) {
+  return [row.zona, row.freguesia, row.concelho].filter(Boolean).join(", ") || null;
+}
+
 function businessFromImovel(row: ImovelRow): Property["business"] {
   if ((Number(row.arrendamento_preco) || 0) > 0 && !(Number(row.venda_preco) || 0)) return "arrendar";
   return "comprar";
@@ -68,13 +77,14 @@ function typeFromImovel(row: ImovelRow) {
 
 function agentFromName(name: string | null, role: string): Agent | null {
   if (!name) return null;
+  const knownAgent = sampleAgents.find((agent) => normalize(agent.name) === normalize(name));
   return {
     id: slugify(name),
     name,
     role,
-    phone: null,
-    email: null,
-    photo_url: null
+    phone: knownAgent?.phone || null,
+    email: knownAgent?.email || null,
+    photo_url: knownAgent?.photo_url || null
   };
 }
 
@@ -97,11 +107,15 @@ function areaFromImovel(row: ImovelRow) {
   return area || null;
 }
 
+function energyCertificateFromImovel(row: ImovelRow) {
+  return row.certificacao_energetica?.trim() || null;
+}
+
 function mapImovel(row: ImovelRow): Property | null {
   const ref = row.imovel_ref?.trim();
   if (!ref) return null;
   const price = priceFromImovel(row);
-  const published = row.disponibilidade === "Disponível" && price > 0;
+  const published = row.publicado === true && row.disponibilidade === "Disponível" && price > 0;
   const type = typeFromImovel(row);
   const location = locationFromImovel(row);
   const title = row.titulo?.trim() || `${type} em ${location}`;
@@ -122,6 +136,11 @@ function mapImovel(row: ImovelRow): Property | null {
     bedrooms: row.quartos,
     bathrooms: row.casas_banho,
     area_sqm: areaFromImovel(row),
+    energy_certificate: energyCertificateFromImovel(row),
+    has_garage: Boolean(row.garagem),
+    has_balcony: Boolean(row.varanda),
+    map_location: mapLocationFromImovel(row),
+    video_url: row.video_url?.trim() || null,
     status: row.disponibilidade || row.estado || "Disponível",
     featured: Boolean(row.vista_mar || row.vista_praia || row.piscina || row.terraco),
     published,
@@ -178,6 +197,7 @@ export async function getProperties(filters: PropertyFilters = {}) {
   const { data, error } = await supabase
     .from("imoveis")
     .select("*")
+    .eq("publicado", true)
     .eq("disponibilidade", "Disponível")
     .order("data_criacao", { ascending: false })
     .limit(500);
@@ -196,6 +216,7 @@ export async function getFeaturedProperties(limit = 3) {
   const { data, error } = await supabase
     .from("imoveis")
     .select("*")
+    .eq("publicado", true)
     .eq("disponibilidade", "Disponível")
     .order("data_criacao", { ascending: false })
     .limit(500);
@@ -216,6 +237,7 @@ export async function getPropertyBySlug(slug: string) {
   const { data, error } = await supabase
     .from("imoveis")
     .select("*")
+    .eq("publicado", true)
     .eq("disponibilidade", "Disponível")
     .limit(500);
   if (error) return null;

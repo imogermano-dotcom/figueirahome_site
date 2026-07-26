@@ -22,7 +22,7 @@ export function PropertyCard({ property, dark = false }: { property: Property; d
           </span>
         </div>
         <div className="p-5">
-          <div className="mb-2 text-xs font-extrabold uppercase tracking-[1.5px] text-[var(--gold-l)]">{property.type}</div>
+          <div className="mb-2 flex items-center justify-between gap-3 text-xs font-extrabold uppercase tracking-[1.5px] text-[var(--gold-l)]"><span>{property.type}</span><span className={dark ? "text-white/55" : "text-[var(--muted)]"}>Ref. {property.id}</span></div>
           <h3 className="mb-2 text-lg font-extrabold leading-snug">{property.title}</h3>
           <p className={`mb-4 flex items-start gap-2 text-sm ${dark ? "text-white/60" : "text-[var(--muted)]"}`}>
             <MapPin size={16} className="mt-0.5 shrink-0" /> {property.location}

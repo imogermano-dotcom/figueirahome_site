@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Mail, MapPin, Phone, Smartphone } from "lucide-react";
+import { fixedPhone, mobilePhone, phoneCallCost } from "@/lib/contact-details";
 
 const footerLinks = {
   imoveis: [
@@ -15,12 +16,28 @@ const footerLinks = {
     { href: "/quem-somos#equipa", label: "A Nossa Equipa" },
     { href: "/#testemunhos", label: "Testemunhos" },
     { href: "/blog", label: "Blog" },
-    { href: "/contacto", label: "Recrutamento" },
+    { href: "/recrutamento", label: "Recrutamento" },
     { href: "/contacto?pedido=avaliacao", label: "Vender o Meu Im\u00f3vel" }
   ]
 } as const;
 
-export function VideoFooter() {
+export function VideoFooter({ variant = "default" }: { variant?: "default" | "recruitment" }) {
+  const isRecruitment = variant === "recruitment";
+  const opportunityLinks = [
+    { href: "#perfil", label: "Questionário de perfil" },
+    { href: "#processo", label: "Como funciona" },
+    { href: "#candidatura", label: "Candidatar-me" },
+    { href: "/politica-privacidade", label: "Privacidade no recrutamento" },
+  ];
+  const companyLinks = isRecruitment
+    ? [
+        { href: "/quem-somos", label: "Quem Somos" },
+        { href: "/quem-somos#equipa", label: "A Nossa Equipa" },
+        { href: "/#testemunhos", label: "Testemunhos" },
+        { href: "/blog", label: "Blog" },
+        { href: "/recrutamento", label: "Recrutamento" },
+      ]
+    : footerLinks.empresa;
   return (
     <div className="relative overflow-hidden bg-[var(--navy)] text-white">
       <video className="absolute inset-0 h-full w-full object-cover opacity-70" autoPlay muted loop playsInline preload="metadata">
@@ -28,11 +45,11 @@ export function VideoFooter() {
       </video>
       <div className="absolute inset-0 bg-[rgba(5,15,30,0.58)]" />
       <section className="container relative py-16 text-center">
-        <h2 className="display-font text-3xl font-extrabold md:text-5xl">{"Quer vender o seu im\u00f3vel ao melhor pre\u00e7o?"}</h2>
-        <p className="mx-auto mt-5 max-w-2xl text-white/72">{"Fazemos uma avalia\u00e7\u00e3o gratuita e sem compromisso. A nossa equipa coloca o seu im\u00f3vel \u00e0 frente de compradores ativos na regi\u00e3o."}</p>
+        <h2 className="display-font text-3xl font-extrabold md:text-5xl">{isRecruitment ? "Pronto para perceber se este caminho é para si?" : "Quer vender o seu imóvel ao melhor preço?"}</h2>
+        <p className="mx-auto mt-5 max-w-2xl text-white/72">{isRecruitment ? "Comece pelo questionário de perfil. A candidatura demora poucos minutos e a nossa equipa analisa cada passo com atenção." : "Fazemos uma avaliação gratuita e sem compromisso. A nossa equipa coloca o seu imóvel à frente de compradores ativos na região."}</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Link href="/contacto?pedido=avaliacao" className="btn btn-gold">{"Pedir Avalia\u00e7\u00e3o Gratuita"}</Link>
-          <Link href="/contacto" className="btn btn-outline-light">Falar com a Equipa</Link>
+          <Link href={isRecruitment ? "#perfil" : "/contacto?pedido=avaliacao"} className="btn btn-gold">{isRecruitment ? "Começar candidatura" : "Pedir Avaliação Gratuita"}</Link>
+          <Link href={isRecruitment ? "#processo" : "/contacto"} className="btn btn-outline-light">{isRecruitment ? "Ver o processo" : "Falar com a Equipa"}</Link>
         </div>
       </section>
       <footer className="container relative grid gap-8 border-t border-white/12 py-12 md:grid-cols-4">
@@ -44,14 +61,14 @@ export function VideoFooter() {
             {["Facebook", "Instagram", "YouTube", "WhatsApp"].map((label) => <span key={label} className="grid h-9 min-w-9 place-items-center rounded border border-white/20 px-2 text-xs font-bold">{label}</span>)}
           </div>
         </div>
-        <FooterCol title={"Im\u00f3veis"} items={footerLinks.imoveis} />
-        <FooterCol title="A Empresa" items={footerLinks.empresa} />
+        <FooterCol title={isRecruitment ? "A oportunidade" : "Imóveis"} items={isRecruitment ? opportunityLinks : footerLinks.imoveis} />
+        <FooterCol title="A Empresa" items={companyLinks} />
         <div>
           <h3 className="mb-4 font-extrabold">Contacto</h3>
           <div className="grid gap-3 text-sm text-white/70">
             <p className="flex gap-2"><MapPin size={17} /> Av. do Brasil, 48, 3080-323 Buarcos, Figueira da Foz</p>
-            <p className="flex gap-2"><Phone size={17} /> +351 233 408 130</p>
-            <p className="flex gap-2"><Smartphone size={17} /> +351 913 702 002</p>
+            <p className="flex gap-2"><Phone className="mt-0.5 shrink-0" size={17} /><span>{fixedPhone}<small className="block text-white/55">{phoneCallCost(fixedPhone)}</small></span></p>
+            <p className="flex gap-2"><Smartphone className="mt-0.5 shrink-0" size={17} /><span>{mobilePhone}<small className="block text-white/55">{phoneCallCost(mobilePhone)}</small></span></p>
             <p className="flex gap-2"><Mail size={17} /> geral.figueirahome@gmail.com</p>
           </div>
         </div>

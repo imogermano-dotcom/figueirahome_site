@@ -1,0 +1,46 @@
+import { NextResponse } from "next/server";
+import { z } from "zod";
+import { recruitmentQuestions, scoreRecruitmentAnswers } from "@/lib/recruitment";
+import { getSupabaseServiceClient } from "@/lib/supabase";
+
+const RecruitmentSchema = z.object({
+  name: z.string().trim().min(2).max(120), email: z.string().trim().email(), phone: z.string().trim().min(6).max(40),
+  location: z.string().trim().min(2).max(120), professional_situation: z.string().trim().min(2).max(160),
+  motivation: z.string().trim().min(12).max(2000), contact_preference: z.enum(["telefone", "email", "whatsapp"]),
+  whatsapp_consent: z.boolean(), privacy_consent: z.literal(true),
+  answers: z.array(z.number().int().min(0).max(2)).length(recruitmentQuestions.length), website: z.string().max(0).optional()
+});
+
+const groupEnvByLevel = { muito_alinhado: "MAILERLITE_RECRUTAMENTO_GRUPO_MUITO_ALINHADO", bom_potencial: "MAILERLITE_RECRUTAMENTO_GRUPO_BOM_POTENCIAL", potencial_com_reservas: "MAILERLITE_RECRUTAMENTO_GRUPO_COM_RESERVAS", menos_alinhado: "MAILERLITE_RECRUTAMENTO_GRUPO_MENOS_ALINHADO" } as const;
+
+async function syncMailerLite(input: z.infer<typeof RecruitmentSchema>, level: keyof typeof groupEnvByLevel) {
+  const apiKey = process.env.MAILERLITE_API_KEY;
+  const groupId = process.env[groupEnvByLevel[level]];
+  if (!apiKey || !groupId) return { status: "pendente", error: "Configura\u00e7\u00e3o MailerLite em falta" };
+  try {
+    const response = await fetch("https://connect.mailerlite.com/api/subscribers", { method: "POST", headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" }, body: JSON.stringify({ email: input.email, groups: [groupId], fields: { name: input.name, phone: input.phone, localidade: input.location, nivel_recrutamento: level } }) });
+    return response.ok ? { status: "sincronizado", error: null } : { status: "erro", error: `MailerLite respondeu ${response.status}` };
+  } catch (error) {
+    console.error("MailerLite request failed", error);
+    return { status: "erro", error: "N\u00e3o foi poss\u00edvel contactar o MailerLite" };
+  }
+}
+
+export async function POST(request: Request) {
+  const parsed = RecruitmentSchema.safeParse(await request.json());
+  if (!parsed.success) return NextResponse.json({ error: "Dados de candidatura inv\u00e1lidos", details: parsed.error.flatten() }, { status: 400 });
+  if (parsed.data.website) return NextResponse.json({ ok: true });
+  const { score, level } = scoreRecruitmentAnswers(parsed.data.answers);
+  const answerDetails = parsed.data.answers.map((answer, index) => ({ pergunta: recruitmentQuestions[index].question, resposta: recruitmentQuestions[index].options[answer], pontos: 3 - answer }));
+  const supabase = getSupabaseServiceClient();
+  if (!supabase) { console.info("Recruitment fallback", { ...parsed.data, answers: answerDetails, score, level }); return NextResponse.json({ ok: true, id: "local-fallback" }); }
+  const now = new Date().toISOString();
+  const { data: application, error: recruitmentError } = await supabase.from("recrutamento").insert({ nome: parsed.data.name, email: parsed.data.email, telemovel: parsed.data.phone, localidade: parsed.data.location, situacao_profissional: parsed.data.professional_situation, motivacao: parsed.data.motivation, preferencia_contacto: parsed.data.contact_preference, aceita_whatsapp: parsed.data.whatsapp_consent, quiz_respostas: answerDetails, pontuacao: score, nivel: level, consentimento_privacidade_em: now, mailerlite_estado: "pendente" }).select("id").single();
+  if (recruitmentError) { console.error(recruitmentError); return NextResponse.json({ error: "N\u00e3o foi poss\u00edvel guardar a candidatura" }, { status: 500 }); }
+  const { error: contactError } = await supabase.from("contactos").insert({ nome: parsed.data.name, email: parsed.data.email, telemovel: parsed.data.phone, tipos: ["recrutamento", "candidatura", level], criado_em: now.slice(0, 10) });
+  if (contactError) console.error("Contact record failed", contactError);
+  const mailerLite = await syncMailerLite(parsed.data, level);
+  const { error: updateError } = await supabase.from("recrutamento").update({ mailerlite_estado: mailerLite.status, mailerlite_erro: mailerLite.error, mailerlite_sincronizado_em: mailerLite.status === "sincronizado" ? now : null }).eq("id", application.id);
+  if (updateError) console.error("MailerLite status update failed", updateError);
+  return NextResponse.json({ ok: true, id: application.id });
+}

@@ -1,17 +1,17 @@
 import Link from "next/link";
 import { BarChart3, Camera, ClipboardList, Home, KeyRound, Megaphone, MoveRight, ShieldCheck } from "lucide-react";
-import { getAgents, getFeaturedProperties, getProperties } from "@/lib/properties";
-import { initials } from "@/lib/format";
+import Image from "next/image";
+import { getFeaturedProperties, getProperties } from "@/lib/properties";
+import { figueiraTeam } from "@/lib/team";
 import { PropertyCard } from "@/components/property-card";
 import { QuickSearch } from "@/components/quick-search";
 import { ScrollEffects } from "@/components/scroll-effects";
 import { VideoFooter } from "@/components/video-footer";
 
 export default async function HomePage() {
-  const [featured, allProperties, agents] = await Promise.all([
+  const [featured, allProperties] = await Promise.all([
     getFeaturedProperties(3),
-    getProperties(),
-    getAgents()
+    getProperties()
   ]);
 
   return (
@@ -132,12 +132,12 @@ export default async function HomePage() {
       <section className="bg-[var(--offwhite)] py-16">
         <div className="container">
           <h2 className="section-title mb-8">A Nossa Equipa</h2>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {agents.slice(0, 4).map((agent) => (
-              <article key={agent.id} className="fade rounded-md border border-[var(--border)] bg-white p-6 text-center">
-                <div className="mx-auto mb-4 grid h-20 w-20 place-items-center rounded-full border-[3px] border-[var(--blue)] bg-[var(--navy)] text-xl font-extrabold text-white">{initials(agent.name)}</div>
-                <h3 className="font-extrabold">{agent.name}</h3>
-                <p className="mt-1 text-xs font-extrabold uppercase tracking-wide text-[var(--blue)]">{agent.role}</p>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+            {figueiraTeam.map((member) => (
+              <article key={member.id} className="fade rounded-md border border-[var(--border)] bg-white p-6 text-center">
+                <div className="relative mx-auto mb-4 h-20 w-20 overflow-hidden rounded-full border-[3px] border-[var(--blue)] bg-[var(--offwhite)]"><Image src={member.photo_url} alt={`Retrato de ${member.name}`} fill sizes="80px" className="object-contain p-1" /></div>
+                <h3 className="font-extrabold">{member.name}</h3>
+                <p className="mt-1 text-xs font-extrabold uppercase tracking-wide text-[var(--blue)]">{member.role}</p>
               </article>
             ))}
           </div>

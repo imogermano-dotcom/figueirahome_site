@@ -11,6 +11,7 @@ const links = [
   ["Im\u00f3veis", "/imoveis"],
   ["Empreendimentos", "/empreendimentos"],
   ["Quem Somos", "/quem-somos"],
+  ["Recrutamento", "/recrutamento"],
   ["Blog", "/blog"]
 ];
 

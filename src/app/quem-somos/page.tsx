@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Handshake, MapPin, ShieldCheck, Sparkles } from "lucide-react";
-import { getAgents } from "@/lib/properties";
-import { initials } from "@/lib/format";
+import { figueiraTeam } from "@/lib/team";
 import { VideoFooter } from "@/components/video-footer";
 
 export const metadata: Metadata = {
@@ -18,9 +17,7 @@ const principles = [
   [ShieldCheck, "Rigor no processo", "Tratamos cada neg\u00f3cio com prepara\u00e7\u00e3o, acompanhamento documental e foco no resultado certo."],
 ] as const;
 
-export default async function AboutPage() {
-  const agents = await getAgents();
-
+export default function AboutPage() {
   return (
     <>
       <main>
@@ -90,7 +87,7 @@ export default async function AboutPage() {
           </div>
         </section>
 
-        <section className="container py-20 md:py-28">
+        <section id="equipa" className="container py-20 md:py-28">
           <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--blue)]">As pessoas</p>
@@ -98,15 +95,15 @@ export default async function AboutPage() {
             </div>
             <Link href="/contacto" className="inline-flex items-center gap-2 font-extrabold text-[var(--blue)] hover:text-[var(--navy)]">Falar connosco <ArrowUpRight size={18} /></Link>
           </div>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {agents.map((agent, index) => (
-              <article key={agent.id} className="group relative overflow-hidden rounded-md border border-[var(--border)] bg-white p-7">
-                <div className="absolute right-0 top-0 h-20 w-20 border-l border-b border-[var(--border)] bg-[var(--offwhite)]" />
-                <div className="relative grid h-16 w-16 place-items-center rounded-full bg-[var(--navy)] text-lg font-extrabold text-[var(--gold-l)]">{initials(agent.name)}</div>
-                <p className="relative mt-8 text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--blue)]">{agent.role}</p>
-                <h3 className="relative mt-2 text-xl font-extrabold">{agent.name}</h3>
-                <div className="relative mt-7 h-px w-12 bg-[var(--gold)] transition-all duration-300 group-hover:w-full" />
-                <span className="sr-only">Membro {index + 1} da equipa Figueira Home</span>
+          <div className="mt-12 grid gap-px overflow-hidden rounded-md border border-[var(--border)] bg-[var(--border)] sm:grid-cols-2 lg:grid-cols-3">
+            {figueiraTeam.map((member) => (
+              <article key={member.id} className="group bg-white">
+                <div className="relative aspect-[4/3] overflow-hidden bg-[var(--offwhite)]"><Image src={member.photo_url} alt={`Retrato de ${member.name}`} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-contain p-7 transition duration-500 group-hover:scale-105" /></div>
+                <div className="p-7">
+                  <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--blue)]">{member.role}</p>
+                  <h3 className="mt-2 text-xl font-extrabold">{member.name}</h3>
+                  <p className="mt-4 text-sm leading-7 text-[var(--muted)]">{member.bio}</p>
+                </div>
               </article>
             ))}
           </div>
