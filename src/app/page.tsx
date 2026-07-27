@@ -42,29 +42,18 @@ export default async function HomePage() {
         </svg>
       </section>
 
-      <section className="bg-[var(--navy)] pb-16">
-        <div className="container grid gap-6 md:grid-cols-3">
-          {[
-            [Home, "Comprar Imóvel", "Mais de 78 imóveis na Figueira da Foz. Apartamentos, moradias, terrenos e comercial.", "Explorar Imóveis", "/imoveis", "/services/comprar-imovel.png"],
-            [ShieldCheck, "Vender o Seu Imóvel", "Avaliação gratuita, fotografia profissional, drone e marketing digital avançado.", "Saber Mais", "/contacto?pedido=avaliacao", "/services/vender-imovel.png"],
-            [KeyRound, "Arrendar ou Trespassar", "Mediação de arrendamentos e trespasses. Processo simples, documentado e rápido.", "Ver Disponíveis", "/imoveis?negocio=arrendar", "/services/arrendar-trespassar.png"]
-          ].map(([Icon, title, desc, cta, href, image], index) => (
-            <article key={String(title)} className="fade zoom-card rounded-md border border-white/10 bg-[var(--navy2)] text-white transition hover:-translate-y-1 hover:shadow-2xl" style={{ transitionDelay: `${index * 0.1}s` }}>
-              <div className="service-media h-44 overflow-hidden" style={{ backgroundImage: `linear-gradient(90deg, rgba(5, 20, 38, 0.52), rgba(5, 20, 38, 0.08)), url(${image})` }}>
-                <div className="zoom-layer grid h-full w-full place-items-center">
-                  <Icon size={42} strokeWidth={1.6} />
-                </div>
-              </div>
-              <div className="p-6">
-                <div className="mb-4 flex items-start justify-between gap-4">
-                  <h2 className="display-font text-xl font-extrabold">{String(title)}</h2>
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded bg-[rgba(21,101,192,0.25)]"><Icon size={20} /></span>
-                </div>
-                <p className="mb-5 text-sm leading-7 text-white/62">{String(desc)}</p>
-                <Link href={String(href)} className="inline-flex items-center gap-2 rounded-sm border border-white/25 px-4 py-2 text-sm font-bold">{String(cta)} <MoveRight size={15} /></Link>
-              </div>
-            </article>
-          ))}
+      <section className="bg-[var(--navy)] py-20">
+        <div className="container">
+          <div className="mb-10 grid items-center gap-8 md:grid-cols-[auto_1fr]">
+            <h2 className="section-title text-white">Imóveis<br />em Destaque</h2>
+            <p className="max-w-3xl leading-8 text-white/62">Uma seleção dos imóveis publicados e marcados como destaque na base de dados. Ao alterar `featured` ou `published`, esta área reflete a mudança.</p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {featured.map((property) => <PropertyCard key={property.id} property={property} dark />)}
+          </div>
+          <div className="mt-10 text-center">
+            <Link href="/imoveis" className="btn btn-outline-light">Ver Todos os Imóveis ({allProperties.length})</Link>
+          </div>
         </div>
       </section>
 
@@ -114,18 +103,29 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="bg-[var(--navy)] py-20">
-        <div className="container">
-          <div className="mb-10 grid items-center gap-8 md:grid-cols-[auto_1fr]">
-            <h2 className="section-title text-white">Imóveis<br />em Destaque</h2>
-            <p className="max-w-3xl leading-8 text-white/62">Uma seleção dos imóveis publicados e marcados como destaque na base de dados. Ao alterar `featured` ou `published`, esta área reflete a mudança.</p>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {featured.map((property) => <PropertyCard key={property.id} property={property} dark />)}
-          </div>
-          <div className="mt-10 text-center">
-            <Link href="/imoveis" className="btn btn-outline-light">Ver Todos os Imóveis ({allProperties.length})</Link>
-          </div>
+      <section className="bg-[var(--navy)] pb-16">
+        <div className="container grid gap-6 md:grid-cols-3">
+          {[
+            [Home, "Comprar Imóvel", "Mais de 78 imóveis na Figueira da Foz. Apartamentos, moradias, terrenos e comercial.", "Explorar Imóveis", "/imoveis", "/services/comprar-imovel.png"],
+            [ShieldCheck, "Vender o Seu Imóvel", "Avaliação gratuita, fotografia profissional, drone e marketing digital avançado.", "Saber Mais", "/contacto?pedido=avaliacao", "/services/vender-imovel.png"],
+            [KeyRound, "Arrendar ou Trespassar", "Mediação de arrendamentos e trespasses. Processo simples, documentado e rápido.", "Ver Disponíveis", "/imoveis?negocio=arrendar", "/services/arrendar-trespassar.png"]
+          ].map(([Icon, title, desc, cta, href, image], index) => (
+            <article key={String(title)} className="fade zoom-card rounded-md border border-white/10 bg-[var(--navy2)] text-white transition hover:-translate-y-1 hover:shadow-2xl" style={{ transitionDelay: `${index * 0.1}s` }}>
+              <div className="service-media h-44 overflow-hidden" style={{ backgroundImage: `linear-gradient(90deg, rgba(5, 20, 38, 0.52), rgba(5, 20, 38, 0.08)), url(${image})` }}>
+                <div className="zoom-layer grid h-full w-full place-items-center">
+                  <Icon size={42} strokeWidth={1.6} />
+                </div>
+              </div>
+              <div className="p-6">
+                <div className="mb-4 flex items-start justify-between gap-4">
+                  <h2 className="display-font text-xl font-extrabold">{String(title)}</h2>
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded bg-[rgba(21,101,192,0.25)]"><Icon size={20} /></span>
+                </div>
+                <p className="mb-5 text-sm leading-7 text-white/62">{String(desc)}</p>
+                <Link href={String(href)} className="inline-flex items-center gap-2 rounded-sm border border-white/25 px-4 py-2 text-sm font-bold">{String(cta)} <MoveRight size={15} /></Link>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
