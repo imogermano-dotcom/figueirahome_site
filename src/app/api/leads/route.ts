@@ -9,7 +9,8 @@ const LeadSchema = z.object({
   phone: z.string().min(6).optional().or(z.literal("")),
   message: z.string().min(8),
   request_type: z.string().min(2),
-  property_id: z.string().optional()
+  property_id: z.string().optional(),
+  privacy_consent: z.literal(true)
 }).refine((data) => Boolean(data.email || data.phone), {
   message: "Indique email ou telefone"
 });

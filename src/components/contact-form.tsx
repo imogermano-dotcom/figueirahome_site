@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Send } from "lucide-react";
 import { useState } from "react";
 
@@ -19,7 +20,8 @@ export function ContactForm({ source = "form", propertyId }: { source?: "form" |
       email: String(data.get("email") || ""),
       phone: String(data.get("phone") || ""),
       request_type: String(data.get("request_type") || "contacto"),
-      message: String(data.get("message") || "")
+      message: String(data.get("message") || ""),
+      privacy_consent: data.get("privacy_consent") === "on"
     };
     const res = await fetch("/api/leads", {
       method: "POST",
@@ -51,6 +53,10 @@ export function ContactForm({ source = "form", propertyId }: { source?: "form" |
         </label>
       </div>
       <label className="field"><span>Mensagem</span><textarea name="message" rows={5} required minLength={8} /></label>
+      <label className="privacy-check">
+        <input name="privacy_consent" type="checkbox" required />
+        <span>Li a <Link href="/politica-privacidade" target="_blank">Política de Privacidade</Link> e autorizo o tratamento dos meus dados para responder ao meu pedido.</span>
+      </label>
       <button className="btn btn-primary w-fit" disabled={state === "sending"} type="submit"><Send size={18} /> Enviar pedido</button>
       {state === "success" && <p className="text-sm font-bold text-[var(--blue)]">Pedido recebido. A equipa entrará em contacto.</p>}
       {state === "error" && <p className="text-sm font-bold text-red-700">Não foi possível enviar. Tente novamente ou contacte por telefone.</p>}
