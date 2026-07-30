@@ -19,7 +19,7 @@ test-results/
 
 # Local state and visual QA artefacts
 supabase/.temp/
-/public/ideia site.png
+/client-reference/
 /hero-*.png
 /visual-hero-*.png
 /consultant-*.png
