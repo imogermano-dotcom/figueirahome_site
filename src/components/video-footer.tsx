@@ -21,6 +21,13 @@ const footerLinks = {
   ]
 } as const;
 
+const socialLinks = [
+  { href: "https://www.instagram.com/figueirahome/", label: "Instagram", icon: "instagram" },
+  { href: "https://www.facebook.com/FigueiraHome/", label: "Facebook", icon: "facebook" },
+  { href: "https://www.youtube.com/@figueirahome", label: "YouTube", icon: "youtube" },
+  { href: "https://wa.me/351913702002", label: "WhatsApp", icon: "whatsapp" }
+] as const;
+
 export function VideoFooter({ variant = "default" }: { variant?: "default" | "recruitment" }) {
   const isRecruitment = variant === "recruitment";
   const opportunityLinks = [
@@ -58,7 +65,18 @@ export function VideoFooter({ variant = "default" }: { variant?: "default" | "re
           <div className="display-font text-2xl font-extrabold">Figueira<span className="text-[var(--gold-l)]">Home</span></div>
           <p className="mt-3 text-sm leading-7 text-white/65">{"A sua imobili\u00e1ria de refer\u00eancia na Figueira da Foz. Ondaveloz - Media\u00e7\u00e3o Imobili\u00e1ria Lda, desde 2009."}</p>
           <div className="mt-4 flex gap-2">
-            {["Facebook", "Instagram", "YouTube", "WhatsApp"].map((label) => <span key={label} className="grid h-9 min-w-9 place-items-center rounded border border-white/20 px-2 text-xs font-bold">{label}</span>)}
+            {socialLinks.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`${social.label} da Figueira Home (abre numa nova janela)`}
+                className="grid h-10 w-10 place-items-center rounded-full border border-white/25 text-white/85 transition hover:-translate-y-0.5 hover:border-[var(--gold)] hover:bg-[var(--gold)] hover:text-[var(--navy)] focus:outline-none focus:ring-2 focus:ring-[var(--gold)] focus:ring-offset-2 focus:ring-offset-[var(--navy)]"
+              >
+                <SocialIcon name={social.icon} />
+              </a>
+            ))}
           </div>
         </div>
         <FooterCol title={isRecruitment ? "A oportunidade" : "Imóveis"} items={isRecruitment ? opportunityLinks : footerLinks.imoveis} />
@@ -83,6 +101,21 @@ export function VideoFooter({ variant = "default" }: { variant?: "default" | "re
       </footer>
     </div>
   );
+}
+
+function SocialIcon({ name }: { name: (typeof socialLinks)[number]["icon"] }) {
+  const common = { width: 19, height: 19, viewBox: "0 0 24 24", "aria-hidden": true };
+
+  switch (name) {
+    case "instagram":
+      return <svg {...common} fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>;
+    case "facebook":
+      return <svg {...common} fill="currentColor"><path d="M13.8 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5H17V3.9c-.4-.1-1.3-.2-2.3-.2-2.3 0-3.9 1.4-3.9 4V10H8v3h2.8v8h3Z" /></svg>;
+    case "youtube":
+      return <svg {...common} fill="currentColor"><path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2C2 9 2 12 2 12s0 3 .4 4.8a3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1c.4-1.8.4-4.8.4-4.8s0-3-.4-4.8ZM10 15.5v-7l6 3.5-6 3.5Z" /></svg>;
+    case "whatsapp":
+      return <svg {...common} fill="currentColor"><path d="M12 2a9.8 9.8 0 0 0-8.4 14.9L2 22l5.3-1.5A9.8 9.8 0 1 0 12 2Zm0 17.8a8 8 0 0 1-4.1-1.1l-.3-.2-3.1.9.9-3-.2-.3A8 8 0 1 1 12 19.8Zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.8c-.1.2-.3.2-.5.1a6.5 6.5 0 0 1-1.9-1.2 7 7 0 0 1-1.3-1.7c-.1-.2 0-.4.1-.5l.4-.5.2-.4a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.4-.4-.3-.5-.3h-.5c-.2 0-.5.1-.7.4-.2.3-.9.9-.9 2.1 0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.4-.6 1.6-1.2.2-.6.2-1.1.1-1.2-.1-.1-.2-.2-.5-.3Z" /></svg>;
+  }
 }
 
 function FooterCol({ title, items }: { title: string; items: ReadonlyArray<{ href: string; label: string }> }) {
