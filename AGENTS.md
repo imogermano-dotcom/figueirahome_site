@@ -1,80 +1,97 @@
 # AGENTS.md — Figueira Home
 
-Handoff operacional atualizado em 2026-07-20.
+Handoff operacional atualizado em 2026-07-30. Manter este ficheiro abaixo de 200 linhas e substituir informação ultrapassada em vez de a acumular.
 
-## Projeto
+## Projeto e estado atual
 
-Site institucional e catálogo imobiliário da Figueira Home, construído em Next.js App Router. Inclui catálogo e detalhe de imóveis, contactos, recrutamento, chat AI e fallback local quando o Supabase não está disponível.
+- Site institucional e catálogo imobiliário da Figueira Home em Next.js App Router, com Supabase, contactos, recrutamento, chat AI e fallback local.
+- Produção atual: `https://figueira-home.miguel-germano.workers.dev` (Cloudflare Worker `figueira-home`). Nenhuma alteração do ramo de teste foi publicada.
+- Ramo ativo: `teste/alteracao-cliente`; não há commits nem deploys novos desta sessão.
+- `npm.cmd run build` (Webpack) passou neste ramo após as alterações de hero e consultores. O lint dos ficheiros alterados também passou.
+- O servidor local esteve disponível em `http://localhost:3000` durante a validação visual; confirmar a porta antes de reutilizar.
+- Não expor valores de `.env.local` nem secrets de Supabase, AI ou MailerLite.
 
-## Estado atual
+### Estado do worktree
 
-- Produção: `https://figueira-home.miguel-germano.workers.dev`, Cloudflare Worker `figueira-home`.
-- Último deploy confirmado: versão `f1417c48-cd1f-49c3-8b82-29a9011d68f6`.
-- O build de produção (`npm.cmd run build`, com Webpack) e o lint dos ficheiros de imóveis passaram antes do último deploy.
-- O repositório usa o ramo `main` e está ligado a `https://github.com/imogermano-dotcom/figueirahome_site.git`. Um push para GitHub não faz deploy automático.
-- Há alterações locais não commitadas, incluindo recrutamento, políticas, contactos, galeria e o mapeamento de imóveis. Preservá-las ao trabalhar no repositório.
-- O servidor de desenvolvimento não deve ser presumido como ativo; confirmar o processo/porta antes de o usar.
+- Alterações intencionais ainda não versionadas: hero experimental, perfis de consultores, dados da equipa, sitemap, `public/equipa/sandra-silva.png` e este handoff.
+- `supabase/.temp/` é estado local: nunca incluir em commits.
+- `public/ideia site.png` é a referência visual fornecida pelo cliente; manter fora do deploy/commit salvo instrução contrária.
+- Existem várias capturas locais `hero-*.png`, `visual-hero-*.png` e `consultant-*.png` na raiz. São artefactos de QA e devem ser removidos ou ignorados antes do commit, após confirmação do utilizador.
 
-## Implementado recentemente
+## Implementado
 
-- Página `/recrutamento` integrada, com questionário, candidatura, rodapé próprio e sem mensagens comerciais sobre imóveis.
-- Candidaturas validadas são persistidas em `contactos` e `recrutamento`, classificadas e sincronizadas com o grupo MailerLite correspondente. Os secrets e quatro grupos já estão configurados no Worker.
-- Políticas `/politica-privacidade` e `/politica-cookies` atualizadas; contactos mostram a indicação legal do custo de chamada.
-- Catálogo e detalhe apresentam a referência `imovel_ref`.
-- Detalhe de imóvel com galeria completa: miniaturas, setas, imagem ampliada e controlo por teclado; validada em produção num imóvel com 79 fotografias.
-- Detalhe de imóvel apresenta o certificado energético exatamente como vem de `certificacao_energetica`, quando preenchido (inclui, por exemplo, `A+`, `B` ou `Isento`). Não são inventadas classes energéticas.
-- Detalhe de imóvel apresenta cartões de `Garagem` e `Varanda` apenas quando os campos Supabase respetivos são verdadeiros.
-- Detalhe mostra um mapa Google da zona aproximada. A pesquisa do mapa usa apenas `zona`, `freguesia` e `concelho`; nunca a morada, número ou código-postal. O interface informa explicitamente esta aproximação.
+### Catálogo, detalhe e pesquisa
 
-## Stack e operação
+- A fonte runtime é a tabela Supabase `imoveis`. Só aparecem imóveis com `publicado = true`, `disponibilidade = "Disponível"`, `imovel_ref` válido e preço positivo.
+- Catálogo, detalhe e pesquisa rápida suportam referência `imovel_ref`.
+- O detalhe reúne `foto_principal` e `fotos` sem duplicados; tem galeria, modal, teclado, certificado energético, cartões condicionais, mapa aproximado e vídeo quando existe `video_url`.
+- Vídeos suportam YouTube, Vimeo e URL direta; `videoSourceFromUrl()` é exportado por `src/components/property-video.tsx` para reutilização.
+- Arrendamento só é apresentado quando existe `arrendamento_preco` positivo e não existe venda válida.
+- Destaques: imóveis com vista de mar/praia, piscina ou terraço; se faltarem, usa os disponíveis mais recentes.
 
-- Next.js 16, React 19, TypeScript, Tailwind CSS 4, Supabase JS, AI SDK e Zod.
-- Scripts: `npm run dev`, `npm run build`, `npm run start`, `npm run lint`, `npm run preview`, `npm run deploy`.
-- Em PowerShell, se `npm` falhar por política de execução, usar `npm.cmd` (por exemplo, `npm.cmd run build` e `npm.cmd run deploy`).
-- O build de produção usa `next build --webpack`; não trocar para Turbopack, que falhava no runtime OpenNext/Workers.
-- `npm run deploy` executa OpenNext e publica no Worker. Manter `nodejs_compat` em `wrangler.jsonc`.
-- Variáveis locais: `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `AI_MODEL`, `MAILERLITE_API_KEY` e IDs dos grupos de recrutamento. Nunca expor valores de secrets.
+### Homepage e hero experimental
 
-## Decisões arquiteturais
+- A homepage mantém destaques antes dos serviços e inclui a equipa.
+- A hero foi substituída por `HeroExperience`: texto e CTAs à esquerda, quatro provas de valor com ícones, divisor vertical e vitrine à direita.
+- A vitrine usa exclusivamente até três imóveis publicados com `video_url` válido. O reel principal e as miniaturas laterais são vídeos de imóveis; não usa imagens estáticas nem o vídeo institucional nessa vitrine.
+- As miniaturas de vídeos verticais são recortadas ao centro para evitar margens escuras. O vídeo de fundo geral da hero permanece separado.
+- Foi acrescentado sublinhado dourado sob “Figueira da Foz.” e o texto de apoio sobre transparência e resultados.
+- Layout responsivo específico para hero e vitrine em mobile.
 
-- A fonte runtime é a tabela Supabase `imoveis`. Só são publicados registos com `disponibilidade = "Disponível"`, referência válida e preço superior a zero.
-- Arrendamento é usado apenas com `arrendamento_preco` superior a zero e sem preço de venda; nos restantes casos o negócio é compra.
-- A página inicial considera destaque um imóvel com `vista_mar`, `vista_praia`, `piscina` ou `terraco`; se não houver nenhum, apresenta os imóveis disponíveis mais recentes.
-- `foto_principal` e `fotos` são combinadas sem duplicados por `imagesFromImovel()`; o detalhe consome a lista completa em `PropertyGallery`.
-- O mapeamento de Supabase para `Property` expõe `energy_certificate`, `has_garage`, `has_balcony` e `map_location`. Valores `false`/ausentes de garagem e varanda não criam cartões no detalhe.
-- Sem cliente Supabase válido, imóveis e agentes usam `sample-data.ts`; leads devolvem `local-fallback`. Não remover este fallback sem instrução explícita.
-- Os agentes são derivados de `angariador`/`vendedor`; nomes conhecidos reutilizam contacto, email e fotografia de `sampleAgents`.
-- Leads normais escrevem em `contactos`. Candidaturas usam `/api/recrutamento`, com persistência dupla antes da sincronização MailerLite.
-- O chat responde em PT-PT, consulta apenas imóveis publicados e não inventa preços, disponibilidade ou imóveis.
+### Equipa e páginas de consultores
+
+- Equipa atual: Sofia Monteiro, Miguel Germano, Alexandra Santos, Giulia Almeida, Alexsandra Ferreira e Sandra Silva.
+- Alexandra Santos e Alexsandra Ferreira têm biografias completas extraídas do ficheiro ODT do cliente; Sandra Silva tem perfil completo e retrato local.
+- Cada cartão da equipa, na home e em `/quem-somos`, liga para `/consultores/[slug]`.
+- Cada perfil mostra fotografia, função, descrição, contactos disponíveis e imóveis associados, com links para os detalhes.
+- A associação é automática pelos dados de `angariador` ou, na ausência deste, `vendedor`. Alexandra Santos reconhece também o alias legado “Alexandra”.
+- As rotas dos consultores estão incluídas no sitemap. Imóveis associados surgem apenas quando publicados/disponíveis através de `getProperties()`.
+
+### Contactos, recrutamento e comunicação
+
+- O formulário de contacto exige consentimento RGPD; a API rejeita pedidos sem `privacy_consent: true`.
+- `/recrutamento` tem questionário, candidatura e rodapé próprio. Candidaturas são gravadas e sincronizadas com os grupos MailerLite configurados no Worker.
+- Leads normais escrevem em `contactos`. Sem Supabase válido, imóveis e agentes usam `sample-data.ts` e leads devolvem `local-fallback`.
+- Contactos e políticas indicam legalmente o custo de chamada.
 
 ## Ficheiros principais
 
-- `src/lib/properties.ts`: leitura/mapeamento Supabase, regras de publicação, imagens, filtros, agentes, certificado, mapa, garagem e varanda.
-- `src/lib/types.ts`: tipo `Property`, incluindo dados energéticos, mapa e características booleanas.
-- `src/app/imoveis/page.tsx` e `src/app/imoveis/[slug]/page.tsx`: catálogo e detalhe, incluindo mapa e cartões de características.
-- `src/components/property-card.tsx` e `src/components/property-gallery.tsx`: cartões e galeria do imóvel.
-- `src/app/recrutamento/page.tsx`, `src/components/recruitment-form.tsx`, `src/lib/recruitment.ts` e `src/app/api/recrutamento/route.ts`: candidatura e integração MailerLite/Supabase.
-- `src/app/politica-privacidade/page.tsx`, `src/app/politica-cookies/page.tsx`, `src/lib/contact-details.ts` e `src/app/contacto/page.tsx`: políticas e contactos.
-- `src/components/site-chrome.tsx` e `src/components/video-footer.tsx`: navegação e rodapés.
-- `supabase/recrutamento.sql` e `supabase/migrations/20260714000000_create_recrutamento.sql`: referência da estrutura de recrutamento.
+- `src/components/hero-experience.tsx`: hero experimental, seleção e interação dos vídeos de imóveis.
+- `src/app/page.tsx` e `src/app/globals.css`: integração e estilo responsivo da hero; grelha de equipa em três colunas desktop.
+- `src/components/property-video.tsx`: resolução de fontes YouTube/Vimeo/diretas.
+- `src/app/consultores/[slug]/page.tsx`: perfil individual e imóveis associados.
+- `src/lib/team.ts`: membros, aliases, bios curtas e completas, incluindo Sandra Silva.
+- `src/lib/properties.ts`: mapeamento Supabase, filtros e reconhecimento de membros/aliases.
+- `src/app/quem-somos/page.tsx` e `src/app/sitemap.ts`: links para perfis e indexação.
+- `public/equipa/sandra-silva.png`: retrato da Sandra.
+- Também relevantes: `src/app/imoveis/page.tsx`, `src/app/imoveis/[slug]/page.tsx`, `src/components/quick-search.tsx`, `property-card.tsx`, `property-gallery.tsx`, `contact-form.tsx`, `src/app/api/leads/route.ts`, recrutamento e `video-footer.tsx`.
+
+## Decisões arquiteturais
+
+- `publicado` é a autoridade para retirar um imóvel do site sem apagar o registo.
+- O mapa usa só zona/freguesia/concelho, nunca morada, número ou código-postal.
+- Não há tabela dedicada de agentes: os responsáveis são derivados de `angariador`/`vendedor` e enriquecidos a partir de `figueiraTeam`/`sampleAgents`.
+- O fallback local é deliberado e não deve ser removido sem instrução explícita.
+- O chat responde em PT-PT, consulta apenas imóveis publicados e não inventa preços, disponibilidade ou imóveis.
+- Build de produção deve manter `next build --webpack`; Turbopack não é compatível com o runtime OpenNext/Cloudflare atual.
+- `npm.cmd run deploy` executa OpenNext e publica no Worker; manter `nodejs_compat` em `wrangler.jsonc`.
 
 ## Bugs conhecidos e dívida técnica
 
-- Alguns imóveis não têm fotografias; o detalhe mostra o bloco de substituição. Completar os dados na origem.
-- Existem áreas, WC e descrições incompletos em dados reais.
-- `createLead()` só persiste comprovadamente `nome`, `email`, `telemovel`, `tipos` e `criado_em`; `message` e `property_id` ainda não estão confirmados na tabela `contactos`.
-- `getPropertyBySlug()` carrega até 500 imóveis e filtra em memória; deve passar a uma consulta direta por referência/slug.
-- Não existe uma tabela dedicada de agentes.
-- `supabase/schema.sql` e o histórico remoto de migrations não estão alinhados com o runtime. Tratar `supabase db push` com cuidado.
-- Podem subsistir sequências de encoding incorretas em páginas antigas. Corrigir página a página e validar o HTML publicado, especialmente texto JSX direto.
-- A galeria carrega todas as miniaturas em imóveis com muitas fotos; avaliar carregamento progressivo/lazy se houver impacto.
-- O mapa depende do embed Google e indica deliberadamente uma zona, não uma localização exata.
+- Alguns imóveis reais têm fotos, áreas, WC, descrições ou vídeos incompletos; corrigir na origem.
+- A página do consultor considera apenas um responsável por imóvel: `angariador` tem prioridade e `vendedor` é fallback. Não mostra ambos quando existem.
+- Sandra Silva ainda não tem imóveis atribuídos na origem; o perfil mostra corretamente o estado vazio.
+- `getPropertyBySlug()` carrega até 500 imóveis e filtra em memória; substituir por consulta direta por referência/slug.
+- Confirmar/implementar persistência de `message` e `property_id` em `contactos`.
+- `supabase/schema.sql` e migrations remotas podem divergir do runtime; usar `supabase db push` com cautela.
+- A galeria de imóveis ainda carrega todas as miniaturas; avaliar carregamento progressivo/lazy.
+- Validar HTML publicado para possíveis sequências antigas de encoding incorreto.
 
 ## Próximos passos recomendados
 
-1. Fazer QA responsivo real (desktop e mobile) de home, catálogo, detalhe com galeria/mapa, contacto, recrutamento, blog e rodapés; validar também certificado, garagem e varanda em dados reais.
-2. Completar dados de `imoveis`, começando por imóveis sem fotografia e por campos de área, WC e descrição.
-3. Decidir e implementar a persistência de `message` e `property_id` em `contactos`.
-4. Otimizar `getPropertyBySlug()` e definir uma fonte/tabela dedicada para agentes.
-5. Validar uma candidatura ponta a ponta num ambiente controlado, sem poluir os grupos MailerLite de produção.
-6. Avaliar miniaturas progressivas e, se desejado, configurar Cloudflare Workers Builds com GitHub para deploy automático.
+1. Fazer QA responsivo completo: hero de vídeos (desktop/mobile), perfis de todos os consultores, catálogo, detalhe, contacto, recrutamento, blog e rodapés.
+2. Atualizar `imoveis` com dados completos e atribuir imóveis à Sandra; decidir se cada imóvel deve suportar simultaneamente angariador e vendedor nas páginas de perfil.
+3. Rever a hero com o cliente e, se aprovada, remover as capturas de QA, preparar um commit seletivo e só depois pedir autorização para deploy.
+4. Confirmar a estrutura de `contactos` e persistir mensagem e referência de imóvel.
+5. Otimizar `getPropertyBySlug()` e avaliar tabela própria para agentes.
+6. Validar uma candidatura ponta a ponta num ambiente controlado e avaliar miniaturas progressivas/CI de Cloudflare.

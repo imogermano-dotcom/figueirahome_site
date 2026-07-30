@@ -3,7 +3,7 @@ type PropertyVideoProps = {
   title: string;
 };
 
-type VideoSource =
+export type VideoSource =
   | { kind: "embed"; src: string }
   | { kind: "file"; src: string };
 
@@ -18,7 +18,7 @@ export function PropertyVideo({ url, title }: PropertyVideoProps) {
   return <iframe title={`Vídeo: ${title}`} src={video.src} className="block aspect-video w-full border-0 bg-[var(--navy)]" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" />;
 }
 
-function videoSourceFromUrl(value: string): VideoSource | null {
+export function videoSourceFromUrl(value: string): VideoSource | null {
   try {
     const url = new URL(value.trim());
     if (url.protocol !== "https:" && url.protocol !== "http:") return null;

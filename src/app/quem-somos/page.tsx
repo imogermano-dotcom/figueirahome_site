@@ -97,14 +97,14 @@ export default function AboutPage() {
           </div>
           <div className="mt-12 grid gap-px overflow-hidden rounded-md border border-[var(--border)] bg-[var(--border)] sm:grid-cols-2 lg:grid-cols-3">
             {figueiraTeam.map((member) => (
-              <article key={member.id} className="group bg-white">
+              <Link key={member.id} href={`/consultores/${member.id}`} className="group bg-white transition hover:bg-[var(--offwhite)]">
                 <div className="relative aspect-[4/3] overflow-hidden bg-[var(--offwhite)]"><Image src={member.photo_url} alt={`Retrato de ${member.name}`} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-contain p-7 transition duration-500 group-hover:scale-105" /></div>
                 <div className="p-7">
                   <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--blue)]">{member.role}</p>
-                  <h3 className="mt-2 text-xl font-extrabold">{member.name}</h3>
+                  <h3 className="mt-2 text-xl font-extrabold group-hover:text-[var(--blue)]">{member.name}</h3>
                   <p className="mt-4 text-sm leading-7 text-[var(--muted)]">{member.bio}</p>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </section>

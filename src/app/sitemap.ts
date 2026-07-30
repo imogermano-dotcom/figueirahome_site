@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getProperties } from "@/lib/properties";
+import { figueiraTeam } from "@/lib/team";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = process.env.NEXT_PUBLIC_SITE_URL || "https://figueirahome.pt";
@@ -10,6 +11,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const properties = await getProperties();
   return [
     ...staticRoutes,
+    ...figueiraTeam.map((member) => ({
+      url: `${base}/consultores/${member.id}`,
+      lastModified: new Date()
+    })),
     ...properties.map((property) => ({
       url: `${base}/imoveis/${property.slug}`,
       lastModified: new Date(property.updated_at)

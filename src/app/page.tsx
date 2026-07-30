@@ -7,6 +7,7 @@ import { PropertyCard } from "@/components/property-card";
 import { QuickSearch } from "@/components/quick-search";
 import { ScrollEffects } from "@/components/scroll-effects";
 import { VideoFooter } from "@/components/video-footer";
+import { HeroExperience } from "@/components/hero-experience";
 
 export default async function HomePage() {
   const [featured, allProperties] = await Promise.all([
@@ -17,30 +18,13 @@ export default async function HomePage() {
   return (
     <>
       <ScrollEffects />
-      <section className="hero-section relative -mt-0 min-h-[620px] overflow-hidden bg-[var(--navy)] pt-[72px]">
-        <video className="hero-video absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline preload="metadata">
-          <source src="/Video/hero-web.mp4" type="video/mp4" />
-        </video>
-        <div className="hero-video-tint absolute inset-0" />
-        <div className="hero-copy-shade absolute inset-y-0 left-0" />
-        <div className="container relative z-10 flex min-h-[548px] items-center py-16">
-          <div className="max-w-[590px]">
-            <h1 className="hero-title display-font text-[clamp(2.1rem,4vw,3.4rem)] font-extrabold leading-tight text-white">
-              A Sua Imobiliária de Referência na <span className="text-[var(--gold-l)]">Figueira da Foz</span>
-            </h1>
-            <p className="hero-sub mt-5 max-w-[480px] leading-8 text-white/75">
-              Compre, venda ou arrende o seu imóvel com uma equipa local especializada, presente na região desde 2009. Transparência e resultados em cada transação.
-            </p>
-            <div className="hero-btns mt-8 flex flex-wrap gap-3">
-              <Link className="btn btn-primary" href="/imoveis">Ver Imóveis</Link>
-              <Link className="btn btn-outline-light" href="/contacto?pedido=avaliacao">Avaliação Gratuita</Link>
-            </div>
-          </div>
-        </div>
-        <svg className="absolute bottom-[-1px] left-0 z-10 h-16 w-full" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M0,64 C360,0 1080,0 1440,64 L1440,64 L0,64 Z" fill="#0D2B4E" />
-        </svg>
-      </section>
+      <HeroExperience properties={allProperties.map((property) => ({
+        id: property.id,
+        slug: property.slug,
+        title: property.title,
+        location: property.location,
+        videoUrl: property.video_url || null
+      }))} />
 
       <section className="bg-[var(--navy)] py-20">
         <div className="container">
@@ -132,13 +116,13 @@ export default async function HomePage() {
       <section className="bg-[var(--offwhite)] py-16">
         <div className="container">
           <h2 className="section-title mb-8">A Nossa Equipa</h2>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {figueiraTeam.map((member) => (
-              <article key={member.id} className="fade rounded-md border border-[var(--border)] bg-white p-6 text-center">
+              <Link key={member.id} href={`/consultores/${member.id}`} className="fade group rounded-md border border-[var(--border)] bg-white p-6 text-center transition hover:-translate-y-1 hover:border-[var(--gold)]">
                 <div className="relative mx-auto mb-4 h-20 w-20 overflow-hidden rounded-full border-[3px] border-[var(--blue)] bg-[var(--offwhite)]"><Image src={member.photo_url} alt={`Retrato de ${member.name}`} fill sizes="80px" className="object-contain p-1" /></div>
-                <h3 className="font-extrabold">{member.name}</h3>
+                <h3 className="font-extrabold group-hover:text-[var(--blue)]">{member.name}</h3>
                 <p className="mt-1 text-xs font-extrabold uppercase tracking-wide text-[var(--blue)]">{member.role}</p>
-              </article>
+              </Link>
             ))}
           </div>
         </div>

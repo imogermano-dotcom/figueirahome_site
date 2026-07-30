@@ -1,6 +1,7 @@
 import { unstable_noStore as noStore } from "next/cache";
 import { getSupabaseServiceClient } from "./supabase";
 import { sampleAgents, sampleProperties } from "./sample-data";
+import { figueiraTeam } from "./team";
 import type { Agent, LeadInput, Property, PropertyFilters, PropertyImage } from "./types";
 
 type ImovelRow = {
@@ -77,10 +78,11 @@ function typeFromImovel(row: ImovelRow) {
 
 function agentFromName(name: string | null, role: string): Agent | null {
   if (!name) return null;
-  const knownAgent = sampleAgents.find((agent) => normalize(agent.name) === normalize(name));
+  const teamMember = figueiraTeam.find((member) => [member.name, ...(member.aliases || [])].some((candidate) => normalize(candidate) === normalize(name)));
+  const knownAgent = teamMember || sampleAgents.find((agent) => normalize(agent.name) === normalize(name));
   return {
-    id: slugify(name),
-    name,
+    id: knownAgent?.id || slugify(name),
+    name: knownAgent?.name || name,
     role,
     phone: knownAgent?.phone || null,
     email: knownAgent?.email || null,

@@ -16,3 +16,10 @@ cloudflare-env.d.ts
 # Diagnostics
 *.log
 test-results/
+
+# Local state and visual QA artefacts
+supabase/.temp/
+/public/ideia site.png
+/hero-*.png
+/visual-hero-*.png
+/consultant-*.png
