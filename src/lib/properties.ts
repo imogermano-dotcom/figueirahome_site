@@ -33,10 +33,7 @@ type ImovelRow = {
   fotos: string[] | null;
   plantas: string[] | string | null;
   video_url: string | null;
-  vista_mar: boolean | null;
-  vista_praia: boolean | null;
-  piscina: boolean | null;
-  terraco: boolean | null;
+  destaque: boolean | null;
 };
 
 function normalize(value?: string | null) {
@@ -156,7 +153,7 @@ function mapImovel(row: ImovelRow): Property | null {
     map_location: mapLocationFromImovel(row),
     video_url: row.video_url?.trim() || null,
     status: row.disponibilidade || row.estado || "Disponível",
-    featured: Boolean(row.vista_mar || row.vista_praia || row.piscina || row.terraco),
+    featured: Boolean(row.destaque),
     published,
     agent_id: agent?.id || null,
     created_at: createdAt,
@@ -206,6 +203,15 @@ function applyFilters(properties: Property[], filters: PropertyFilters) {
   return rows;
 }
 
+function featuredOrNewest(properties: Property[], limit: number) {
+  const published = properties
+    .filter((property) => property.published)
+    .sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at));
+  const featured = published.filter((property) => property.featured);
+  const newest = published.filter((property) => !property.featured);
+  return [...featured, ...newest].slice(0, limit);
+}
+
 export async function getProperties(filters: PropertyFilters = {}) {
   noStore();
   const supabase = getSupabaseServiceClient();
@@ -228,7 +234,7 @@ export async function getProperties(filters: PropertyFilters = {}) {
 export async function getFeaturedProperties(limit = 3) {
   noStore();
   const supabase = getSupabaseServiceClient();
-  if (!supabase) return sampleProperties.filter((property) => property.published && property.featured).slice(0, limit);
+  if (!supabase) return featuredOrNewest(sampleProperties, limit);
 
   const { data, error } = await supabase
     .from("imoveis")
@@ -239,11 +245,9 @@ export async function getFeaturedProperties(limit = 3) {
     .limit(500);
   if (error) {
     console.error(error);
-    return sampleProperties.filter((property) => property.published && property.featured).slice(0, limit);
+    return featuredOrNewest(sampleProperties, limit);
   }
-  const properties = applyFilters(mapImoveis((data || []) as ImovelRow[]), {});
-  const featured = properties.filter((property) => property.featured);
-  return (featured.length ? featured : properties).slice(0, limit);
+  return featuredOrNewest(mapImoveis((data || []) as ImovelRow[]), limit);
 }
 
 export async function getPropertyBySlug(slug: string) {

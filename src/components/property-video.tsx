@@ -28,7 +28,7 @@ export function videoSourceFromUrl(value: string): VideoSource | null {
     const isYoutube = hostname === "youtu.be" || hostname.endsWith("youtube.com");
 
     if (isYoutube) {
-      const id = hostname === "youtu.be" ? segments[0] : url.searchParams.get("v") || segments.find((segment, index) => (segments[index - 1] === "embed" || segments[index - 1] === "shorts") && Boolean(segment));
+      const id = hostname === "youtu.be" ? segments[0] : url.searchParams.get("v") || segments.find((segment, index) => (segments[index - 1] === "embed" || segments[index - 1] === "shorts" || segments[index - 1] === "v") && Boolean(segment));
       return id ? { kind: "embed", src: `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}` } : null;
     }
 
