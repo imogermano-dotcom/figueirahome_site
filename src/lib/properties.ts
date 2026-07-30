@@ -31,6 +31,7 @@ type ImovelRow = {
   varanda: boolean | null;
   foto_principal: string | null;
   fotos: string[] | null;
+  plantas: string[] | string | null;
   video_url: string | null;
   vista_mar: boolean | null;
   vista_praia: boolean | null;
@@ -90,15 +91,26 @@ function agentFromName(name: string | null, role: string): Agent | null {
   };
 }
 
-function imagesFromImovel(row: ImovelRow, title: string): PropertyImage[] {
-  const urls = [row.foto_principal, ...(Array.isArray(row.fotos) ? row.fotos : [])]
-    .filter((url): url is string => Boolean(url?.trim()));
+function urlsFromColumn(value: string[] | string | null | undefined) {
+  if (Array.isArray(value)) return value.filter((url): url is string => typeof url === "string" && Boolean(url.trim()));
+  return value?.trim() ? [value] : [];
+}
+
+function imageItemsFromUrls(urls: string[], title: string, label: "imagem" | "planta"): PropertyImage[] {
   return Array.from(new Set(urls)).map((url, index) => ({
     url,
-    alt: `${title} - imagem ${index + 1}`,
+    alt: `${title} - ${label} ${index + 1}`,
     sort_order: index + 1,
     is_primary: index === 0
   }));
+}
+
+function imagesFromImovel(row: ImovelRow, title: string) {
+  return imageItemsFromUrls([row.foto_principal, ...urlsFromColumn(row.fotos)].filter((url): url is string => Boolean(url?.trim())), title, "imagem");
+}
+
+function floorPlansFromImovel(row: ImovelRow, title: string) {
+  return imageItemsFromUrls(urlsFromColumn(row.plantas), title, "planta");
 }
 
 function areaFromImovel(row: ImovelRow) {
@@ -150,7 +162,8 @@ function mapImovel(row: ImovelRow): Property | null {
     created_at: createdAt,
     updated_at: updatedAt,
     agent,
-    images: imagesFromImovel(row, title)
+    images: imagesFromImovel(row, title),
+    floor_plans: floorPlansFromImovel(row, title)
   };
 }
 

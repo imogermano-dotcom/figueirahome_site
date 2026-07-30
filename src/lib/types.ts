@@ -41,6 +41,7 @@ export type Property = {
   updated_at: string;
   agent?: Agent | null;
   images?: PropertyImage[];
+  floor_plans?: PropertyImage[];
 };
 
 export type PropertyFilters = {
