@@ -1,8 +1,9 @@
 "use client";
+
 import Link from "next/link";
-import { Award, BadgeCheck, Clapperboard, Handshake, MoveRight, UserRound } from "lucide-react";
+import { ArrowUpRight, Award, BadgeCheck, Clapperboard, Handshake, MoveRight, Play, UserRound } from "lucide-react";
 import { useState } from "react";
-import { videoSourceFromUrl } from "@/components/property-video";
+import { videoSourceFromUrl, type VideoSource } from "@/components/property-video";
 
 export type HeroProperty = {
   id: string;
@@ -12,18 +13,28 @@ export type HeroProperty = {
   videoUrl: string | null;
 };
 
-type HeroItem = { id: string; title: string; description: string; href: string; videoUrl: string };
+type HeroItem = {
+  id: string;
+  title: string;
+  description: string;
+  href: string;
+  video: VideoSource;
+};
 
 export function HeroExperience({ properties }: { properties: HeroProperty[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const items: HeroItem[] = properties
-    .filter((property): property is HeroProperty & { videoUrl: string } => Boolean(property.videoUrl && videoSourceFromUrl(property.videoUrl)))
-    .slice(0, 3)
-    .map((property) => ({ id: property.id, title: property.title, description: property.location, href: `/imoveis/${property.slug}`, videoUrl: property.videoUrl }));
+  const [isPlaying, setIsPlaying] = useState(false);
+  const items: HeroItem[] = properties.flatMap((property) => {
+    const video = property.videoUrl ? videoSourceFromUrl(property.videoUrl) : null;
+    return video ? [{ id: property.id, title: property.title, description: property.location, href: `/imoveis/${property.slug}`, video }] : [];
+  }).slice(0, 3);
   const activeItem = items[activeIndex] || items[0];
-  const activeVideo = activeItem ? videoSourceFromUrl(activeItem.videoUrl) : null;
+  const activeVideo = activeItem?.video || null;
 
-  function selectItem(index: number) { setActiveIndex((index + items.length) % items.length); }
+  function selectItem(index: number, play = false) {
+    setActiveIndex((index + items.length) % items.length);
+    setIsPlaying(play);
+  }
 
   return (
     <section className="hero-section hero-experience relative -mt-0 overflow-hidden bg-[var(--navy)] pt-[72px]">
@@ -46,17 +57,32 @@ export function HeroExperience({ properties }: { properties: HeroProperty[] }) {
           <div className="hero-showcase-heading"><Clapperboard aria-hidden="true" /><div><p>Veja o nosso trabalho</p><span>Vídeos curtos dos nossos imóveis e projetos.</span></div></div>
           <div className="hero-showcase-layout">
             <div className="hero-showcase-stage">
-              {activeVideo.kind === "file" ? <video className="hero-showcase-media" autoPlay muted loop playsInline controls preload="metadata"><source src={activeVideo.src} /></video> : <iframe className="hero-showcase-media border-0" title={`Vídeo: ${activeItem.title}`} src={activeVideo.src} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" />}
+              {isPlaying ? (
+                activeVideo.kind === "file" ? <video className="hero-showcase-media" autoPlay muted loop playsInline controls preload="metadata"><source src={activeVideo.src} /></video> : <iframe className="hero-showcase-media border-0" title={`Vídeo: ${activeItem.title}`} src={`${activeVideo.src}&autoplay=1`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" />
+              ) : (
+                <button type="button" className="hero-showcase-poster" onClick={() => setIsPlaying(true)} aria-label={`Reproduzir vídeo de ${activeItem.title}`}>
+                  {activeVideo.kind === "file" ? <video className="hero-showcase-media" muted autoPlay loop playsInline preload="metadata"><source src={activeVideo.src} /></video> : activeVideo.thumbnailSrc ? <>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img className="hero-showcase-media" src={activeVideo.thumbnailSrc} alt="" />
+                  </> : <span className="hero-showcase-fallback" />}
+                  <span className="hero-play-icon"><Play size={24} fill="currentColor" aria-hidden="true" /></span>
+                </button>
+              )}
               <div className="hero-showcase-gradient" />
-              <div className="hero-showcase-caption"><span>Vídeo do imóvel</span><strong>{activeItem.title}</strong><p>{activeItem.description}</p><Link href={activeItem.href} className="hero-showcase-link">Ver imóvel <MoveRight size={15} /></Link></div>
+              <div className="hero-showcase-caption"><div className="hero-showcase-actions"><button type="button" onClick={() => setIsPlaying(true)} aria-label={`Reproduzir vídeo de ${activeItem.title}`}><Play size={17} fill="currentColor" aria-hidden="true" /></button><Link href={activeItem.href} aria-label={`Abrir página do imóvel ${activeItem.title}`}><ArrowUpRight size={18} aria-hidden="true" /></Link></div></div>
             </div>
-            {items.length > 1 && <div className="hero-showcase-thumbs">{items.map((item, index) => {
-              const thumbnailVideo = videoSourceFromUrl(item.videoUrl);
-              return <button type="button" key={item.id} className={index === activeIndex ? "active" : ""} onClick={() => selectItem(index)} aria-label={`Ver vídeo de ${item.title}`}>
-                {thumbnailVideo?.kind === "file" ? <video muted loop autoPlay playsInline preload="metadata"><source src={thumbnailVideo.src} /></video> : thumbnailVideo?.kind === "embed" ? <iframe title="" src={thumbnailVideo.src} tabIndex={-1} aria-hidden="true" /> : null}
-                <span>Ver vídeo</span>
-              </button>;
-            })}</div>}
+            {items.length > 1 && <div className="hero-showcase-thumbs">{items.map((item, index) => (
+              <div className="hero-showcase-thumb" key={item.id}>
+                <button type="button" className={index === activeIndex ? "active" : ""} onClick={() => selectItem(index)} aria-label={`Selecionar vídeo de ${item.title}`}>
+                  {item.video.kind === "file" ? <video muted loop autoPlay playsInline preload="metadata"><source src={item.video.src} /></video> : item.video.thumbnailSrc ? <>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={item.video.thumbnailSrc} alt="" />
+                  </> : <span className="hero-thumb-fallback" />}
+                  <span className="hero-thumb-play"><Play size={14} fill="currentColor" aria-hidden="true" /></span>
+                </button>
+                <Link href={item.href} aria-label={`Abrir página do imóvel ${item.title}`}><ArrowUpRight size={16} aria-hidden="true" /></Link>
+              </div>
+            ))}</div>}
           </div>
         </div>}
       </div>

@@ -4,7 +4,7 @@ type PropertyVideoProps = {
 };
 
 export type VideoSource =
-  | { kind: "embed"; src: string }
+  | { kind: "embed"; src: string; thumbnailSrc?: string }
   | { kind: "file"; src: string };
 
 export function PropertyVideo({ url, title }: PropertyVideoProps) {
@@ -29,7 +29,7 @@ export function videoSourceFromUrl(value: string): VideoSource | null {
 
     if (isYoutube) {
       const id = hostname === "youtu.be" ? segments[0] : url.searchParams.get("v") || segments.find((segment, index) => (segments[index - 1] === "embed" || segments[index - 1] === "shorts" || segments[index - 1] === "v") && Boolean(segment));
-      return id ? { kind: "embed", src: `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}` } : null;
+      return id ? { kind: "embed", src: `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?rel=0&modestbranding=1&cc_load_policy=0&iv_load_policy=3`, thumbnailSrc: `https://i.ytimg.com/vi/${encodeURIComponent(id)}/hqdefault.jpg` } : null;
     }
 
     if (hostname === "vimeo.com" || hostname.endsWith("vimeo.com")) {
