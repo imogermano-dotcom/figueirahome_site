@@ -4,6 +4,8 @@ import { sampleAgents, sampleProperties } from "./sample-data";
 import { figueiraTeam } from "./team";
 import type { Agent, LeadInput, Property, PropertyFilters, PropertyImage } from "./types";
 
+let lastSuccessfulProperties: Property[] | null = null;
+
 type ImovelRow = {
   imovel_ref: string | null;
   publicado: boolean | null;
@@ -212,42 +214,39 @@ function featuredOrNewest(properties: Property[], limit: number) {
   return [...featured, ...newest].slice(0, limit);
 }
 
-export async function getProperties(filters: PropertyFilters = {}) {
-  noStore();
+async function getPublishedProperties() {
   const supabase = getSupabaseServiceClient();
-  if (!supabase) return applyFilters(sampleProperties, filters);
+  if (!supabase) return sampleProperties;
 
-  const { data, error } = await supabase
+  const query = () => supabase
     .from("imoveis")
     .select("*")
     .eq("publicado", true)
     .eq("disponibilidade", "Disponível")
     .order("data_criacao", { ascending: false })
     .limit(500);
-  if (error) {
-    console.error(error);
-    return applyFilters(sampleProperties, filters);
+
+  let result = await query();
+  if (result.error) result = await query();
+
+  if (result.error) {
+    console.error(result.error);
+    return lastSuccessfulProperties || sampleProperties;
   }
-  return applyFilters(mapImoveis((data || []) as ImovelRow[]), filters);
+
+  const properties = mapImoveis((result.data || []) as ImovelRow[]);
+  lastSuccessfulProperties = properties;
+  return properties;
+}
+
+export async function getProperties(filters: PropertyFilters = {}) {
+  noStore();
+  return applyFilters(await getPublishedProperties(), filters);
 }
 
 export async function getFeaturedProperties(limit = 3) {
   noStore();
-  const supabase = getSupabaseServiceClient();
-  if (!supabase) return featuredOrNewest(sampleProperties, limit);
-
-  const { data, error } = await supabase
-    .from("imoveis")
-    .select("*")
-    .eq("publicado", true)
-    .eq("disponibilidade", "Disponível")
-    .order("data_criacao", { ascending: false })
-    .limit(500);
-  if (error) {
-    console.error(error);
-    return featuredOrNewest(sampleProperties, limit);
-  }
-  return featuredOrNewest(mapImoveis((data || []) as ImovelRow[]), limit);
+  return featuredOrNewest(await getPublishedProperties(), limit);
 }
 
 export async function getPropertyBySlug(slug: string) {

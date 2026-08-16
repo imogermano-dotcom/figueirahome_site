@@ -8,6 +8,7 @@ import { QuickSearch } from "@/components/quick-search";
 import { ScrollEffects } from "@/components/scroll-effects";
 import { VideoFooter } from "@/components/video-footer";
 import { HeroExperience } from "@/components/hero-experience";
+import { PropertyTotal } from "@/components/property-total";
 
 export default async function HomePage() {
   const [featured, allProperties] = await Promise.all([
@@ -36,7 +37,7 @@ export default async function HomePage() {
             {featured.map((property) => <PropertyCard key={property.id} property={property} dark />)}
           </div>
           <div className="mt-10 text-center">
-            <Link href="/imoveis" className="btn btn-outline-light">Ver Todos os Imóveis ({allProperties.length})</Link>
+            <Link href="/imoveis" className="btn btn-outline-light">Ver Todos os Imóveis (<PropertyTotal initialCount={allProperties.length} />)</Link>
           </div>
         </div>
       </section>

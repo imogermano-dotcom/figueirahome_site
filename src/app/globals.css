@@ -68,11 +68,24 @@ button, input, textarea, select { font: inherit; }
   box-shadow: 0 1px 0 var(--border);
 }
 
+.nav-logo {
+  position: relative;
+  display: block;
+  height: 54px;
+}
+
 .nav-logo-image {
-  width: 236px;
-  height: auto;
+  width: auto;
+  height: 54px;
   display: block;
   margin-top: 0;
+}
+
+.nav-logo-wordmark-navy {
+  position: absolute;
+  inset: 0;
+  filter: brightness(0) saturate(100%) invert(16%) sepia(29%) saturate(1557%) hue-rotate(171deg) brightness(85%) contrast(93%);
+  clip-path: inset(45% 0 19% 16%);
 }
 
 .nav-link {
@@ -83,6 +96,54 @@ button, input, textarea, select { font: inherit; }
   font-size: 0.9rem;
   font-weight: 700;
 }
+
+.language-switcher {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 9px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  color: inherit;
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.language-switcher select {
+  min-width: 82px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.language-switcher select:disabled { cursor: wait; opacity: .65; }
+.language-switcher select option { color: var(--text); background: white; }
+.google-translate-element {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.site-nav:not(.scrolled):not(.solid) .language-switcher { border-color: rgba(255,255,255,.62); }
+.site-nav.scrolled .language-switcher,
+.site-nav.solid .language-switcher { color: var(--blue); }
+
+/* Translation is controlled from the site navigation, so the Google frame stays out of the page layout. */
+.goog-te-banner-frame,
+.goog-te-balloon-frame,
+.goog-tooltip,
+#goog-gt-tt,
+iframe.VIpgJd-ZVi9od-ORHb-OEVmcd { display: none !important; }
+.goog-text-highlight { background: transparent !important; box-shadow: none !important; }
+.VIpgJd-yAWNEb-VIpgJd-fmcmS-sn54Q { background: transparent !important; box-shadow: none !important; }
+html.translated-ltr body,
+html.translated-rtl body { top: 0 !important; }
 
 .site-nav:not(.scrolled):not(.solid) .nav-link:hover,
 .site-nav:not(.scrolled):not(.solid) .nav-link.active {
@@ -351,7 +412,7 @@ button, input, textarea, select { font: inherit; }
   .site-nav { height: 64px; }
   .nav-inner { height: 64px; }
   .nav-link { height: 48px; }
-  .nav-logo-image { width: 176px; }
+  .nav-logo,.nav-logo-image { width: auto; height: 44px; }
   .hero-section { min-height: 600px; }
   .hero-section .container {
     align-items: flex-start;
@@ -401,7 +462,7 @@ button, input, textarea, select { font: inherit; }
 @media (max-width: 520px) { .recruitment-fit-grid,.recruitment-process { grid-template-columns:1fr; }.recruitment-section-head { gap:18px; }.recruitment-learning > div { padding:26px 22px; }.recruitment-learning h3 { font-size:1.45rem; }.recruitment-method > .container > div:last-child > div { padding-inline:0; } }
 
 @media (max-width: 420px) {
-  .nav-logo-image { width: 164px; }
+  .nav-logo,.nav-logo-image { width: auto; height: 42px; }
   .site-nav .btn {
     min-height: 48px;
     padding-inline: 18px;
@@ -409,7 +470,7 @@ button, input, textarea, select { font: inherit; }
 }
 
 @media (max-width: 360px) {
-  .nav-logo-image { width: 150px; }
+  .nav-logo,.nav-logo-image { width: auto; height: 38px; }
   .site-nav .btn {
     padding-inline: 14px;
   }

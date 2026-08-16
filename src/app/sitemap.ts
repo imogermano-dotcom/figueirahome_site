@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { blogPosts } from "@/lib/blog";
 import { getProperties } from "@/lib/properties";
 import { figueiraTeam } from "@/lib/team";
 
@@ -11,6 +12,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const properties = await getProperties();
   return [
     ...staticRoutes,
+    ...blogPosts.map((post) => ({
+      url: `${base}/blog/${post.slug}`,
+      lastModified: new Date()
+    })),
     ...figueiraTeam.map((member) => ({
       url: `${base}/consultores/${member.id}`,
       lastModified: new Date()

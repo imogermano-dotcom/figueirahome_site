@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { ArrowUpRight, Award, BadgeCheck, Clapperboard, Handshake, MoveRight, Play, UserRound } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { videoSourceFromUrl, type VideoSource } from "@/components/property-video";
+import { getSupabaseBrowserClient } from "@/lib/supabase";
 
 export type HeroProperty = {
   id: string;
@@ -21,15 +22,74 @@ type HeroItem = {
   video: VideoSource;
 };
 
+type HeroVideoRow = {
+  imovel_ref: string | null;
+  titulo: string | null;
+  zona: string | null;
+  freguesia: string | null;
+  concelho: string | null;
+  video_url: string | null;
+};
+
+function slugFromReference(reference: string) {
+  return reference
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 export function HeroExperience({ properties }: { properties: HeroProperty[] }) {
+  const [heroProperties, setHeroProperties] = useState(properties);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const items: HeroItem[] = properties.flatMap((property) => {
+  const browserRecoveryAttempted = useRef(false);
+  const items: HeroItem[] = heroProperties.flatMap((property) => {
     const video = property.videoUrl ? videoSourceFromUrl(property.videoUrl) : null;
     return video ? [{ id: property.id, title: property.title, description: property.location, href: `/imoveis/${property.slug}`, video }] : [];
   }).slice(0, 3);
   const activeItem = items[activeIndex] || items[0];
   const activeVideo = activeItem?.video || null;
+
+  useEffect(() => {
+    if (items.length || browserRecoveryAttempted.current) return;
+
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) return;
+    browserRecoveryAttempted.current = true;
+    let cancelled = false;
+
+    void supabase
+      .from("imoveis")
+      .select("imovel_ref,titulo,zona,freguesia,concelho,video_url")
+      .eq("publicado", true)
+      .eq("disponibilidade", "Disponível")
+      .not("video_url", "is", null)
+      .order("data_criacao", { ascending: false })
+      .limit(3)
+      .then(({ data, error }) => {
+        if (cancelled || error || !data?.length) return;
+
+        setHeroProperties(data.flatMap((row: HeroVideoRow) => {
+          const reference = row.imovel_ref?.trim();
+          const videoUrl = row.video_url?.trim();
+          if (!reference || !videoUrl) return [];
+          const location = [row.zona, row.freguesia, row.concelho].filter(Boolean).join(" - ") || "Figueira da Foz";
+          return [{
+            id: reference,
+            slug: slugFromReference(reference),
+            title: row.titulo?.trim() || `Imóvel ${reference}`,
+            location,
+            videoUrl
+          }];
+        }));
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [items.length]);
 
   function selectItem(index: number, play = false) {
     setActiveIndex((index + items.length) % items.length);
