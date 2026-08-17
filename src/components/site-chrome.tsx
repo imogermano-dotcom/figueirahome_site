@@ -11,7 +11,6 @@ import { GoogleTranslate } from "@/components/google-translate";
 const links = [
   ["Home", "/"],
   ["Im\u00f3veis", "/imoveis"],
-  ["Empreendimentos", "/empreendimentos"],
   ["Quem Somos", "/quem-somos"],
   ["Recrutamento", "/recrutamento"],
   ["Blog", "/blog"]
