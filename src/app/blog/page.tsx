@@ -30,7 +30,7 @@ export default function BlogPage() {
               {featuredPost.coverImage && <Image src={featuredPost.coverImage} alt={featuredPost.coverImageAlt ?? `Imagem do artigo: ${featuredPost.title}`} fill priority sizes="(min-width: 768px) 55vw, 100vw" className="object-cover" />}
               <h2 id="featured-article-title" className="absolute bottom-0 left-0 right-6 m-0 bg-[#005aa9] px-6 py-5 !font-sans text-[clamp(1.35rem,2.3vw,2rem)] font-bold leading-tight tracking-[-.03em] text-white sm:right-10 sm:px-8">{featuredPost.title}</h2>
             </div>
-            <div className="flex flex-col px-7 py-8 sm:px-9 md:py-10">
+            <div className="flex flex-col px-7 py-8 sm:px-9 md:py-10 md:pt-0">
               <p className="font-sans text-xs font-bold uppercase tracking-[0.11em] text-[#002fa7]">{featuredPost.category}{featuredPost.publishedAt && <><span> · </span><time dateTime={featuredPost.publishedAt}>{formatBlogDate(featuredPost.publishedAt)}</time></>} <span> · </span>{featuredPost.readTime}</p>
               <div className="mt-5 space-y-4 text-[1.02rem] leading-7 text-[#40505e]">{featuredParagraphs.length > 0 ? featuredParagraphs.map((block, index) => <p key={index} className="m-0">{block.text}</p>) : <p className="m-0">{featuredPost.description}</p>}</div>
               <Link href={`/blog/${featuredPost.slug}`} className="mt-8 inline-flex w-fit items-center gap-2 bg-[#005aa9] px-5 py-3 font-sans text-sm font-bold text-white transition-colors hover:bg-[#002fa7]">Ler mais <ArrowUpRight size={17} aria-hidden="true" /></Link>

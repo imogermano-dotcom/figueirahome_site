@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, ChevronRight } from "lucide-react";
 import { VideoFooter } from "@/components/video-footer";
-import { blogPosts, formatBlogDate, getBlogPost, getRelatedBlogPosts } from "@/lib/blog";
+import { blogPosts, formatBlogDate, getBlogPost, getRelatedBlogPosts, mergeBlogTableBlocks, toBlogTable } from "@/lib/blog";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -21,6 +21,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const post = getBlogPost(slug);
   if (!post) notFound();
   const relatedPosts = getRelatedBlogPosts(slug);
+  const articleBlocks = mergeBlogTableBlocks(post.blocks);
 
   return (
     <>
@@ -36,13 +37,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </div>
           </header>
 
-          <div className="mx-7 bg-white px-6 pb-12 pt-8 sm:mx-8 sm:px-8 lg:grid lg:grid-cols-[160px_minmax(0,1fr)] lg:gap-10">
-            <aside className="mb-8 lg:mb-0"><Link href="/blog" className="inline-flex items-center gap-2 font-sans text-sm font-bold text-[#005aa9] hover:underline hover:underline-offset-4"><ArrowLeft size={16} aria-hidden="true" /> Todos os artigos</Link></aside>
-            <article className="text-[1.03rem] leading-8 text-[#46515a]">
-              {post.blocks.map((block, index) => {
+          <div className="bg-white pb-12 pt-8">
+            <aside className="mb-8"><Link href="/blog" className="inline-flex items-center gap-2 font-sans text-sm font-bold text-[#005aa9] hover:underline hover:underline-offset-4"><ArrowLeft size={16} aria-hidden="true" /> Todos os artigos</Link></aside>
+            <article className="max-w-[720px] text-[1.03rem] leading-8 text-[#46515a]">
+              {articleBlocks.map((block, index) => {
                 if (block.type === "heading") return <h2 key={`${block.text}-${index}`} className="mb-4 mt-12 !font-sans text-[clamp(1.45rem,2.7vw,2rem)] font-bold leading-tight tracking-[-.035em] text-[#202830] first:mt-0">{block.text}</h2>;
                 if (block.type === "list") return <ul key={`list-${index}`} className="my-6 grid gap-2.5 p-0">{block.items.map((item, itemIndex) => <li key={`${item}-${itemIndex}`} className="relative list-none pl-5 before:absolute before:left-0 before:top-[.8em] before:h-[7px] before:w-[7px] before:bg-[#005aa9]">{item}</li>)}</ul>;
-                if (block.type === "table") return <div key={`table-${index}`} className="my-8 overflow-x-auto border-y border-[#b9c2c9] bg-[#fbfcfc] px-4 py-5"><pre className="m-0 min-w-max whitespace-pre font-sans text-sm leading-6 text-[#2d3b48]">{block.lines.join("\n")}</pre></div>;
+                if (block.type === "table") {
+                  const table = toBlogTable(block.lines);
+                  return table ? <div key={`table-${index}`} className="my-8 overflow-x-auto border-y border-[#b9c2c9] bg-[#fbfcfc]"><table className="min-w-full border-collapse text-left font-sans text-sm leading-6 text-[#2d3b48]"><thead className="border-b border-[#b9c2c9] bg-[#edf2f5]"><tr>{table.headers.map((header) => <th key={header} scope="col" className="px-4 py-3 font-bold text-[#202830]">{header}</th>)}</tr></thead><tbody>{table.rows.map((row, rowIndex) => <tr key={rowIndex} className="border-b border-[#d7dfe4] last:border-b-0">{row.map((cell, cellIndex) => <td key={cellIndex} className="align-top px-4 py-3">{cell}</td>)}</tr>)}</tbody></table></div> : <div key={`table-${index}`} className="my-8 overflow-x-auto border-y border-[#b9c2c9] bg-[#fbfcfc] px-4 py-5"><pre className="m-0 min-w-max whitespace-pre font-sans text-sm leading-6 text-[#2d3b48]">{block.lines.join("\n")}</pre></div>;
+                }
                 return <p key={`${block.text.slice(0, 50)}-${index}`} className="m-0 mt-[18px] first:mt-0">{block.text}</p>;
               })}
               {post.images.length > 1 && <section className="mt-14 border-t border-[#b9c2c9] pt-8" aria-labelledby="article-images-title"><h2 id="article-images-title" className="mb-6 !font-sans text-[clamp(1.45rem,2.7vw,2rem)] font-bold leading-tight tracking-[-.035em] text-[#202830]">Imagens do artigo</h2><div className="grid gap-5 sm:grid-cols-2">{post.images.slice(1).map((image, imageIndex) => <figure key={image} className="relative aspect-[16/10] overflow-hidden bg-[#e8edf1]"><Image src={image} alt={`${post.title} - imagem ${imageIndex + 2}`} fill sizes="(min-width: 768px) 340px, calc(100vw - 7rem)" className="object-cover" /></figure>)}</div></section>}
