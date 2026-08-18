@@ -64,7 +64,15 @@ export default async function HomePage() {
           <div className="fade-right relative rounded-md p-2">
             <div className="absolute left-0 top-0 h-24 w-24 border-l-4 border-t-4 border-[var(--blue)]" />
             <div className="absolute bottom-0 right-0 h-24 w-24 border-b-4 border-r-4 border-[var(--gold)]" />
-            <div className="media-fallback h-80 rounded-md" />
+            <div className="relative h-80 overflow-hidden rounded-md">
+              <Image
+                src="/about/quem-somos.png"
+                alt="Mapa da Figueira da Foz com uma casa, drone e visita virtual"
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover"
+              />
+            </div>
           </div>
         </div>
         <div className="mt-16 grid gap-8 md:grid-cols-[260px_1fr]">

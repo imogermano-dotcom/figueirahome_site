@@ -1,82 +1,83 @@
 # AGENTS.md — Figueira Home
 
-Handoff operacional atualizado em 2026-08-18. Manter este ficheiro abaixo de 200 linhas; substituir informação ultrapassada em vez de a acumular.
+Handoff operacional atualizado em 2026-08-18. Manter este ficheiro abaixo de 200 linhas e substituir informação ultrapassada.
 
-## Projeto e estado atual
+## Estado atual
 
-- Site institucional e catálogo imobiliário da Figueira Home, em Next.js App Router, Supabase, contactos, recrutamento, chat AI e fallback local.
-- Produção: `https://figueira-home.miguel-germano.workers.dev` (Cloudflare Worker `figueira-home`). Último deploy validado: versão `6998f869-2b36-43ad-9b43-85d2a8f46d54`, em 2026-08-18.
-- Ramo ativo: `teste/alteracao-cliente`. HEAD e `origin/teste/alteracao-cliente` estão em `724c01c Corrigir fichas de imóveis e visita virtual`.
-- Produção usa `next build --webpack`; `npm.cmd run deploy` executa OpenNext e publica no Worker. Não usar Turbopack para produção. O OpenNext apresenta avisos no Windows; se houver falhas imprevisíveis, preferir WSL sem alterar o runtime.
-- Não expor valores de `.env.local` nem segredos de Supabase, AI, MailerLite ou Cloudflare.
-
-### Estado do worktree
-
-- `AGENTS.md` é o handoff operacional; qualquer atualização deve entrar apenas num commit intencional.
-- `property-catalogue-local.png` é um ficheiro local não relacionado: não versionar nem remover.
-- `client-reference/` está ignorado; contém a referência do cliente e o PDF do blog. Não publicar nem versionar esse diretório.
-- `supabase/.temp/` é estado local ignorado e nunca deve entrar em commits.
+- Site institucional e catálogo imobiliário em Next.js App Router, Supabase, Cloudflare Workers, contactos, recrutamento e chat AI.
+- Produção: `https://figueira-home.miguel-germano.workers.dev` (Worker `figueira-home`). Último deploy validado: `6998f869-2b36-43ad-9b43-85d2a8f46d54`, em 2026-08-18.
+- Branch: `teste/alteracao-cliente`. `origin` está em `724c01c`; HEAD local está em `2f79c08` e ainda falta enviar este commit.
+- O worktree contém alterações não commitadas para a imagem “Quem Somos” e os novos retratos da equipa. `property-catalogue-local.png`, o ZIP em `public/equipa/` e `public/equipa/old/` são ficheiros locais fora do escopo e não devem ser publicados sem decisão explícita.
+- Servidor local habitual: `http://localhost:3002`. Produção usa `npm.cmd run deploy`, com `next build --webpack`; não usar Turbopack para produção.
+- Nunca expor valores de `.env.local` ou segredos Supabase, AI, MailerLite e Cloudflare. A `SUPABASE_SERVICE_ROLE_KEY` existe como secret do Worker; o valor local está vazio.
 
 ## Implementado
 
-### Blog e arquivo editorial
+### Blog e conteúdo editorial
 
-- Foram importados 68 artigos completos do blog antigo, com 190 imagens extraídas do PDF de referência. O conteúdo está em `src/content/blog-archive.json` e as imagens em `public/blog/archive/`; ambos já estão versionados.
-- `/blog` mostra o artigo mais recente por data como destaque editorial: imagem, título numa faixa azul, até dois parágrafos reais e botão “Ler mais”. Os restantes artigos mantêm a lista editorial.
-- O título “Guias para tomar decisões com mais confiança.” foi reduzido para caber numa linha em desktop, permitindo que o destaque seja visível no primeiro ecrã.
-- As páginas `/blog/[slug]` usam uma imagem de capa, título sobre faixa azul, autor/data e conteúdo semântico (parágrafos, títulos, listas, tabelas e imagens). O texto inicia na margem esquerda da imagem; o link “Todos os artigos” fica acima do artigo e não cria coluna lateral.
-- As tabelas passaram de texto pré-formatado para tabelas HTML responsivas. Blocos consecutivos extraídos do PDF são agrupados e linhas partidas são reunidas por heurística. A primeira tabela do artigo de heranças foi corrigida manualmente: `2022` para a revisão do Código Civil e `2020` para as alterações fiscais, confirmados no site antigo.
-- O item “Empreendimentos” foi ocultado do menu principal. A rota e o link no rodapé permanecem disponíveis.
+- Arquivo importado com 68 artigos completos e 190 imagens em `src/content/blog-archive.json` e `public/blog/archive/`.
+- `/blog` tem destaque do artigo mais recente; `/blog/[slug]` tem capa, metadados, conteúdo semântico, imagens, listas, tabelas HTML responsivas e relacionados.
+- Tabelas extraídas do PDF são reconstruídas por heurística (`mergeBlogTableBlocks`/`toBlogTable`); a primeira tabela de heranças foi corrigida manualmente com valores confirmados no site antigo.
+- “Empreendimentos” foi retirado do menu, mantendo rota e rodapé.
 
 ### Catálogo, homepage e equipa
 
-- A fonte runtime é a tabela Supabase `imoveis`. Só aparecem imóveis com `publicado = true`, `disponibilidade = "Disponível"`, `imovel_ref` válido e preço positivo.
-- Catálogo, detalhe e pesquisa rápida suportam `imovel_ref`. Os links para a ficha levam também `?ref=<imovel_ref>`, permitindo uma consulta direta e evitando páginas não encontradas quando o slug não é suficiente. A ficha junta `foto_principal` e `fotos` sem duplicados, inclui galeria/modal/teclado, certificado energético, cartões condicionais, mapa aproximado, vídeo, plantas e visita virtual (`visita_virtual_url`) quando existem.
-- Arrendamento só é apresentado quando existe `arrendamento_preco` positivo e não existe venda válida. Destaques usam primeiro `destaque = true`, ordenados por data recente, com fallback para imóveis publicados recentes.
-- `HeroExperience` tem CTAs e vitrine de até três imóveis com vídeo válido. Usa posters e miniaturas, sem iframes YouTube antes da reprodução; embeds usam `youtube-nocookie`, `cc_load_policy=0` e `iv_load_policy=3`.
-- Equipa atual: Sofia Monteiro, Miguel Germano, Alexandra Santos, Giulia Almeida, Alexsandra Ferreira e Sandra Silva. Cartões ligam para `/consultores/[slug]`; os imóveis são associados por `angariador`, com `vendedor` como fallback.
+- A fonte runtime é `imoveis`; só entram imóveis publicados, disponíveis, com referência válida e preço positivo.
+- Catálogo, pesquisa e detalhe suportam `imovel_ref`. Links de cards usam `?ref=...`; a ficha faz consulta direta por referência, junta fotos sem duplicados e mostra galeria, certificado, preços, mapa aproximado, vídeo, plantas e `visita_virtual_url`.
+- Quando o SSR não encontra o imóvel, `PropertyDetailBrowserFallback` recupera os dados através do cliente Supabase público no browser. O desenvolvimento local usa fallback/sample data quando o Supabase não responde.
+- Homepage: `src/app/page.tsx` já usa a fotografia `public/about/quem-somos.png` na área “Quem Somos”.
+- `src/lib/team.ts` aponta os seis consultores para os novos retratos com espaços em `public/equipa/`; as mesmas referências alimentam homepage, “Quem Somos” e perfis.
+- Hero usa até três vídeos com posters/miniaturas; embeds usam `youtube-nocookie` e não carregam iframe antes da reprodução.
 
-### Contactos e recrutamento
+### Contactos, recrutamento e segurança
 
-- O formulário de contacto exige consentimento RGPD; a API rejeita pedidos sem `privacy_consent: true`.
-- `/recrutamento` grava candidaturas e sincroniza os grupos MailerLite configurados no Worker.
-- Sem Supabase válido, imóveis e agentes usam `sample-data.ts`; leads devolvem `local-fallback`.
+- Contactos exigem `privacy_consent: true`; recrutamento grava candidatura e sincroniza MailerLite no Worker.
+- Sem credenciais Supabase válidas, imóveis/agentes usam `sample-data.ts` e leads respondem `local-fallback`.
+- O mapa usa apenas zona/freguesia/concelho; nunca publica morada, número ou código-postal.
 
 ## Ficheiros principais
 
-- `src/content/blog-archive.json`: arquivo estático dos 68 artigos; contém o conteúdo, datas, imagens e blocos semânticos.
-- `public/blog/archive/`: imagens do arquivo do blog, servidas localmente pelo site.
-- `src/lib/blog.ts`: tipos do blog, pesquisa/relacionados, formatação de data e reconstrução de tabelas (`mergeBlogTableBlocks()` e `toBlogTable()`).
-- `src/app/blog/page.tsx`: índice, destaque do artigo mais recente e lista dos restantes.
-- `src/app/blog/[slug]/page.tsx`: página de artigo, renderização de blocos, tabelas, galeria e relacionados.
-- `src/components/site-chrome.tsx`: navegação principal; “Empreendimentos” está removido daqui.
-- `src/lib/properties.ts`, `src/app/imoveis/[slug]/page.tsx`, `src/components/property-detail-browser-fallback.tsx`, `src/components/hero-experience.tsx` e `src/components/property-video.tsx`: catálogo, detalhe, recuperação no browser e hero.
-- `src/app/consultores/[slug]/page.tsx`, `src/lib/team.ts`, `src/app/quem-somos/page.tsx` e `src/app/sitemap.ts`: perfis e indexação.
+- `src/lib/properties.ts`: consultas, filtros, mapeamento de `imoveis`, fallback e visita virtual.
+- `src/app/imoveis/[slug]/page.tsx`: metadata, detalhe e parâmetros `ref`.
+- `src/components/property-detail-browser-fallback.tsx`: recuperação pública no browser.
+- `src/components/property-card.tsx`, `src/components/hero-experience.tsx`, `src/components/property-video.tsx`: cards, hero e vídeo.
+- `src/app/page.tsx`: homepage, área “Quem Somos”, serviços e equipa.
+- `src/lib/team.ts`: equipa, bios, aliases e caminhos das fotografias.
+- `src/app/quem-somos/page.tsx`, `src/app/consultores/[slug]/page.tsx`: apresentação da empresa e perfis.
+- `src/lib/blog.ts`, `src/app/blog/page.tsx`, `src/app/blog/[slug]/page.tsx`: arquivo, pesquisa, tabelas e artigos.
+- `src/components/site-chrome.tsx`, `src/app/sitemap.ts`: navegação e indexação.
 
 ## Decisões arquiteturais
 
-- O PDF é apenas fonte editorial local; o site publica dados e imagens já extraídos, nunca o PDF.
-- Não há CMS nesta fase: o arquivo do blog é estático e pode ser migrado mais tarde para um CMS.
-- `publicado` é a autoridade para retirar um imóvel do site sem apagar o registo.
-- O mapa usa apenas zona/freguesia/concelho, nunca morada, número ou código-postal.
+- O PDF é fonte editorial local; o site publica apenas conteúdo e imagens extraídos, sem publicar o PDF.
+- Não há CMS nesta fase. O blog é estático e o catálogo é runtime Supabase.
+- `publicado` é a autoridade para retirar imóveis sem apagar registos.
+- `imovel_ref` é a referência pública mais fiável para resolver fichas; slug continua compatível por razões de URL/indexação.
 - Não existe tabela dedicada de agentes: responsáveis derivam de `angariador`/`vendedor` e são enriquecidos por `figueiraTeam`/`sampleAgents`.
-- O fallback local é deliberado. O chat responde em PT-PT, consulta apenas imóveis publicados e não inventa preços, disponibilidade ou imóveis.
-- Para tabelas do blog, preferir correcções manuais verificadas no site antigo sempre que a extração do PDF não fornecer células completas; não inventar valores.
+- O fallback local é deliberado. O chat responde em PT-PT e não inventa imóveis, preços ou disponibilidade.
 
 ## Bugs conhecidos e dívida técnica
 
-- A extração do PDF perdeu ou reordenou células em várias tabelas. A reconstrução HTML resolve a apresentação, mas é uma heurística; comparar as tabelas relevantes com `https://figueirahome.pt` antes de as considerar editorialmente validadas.
-- Alguns artigos mantêm texto originalmente publicado em português do Brasil; foi preservado por se tratar de arquivo histórico.
-- Alguns imóveis reais têm fotos, áreas, WC, descrições, plantas ou vídeos incompletos; corrigir na origem.
-- A página do consultor considera apenas um responsável: `angariador` tem prioridade e `vendedor` é fallback; não mostra ambos quando coexistem. Sandra Silva ainda não tem imóveis atribuídos na origem.
-- A consulta direta por `imovel_ref` já é usada quando a ficha recebe `?ref=`; a resolução apenas por slug ainda pode recorrer à lista de imóveis e deve ser eliminada quando houver um slug persistido na origem.
-- Confirmar se `message` e `property_id` são persistidos em `contactos`. `supabase/schema.sql` e migrations remotas podem divergir; usar `supabase db push` com cautela.
-- Validar HTML publicado para sequências antigas de encoding incorreto e avaliar carregamento progressivo na galeria.
+- A reconstrução de tabelas do PDF é heurística; validar lotes importantes contra `https://figueirahome.pt`, começando por heranças.
+- Alguns artigos preservam português do Brasil e podem conter encoding antigo; rever apenas com fonte confirmada.
+- Alguns imóveis na origem continuam sem fotos, áreas, WC, descrição, plantas ou vídeo completos.
+- `getPropertyBySlug` ainda pode carregar uma lista e filtrar em memória quando não recebe `ref`; eliminar essa dependência quando houver slug persistido/consultável na origem.
+- Perfis mostram apenas um responsável: `angariador` tem prioridade e `vendedor` é fallback. Sandra Silva ainda não tem imóveis atribuídos na origem.
+- Confirmar se `message` e `property_id` são persistidos em `contactos`; schema local e migrations remotas podem divergir.
+- O full lint já atingiu OOM no Windows; usar lint direcionado e validar o build de produção.
 
-## Próximos passos recomendados
+## Verificação recente
 
-1. Fazer QA responsivo em produção do blog: índice, destaque, páginas de artigo, imagens, listas e principalmente tabelas.
-2. Validar e corrigir manualmente, por lotes, as tabelas dos artigos mais relevantes comparando com o blog antigo; começar por heranças e os artigos que apresentam colunas/células em falta.
-3. Fazer QA completo de hero, perfis, catálogo, fichas, plantas, visita virtual, contacto, recrutamento e rodapés em produção.
-4. Atualizar `imoveis` na origem com dados completos, plantas, visitas virtuais e imóveis atribuídos à Sandra; decidir se cada imóvel deve suportar simultaneamente `angariador` e `vendedor` nos perfis.
-5. Confirmar a estrutura de `contactos`, terminar a otimização da resolução por slug e avaliar uma tabela própria para agentes/CMS do blog.
+- `npm.cmd run deploy` concluiu com build TypeScript/OpenNext e publicou o Worker na versão indicada acima.
+- Lint direcionado passou para os ficheiros de imóveis, fallback, homepage e equipa; `git diff --check` passou.
+- Os seis novos retratos respondem `200` no servidor local `:3002`.
+- Ainda falta validar visualmente em produção após publicar as imagens novas; o deploy atual não contém as alterações recentes da homepage/equipa.
+
+## Próximos passos
+
+1. Rever e decidir o conjunto de ficheiros novos em `public/equipa/`; excluir ZIP/`old/` e confirmar se os seis ficheiros antigos devem ser removidos.
+2. Commitar as alterações da homepage, novos retratos e `AGENTS.md`; depois fazer push para `origin/teste/alteracao-cliente`.
+3. Fazer novo deploy e QA responsivo em produção: homepage, equipa, “Quem Somos”, perfis, catálogo, fichas, plantas e visita virtual.
+4. Fazer QA do blog, sobretudo tabelas, imagens, listas e encoding.
+5. Corrigir dados incompletos em `imoveis`, atribuir imóveis à Sandra e decidir suporte simultâneo a `angariador` e `vendedor`.
+6. Confirmar schema de `contactos`, otimizar resolução por slug e avaliar uma tabela/CMS próprio para agentes e blog.
