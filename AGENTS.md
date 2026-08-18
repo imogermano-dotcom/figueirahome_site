@@ -5,14 +5,14 @@ Handoff operacional atualizado em 2026-08-18. Manter este ficheiro abaixo de 200
 ## Projeto e estado atual
 
 - Site institucional e catálogo imobiliário da Figueira Home, em Next.js App Router, Supabase, contactos, recrutamento, chat AI e fallback local.
-- Produção: `https://figueira-home.miguel-germano.workers.dev` (Cloudflare Worker `figueira-home`). Último deploy validado: versão `e029b7ad-64b7-4dac-9cc3-d9c385cd47fb`, em 2026-08-18.
-- Ramo ativo: `teste/alteracao-cliente`. Último commit local: `1231edc Corrigir estrutura e tabelas do blog`; este commit ainda não foi enviado para `origin`. O último commit já enviado foi `a56908d Publicar arquivo completo do blog`.
+- Produção: `https://figueira-home.miguel-germano.workers.dev` (Cloudflare Worker `figueira-home`). Último deploy validado: versão `6998f869-2b36-43ad-9b43-85d2a8f46d54`, em 2026-08-18.
+- Ramo ativo: `teste/alteracao-cliente`. HEAD e `origin/teste/alteracao-cliente` estão em `724c01c Corrigir fichas de imóveis e visita virtual`.
 - Produção usa `next build --webpack`; `npm.cmd run deploy` executa OpenNext e publica no Worker. Não usar Turbopack para produção. O OpenNext apresenta avisos no Windows; se houver falhas imprevisíveis, preferir WSL sem alterar o runtime.
 - Não expor valores de `.env.local` nem segredos de Supabase, AI, MailerLite ou Cloudflare.
 
 ### Estado do worktree
 
-- `AGENTS.md` está modificado por este handoff e deve ser incluído apenas no próximo commit intencional.
+- `AGENTS.md` é o handoff operacional; qualquer atualização deve entrar apenas num commit intencional.
 - `property-catalogue-local.png` é um ficheiro local não relacionado: não versionar nem remover.
 - `client-reference/` está ignorado; contém a referência do cliente e o PDF do blog. Não publicar nem versionar esse diretório.
 - `supabase/.temp/` é estado local ignorado e nunca deve entrar em commits.
@@ -31,7 +31,7 @@ Handoff operacional atualizado em 2026-08-18. Manter este ficheiro abaixo de 200
 ### Catálogo, homepage e equipa
 
 - A fonte runtime é a tabela Supabase `imoveis`. Só aparecem imóveis com `publicado = true`, `disponibilidade = "Disponível"`, `imovel_ref` válido e preço positivo.
-- Catálogo, detalhe e pesquisa rápida suportam `imovel_ref`. A ficha junta `foto_principal` e `fotos` sem duplicados, inclui galeria/modal/teclado, certificado energético, cartões condicionais, mapa aproximado, vídeo e plantas quando existem.
+- Catálogo, detalhe e pesquisa rápida suportam `imovel_ref`. Os links para a ficha levam também `?ref=<imovel_ref>`, permitindo uma consulta direta e evitando páginas não encontradas quando o slug não é suficiente. A ficha junta `foto_principal` e `fotos` sem duplicados, inclui galeria/modal/teclado, certificado energético, cartões condicionais, mapa aproximado, vídeo, plantas e visita virtual (`visita_virtual_url`) quando existem.
 - Arrendamento só é apresentado quando existe `arrendamento_preco` positivo e não existe venda válida. Destaques usam primeiro `destaque = true`, ordenados por data recente, com fallback para imóveis publicados recentes.
 - `HeroExperience` tem CTAs e vitrine de até três imóveis com vídeo válido. Usa posters e miniaturas, sem iframes YouTube antes da reprodução; embeds usam `youtube-nocookie`, `cc_load_policy=0` e `iv_load_policy=3`.
 - Equipa atual: Sofia Monteiro, Miguel Germano, Alexandra Santos, Giulia Almeida, Alexsandra Ferreira e Sandra Silva. Cartões ligam para `/consultores/[slug]`; os imóveis são associados por `angariador`, com `vendedor` como fallback.
@@ -50,7 +50,7 @@ Handoff operacional atualizado em 2026-08-18. Manter este ficheiro abaixo de 200
 - `src/app/blog/page.tsx`: índice, destaque do artigo mais recente e lista dos restantes.
 - `src/app/blog/[slug]/page.tsx`: página de artigo, renderização de blocos, tabelas, galeria e relacionados.
 - `src/components/site-chrome.tsx`: navegação principal; “Empreendimentos” está removido daqui.
-- `src/lib/properties.ts`, `src/app/imoveis/[slug]/page.tsx`, `src/components/hero-experience.tsx` e `src/components/property-video.tsx`: catálogo, detalhe e hero.
+- `src/lib/properties.ts`, `src/app/imoveis/[slug]/page.tsx`, `src/components/property-detail-browser-fallback.tsx`, `src/components/hero-experience.tsx` e `src/components/property-video.tsx`: catálogo, detalhe, recuperação no browser e hero.
 - `src/app/consultores/[slug]/page.tsx`, `src/lib/team.ts`, `src/app/quem-somos/page.tsx` e `src/app/sitemap.ts`: perfis e indexação.
 
 ## Decisões arquiteturais
@@ -69,15 +69,14 @@ Handoff operacional atualizado em 2026-08-18. Manter este ficheiro abaixo de 200
 - Alguns artigos mantêm texto originalmente publicado em português do Brasil; foi preservado por se tratar de arquivo histórico.
 - Alguns imóveis reais têm fotos, áreas, WC, descrições, plantas ou vídeos incompletos; corrigir na origem.
 - A página do consultor considera apenas um responsável: `angariador` tem prioridade e `vendedor` é fallback; não mostra ambos quando coexistem. Sandra Silva ainda não tem imóveis atribuídos na origem.
-- `getPropertyBySlug()` carrega até 500 imóveis e filtra em memória; substituir por consulta direta por referência/slug.
+- A consulta direta por `imovel_ref` já é usada quando a ficha recebe `?ref=`; a resolução apenas por slug ainda pode recorrer à lista de imóveis e deve ser eliminada quando houver um slug persistido na origem.
 - Confirmar se `message` e `property_id` são persistidos em `contactos`. `supabase/schema.sql` e migrations remotas podem divergir; usar `supabase db push` com cautela.
 - Validar HTML publicado para sequências antigas de encoding incorreto e avaliar carregamento progressivo na galeria.
 
 ## Próximos passos recomendados
 
-1. Enviar o commit `1231edc` para `origin/teste/alteracao-cliente` quando for pedido, pois já está publicado em produção mas ainda não foi feito push.
-2. Fazer QA responsivo em produção do blog: índice, destaque, páginas de artigo, imagens, listas e principalmente tabelas.
-3. Validar e corrigir manualmente, por lotes, as tabelas dos artigos mais relevantes comparando com o blog antigo; começar por heranças e os artigos que apresentam colunas/células em falta.
-4. Fazer QA completo de hero, perfis, catálogo, detalhe/plantas, contacto, recrutamento e rodapés em produção.
-5. Atualizar `imoveis` na origem com dados completos, plantas e imóveis atribuídos à Sandra; decidir se cada imóvel deve suportar simultaneamente `angariador` e `vendedor` nos perfis.
-6. Confirmar a estrutura de `contactos`, otimizar `getPropertyBySlug()` e avaliar uma tabela própria para agentes/CMS do blog.
+1. Fazer QA responsivo em produção do blog: índice, destaque, páginas de artigo, imagens, listas e principalmente tabelas.
+2. Validar e corrigir manualmente, por lotes, as tabelas dos artigos mais relevantes comparando com o blog antigo; começar por heranças e os artigos que apresentam colunas/células em falta.
+3. Fazer QA completo de hero, perfis, catálogo, fichas, plantas, visita virtual, contacto, recrutamento e rodapés em produção.
+4. Atualizar `imoveis` na origem com dados completos, plantas, visitas virtuais e imóveis atribuídos à Sandra; decidir se cada imóvel deve suportar simultaneamente `angariador` e `vendedor` nos perfis.
+5. Confirmar a estrutura de `contactos`, terminar a otimização da resolução por slug e avaliar uma tabela própria para agentes/CMS do blog.
