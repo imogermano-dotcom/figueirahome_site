@@ -47,7 +47,7 @@ export function HeroExperience({ properties }: { properties: HeroProperty[] }) {
   const browserRecoveryAttempted = useRef(false);
   const items: HeroItem[] = heroProperties.flatMap((property) => {
     const video = property.videoUrl ? videoSourceFromUrl(property.videoUrl) : null;
-    return video ? [{ id: property.id, title: property.title, description: property.location, href: `/imoveis/${property.slug}`, video }] : [];
+    return video ? [{ id: property.id, title: property.title, description: property.location, href: `/imoveis/${property.slug}?ref=${encodeURIComponent(property.id)}`, video }] : [];
   }).slice(0, 3);
   const activeItem = items[activeIndex] || items[0];
   const activeVideo = activeItem?.video || null;

@@ -1,5 +1,5 @@
 import { unstable_noStore as noStore } from "next/cache";
-import { getSupabaseServiceClient } from "./supabase";
+import { getSupabasePublicServerClient, getSupabaseServiceClient } from "./supabase";
 import { sampleAgents, sampleProperties } from "./sample-data";
 import { figueiraTeam } from "./team";
 import type { Agent, LeadInput, Property, PropertyFilters, PropertyImage } from "./types";
@@ -35,6 +35,7 @@ type ImovelRow = {
   fotos: string[] | null;
   plantas: string[] | string | null;
   video_url: string | null;
+  visita_virtual_url: string | null;
   destaque: boolean | null;
 };
 
@@ -154,6 +155,7 @@ function mapImovel(row: ImovelRow): Property | null {
     has_balcony: Boolean(row.varanda),
     map_location: mapLocationFromImovel(row),
     video_url: row.video_url?.trim() || null,
+    visita_virtual_url: row.visita_virtual_url?.trim() || null,
     status: row.disponibilidade || row.estado || "Disponível",
     featured: Boolean(row.destaque),
     published,
@@ -215,10 +217,14 @@ function featuredOrNewest(properties: Property[], limit: number) {
 }
 
 async function getPublishedProperties() {
+  // In local development, the browser can read the public catalogue directly.
+  // Avoid holding up server-rendered pages when the local Node process cannot reach Supabase.
+  if (process.env.NODE_ENV === "development") return sampleProperties;
+
   const supabase = getSupabaseServiceClient();
   if (!supabase) return sampleProperties;
 
-  const query = () => supabase
+  const query = (client = supabase) => client
     .from("imoveis")
     .select("*")
     .eq("publicado", true)
@@ -228,6 +234,10 @@ async function getPublishedProperties() {
 
   let result = await query();
   if (result.error) result = await query();
+  if (result.error) {
+    const publicClient = getSupabasePublicServerClient();
+    if (publicClient) result = await query(publicClient);
+  }
 
   if (result.error) {
     console.error(result.error);
@@ -249,19 +259,47 @@ export async function getFeaturedProperties(limit = 3) {
   return featuredOrNewest(await getPublishedProperties(), limit);
 }
 
-export async function getPropertyBySlug(slug: string) {
+export async function getPropertyBySlug(slug: string, reference?: string) {
   noStore();
-  const supabase = getSupabaseServiceClient();
-  if (!supabase) return sampleProperties.find((property) => property.slug === slug && property.published) || null;
+  if (process.env.NODE_ENV === "development") {
+    return sampleProperties.find((item) => item.slug === slug && item.published) || null;
+  }
 
-  const { data, error } = await supabase
-    .from("imoveis")
-    .select("*")
-    .eq("publicado", true)
-    .eq("disponibilidade", "Disponível")
-    .limit(500);
-  if (error) return null;
-  return applyFilters(mapImoveis((data || []) as ImovelRow[]), {}).find((property) => property.slug === slug) || null;
+  const requestedReference = reference?.trim();
+  const supabase = getSupabaseServiceClient();
+
+  if (requestedReference && supabase) {
+    let result = await supabase
+      .from("imoveis")
+      .select("*")
+      .eq("imovel_ref", requestedReference)
+      .eq("publicado", true)
+      .eq("disponibilidade", "Disponível")
+      .maybeSingle();
+
+    if (result.error || !result.data) {
+      const publicClient = getSupabasePublicServerClient();
+      if (publicClient) {
+        result = await publicClient
+          .from("imoveis")
+          .select("*")
+          .eq("imovel_ref", requestedReference)
+          .eq("publicado", true)
+          .eq("disponibilidade", "Disponível")
+          .maybeSingle();
+      }
+    }
+
+    if (!result.error && result.data) {
+      const property = mapImovel(result.data as ImovelRow);
+      if (property) return property;
+    }
+  }
+
+  const property = (await getPublishedProperties()).find((item) => item.slug === slug)
+    || sampleProperties.find((item) => item.slug === slug && item.published)
+    || null;
+  return property;
 }
 
 export async function getAgents() {

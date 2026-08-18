@@ -33,6 +33,7 @@ export type Property = {
   has_balcony?: boolean;
   map_location?: string | null;
   video_url?: string | null;
+  visita_virtual_url?: string | null;
   status: string;
   featured: boolean;
   published: boolean;

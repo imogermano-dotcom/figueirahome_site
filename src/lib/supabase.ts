@@ -2,6 +2,7 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 let browserClient: SupabaseClient | null = null;
 let serviceClient: SupabaseClient | null = null;
+let publicServerClient: SupabaseClient | null = null;
 
 export function hasSupabaseEnv() {
   return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
@@ -27,4 +28,12 @@ export function getSupabaseServiceClient() {
   }
   if (!serviceClient) serviceClient = createClient(url, key);
   return serviceClient;
+}
+
+export function getSupabasePublicServerClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) return null;
+  if (!publicServerClient) publicServerClient = createClient(url, key);
+  return publicServerClient;
 }

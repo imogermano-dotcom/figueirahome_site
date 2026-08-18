@@ -9,7 +9,7 @@ export function PropertyCard({ property, dark = false }: { property: Property; d
 
   return (
     <article className={`zoom-card overflow-hidden rounded-md border transition hover:-translate-y-1 ${dark ? "border-white/10 bg-[var(--navy2)] text-white" : "border-[var(--border)] bg-white text-[var(--text)]"}`}>
-      <Link href={`/imoveis/${property.slug}`} className="block">
+      <Link href={`/imoveis/${property.slug}?ref=${encodeURIComponent(property.id)}`} className="block">
         <div className="property-media relative flex h-[210px] items-center justify-center overflow-hidden">
           {primaryImage ? (
             // eslint-disable-next-line @next/next/no-img-element

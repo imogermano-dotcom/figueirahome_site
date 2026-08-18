@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { Bath, BedDouble, Calendar, Car, MapPin, Ruler, Sun, Zap } from "lucide-react";
 import { ContactForm } from "@/components/contact-form";
 import { PropertyGallery } from "@/components/property-gallery";
 import { PropertyCard } from "@/components/property-card";
+import { PropertyDetailBrowserFallback } from "@/components/property-detail-browser-fallback";
 import { PropertyVideo } from "@/components/property-video";
 import { VideoFooter } from "@/components/video-footer";
 import { formatArea, formatCurrency, initials } from "@/lib/format";
@@ -11,9 +11,9 @@ import { fixedPhone, phoneCallCost } from "@/lib/contact-details";
 import { getProperties, getPropertyBySlug } from "@/lib/properties";
 import { getPrimaryPropertyImage } from "@/lib/property-images";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params;
-  const property = await getPropertyBySlug(slug);
+export async function generateMetadata({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams: Promise<{ ref?: string }> }): Promise<Metadata> {
+  const [{ slug }, { ref }] = await Promise.all([params, searchParams]);
+  const property = await getPropertyBySlug(slug, ref);
   if (!property) return { title: "Imóvel não encontrado" };
 
   const summary = [property.type, `em ${property.location}`, property.area_sqm ? formatArea(property.area_sqm) : null, formatCurrency(property.price)]
@@ -26,10 +26,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function PropertyDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const property = await getPropertyBySlug(slug);
-  if (!property) notFound();
+export default async function PropertyDetailPage({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams: Promise<{ ref?: string }> }) {
+  const [{ slug }, { ref }] = await Promise.all([params, searchParams]);
+  const property = await getPropertyBySlug(slug, ref);
+  if (!property) return <PropertyDetailBrowserFallback slug={slug} reference={ref} />;
 
   const similar = (await getProperties({ tipo: property.type.split(" ")[0] }))
     .filter((item) => item.id !== property.id)
@@ -80,6 +80,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
                 </section>
               )}
               {property.video_url && <section className="mt-10"><h2 className="text-2xl font-extrabold">Vídeo do imóvel</h2><div className="mt-4 overflow-hidden rounded-md border border-[var(--border)] bg-[var(--navy)]"><PropertyVideo url={property.video_url} title={property.title} /></div></section>}
+              {property.visita_virtual_url && <section className="mt-10"><h2 className="text-2xl font-extrabold">Visita virtual</h2><div className="mt-4 overflow-hidden rounded-md border border-[var(--border)] bg-[var(--navy)]"><PropertyVideo url={property.visita_virtual_url} title={`Visita virtual: ${property.title}`} /></div></section>}
               <h2 className="mt-10 text-2xl font-extrabold">Localização aproximada</h2>
               <div className="mt-4 overflow-hidden rounded-md border border-[var(--border)] bg-[var(--offwhite)]">
                 <iframe
