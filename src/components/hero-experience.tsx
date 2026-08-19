@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowUpRight, Award, BadgeCheck, Clapperboard, Handshake, MoveRight, Play, UserRound } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { videoSourceFromUrl, type VideoSource } from "@/components/property-video";
 import { getSupabaseBrowserClient } from "@/lib/supabase";
 
@@ -44,7 +44,6 @@ export function HeroExperience({ properties }: { properties: HeroProperty[] }) {
   const [heroProperties, setHeroProperties] = useState(properties);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const browserRecoveryAttempted = useRef(false);
   const items: HeroItem[] = heroProperties.flatMap((property) => {
     const video = property.videoUrl ? videoSourceFromUrl(property.videoUrl) : null;
     return video ? [{ id: property.id, title: property.title, description: property.location, href: `/imoveis/${property.slug}?ref=${encodeURIComponent(property.id)}`, video }] : [];
@@ -53,11 +52,10 @@ export function HeroExperience({ properties }: { properties: HeroProperty[] }) {
   const activeVideo = activeItem?.video || null;
 
   useEffect(() => {
-    if (items.length || browserRecoveryAttempted.current) return;
+    if (items.length) return;
 
     const supabase = getSupabaseBrowserClient();
     if (!supabase) return;
-    browserRecoveryAttempted.current = true;
     let cancelled = false;
 
     void supabase
