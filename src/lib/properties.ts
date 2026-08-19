@@ -217,10 +217,6 @@ function featuredOrNewest(properties: Property[], limit: number) {
 }
 
 async function getPublishedProperties() {
-  // In local development, the browser can read the public catalogue directly.
-  // Avoid holding up server-rendered pages when the local Node process cannot reach Supabase.
-  if (process.env.NODE_ENV === "development") return sampleProperties;
-
   const supabase = getSupabaseServiceClient();
   if (!supabase) return sampleProperties;
 
@@ -261,10 +257,6 @@ export async function getFeaturedProperties(limit = 3) {
 
 export async function getPropertyBySlug(slug: string, reference?: string) {
   noStore();
-  if (process.env.NODE_ENV === "development") {
-    return sampleProperties.find((item) => item.slug === slug && item.published) || null;
-  }
-
   const requestedReference = reference?.trim();
   const supabase = getSupabaseServiceClient();
 
