@@ -45,7 +45,7 @@ export default async function ConsultantPage({ params }: { params: Promise<{ slu
             <div className="p-8 sm:p-12">
               <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--blue)]">Equipa Figueira Home</p>
               <h1 className="section-title mt-4">{member.name}</h1>
-              <p className="mt-3 text-lg font-extrabold text-[var(--gold)]">{member.role}</p>
+              <p className="mt-3 text-lg font-extrabold text-[var(--gold)]" translate="no">{member.role}</p>
               <div className="mt-7 max-w-2xl space-y-5 text-[1.05rem] leading-8 text-[var(--muted)]">{profileBio.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
               <div className="mt-9 flex flex-wrap gap-3">
                 <Link href={directContact} className="btn btn-primary">{contactLabel} <ArrowUpRight size={16} /></Link>

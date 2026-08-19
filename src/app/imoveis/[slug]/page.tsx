@@ -105,7 +105,7 @@ export default async function PropertyDetailPage({ params, searchParams }: { par
                     <div className="grid h-16 w-16 place-items-center rounded-full bg-[var(--navy)] font-extrabold text-white">{initials(property.agent.name)}</div>
                     <div>
                       <div className="font-extrabold">{property.agent.name}</div>
-                      <div className="text-sm text-[var(--muted)]">{property.agent.role}</div>
+                      <div className="text-sm text-[var(--muted)]" translate="no">{property.agent.role}</div>
                       {property.agent.phone ? <div className="mt-1 text-sm font-bold text-[var(--blue)]">{property.agent.phone}<span className="mt-1 block text-xs font-medium text-[var(--muted)]">{phoneCallCost(property.agent.phone)}</span></div> : <div className="mt-3 text-sm"><span className="block font-bold text-[var(--text)]">Contacto Figueira Home</span><span className="font-bold text-[var(--blue)]">{fixedPhone}</span><span className="mt-1 block text-xs text-[var(--muted)]">{phoneCallCost(fixedPhone)}</span></div>}
                     </div>
                   </div>
