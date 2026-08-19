@@ -131,5 +131,5 @@ export function PropertyDetailBrowserFallback({ slug, reference }: { slug: strin
 }
 
 function Info({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
-  return <div className="rounded-md border border-[var(--border)] p-4">{icon}<div className="mt-2 text-xs font-extrabold uppercase text-[var(--muted)]">{label}</div><div className="font-extrabold">{value}</div></div>;
+  return <div className="rounded-md border border-[var(--border)] p-4">{icon}<div className="mt-2 text-xs font-extrabold uppercase text-[var(--muted)]">{label}</div><div className="font-extrabold" translate="no">{value}</div></div>;
 }
