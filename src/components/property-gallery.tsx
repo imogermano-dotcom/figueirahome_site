@@ -1,8 +1,12 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Expand, FileText, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import type { PropertyImage } from "@/lib/types";
+
+function isPdfUrl(url: string) {
+  return /\.pdf($|\?)/i.test(url);
+}
 
 type PropertyGalleryProps = {
   images: PropertyImage[];
@@ -43,16 +47,25 @@ export function PropertyGallery({ images, title, contentLabel = "fotografia" }: 
   return (
     <section aria-label={`Galeria de ${contentLabel === "planta" ? "plantas" : "imagens"}: ${title}`}>
       <div className="property-detail-media relative h-[420px] overflow-hidden rounded-md bg-[var(--navy)]">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className={`h-full w-full ${imageFit}`} src={activeImage.url} alt={activeImage.alt || title} />
-        <button
-          type="button"
-          onClick={() => setIsLightboxOpen(true)}
-          className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-sm bg-[var(--navy)] px-4 py-2 text-sm font-extrabold text-white shadow-lg transition hover:bg-[var(--blue)] focus:outline-none focus:ring-2 focus:ring-white"
-          aria-label={`Ampliar ${contentLabel}`}
-        >
-          <Expand size={17} /> Ver {contentLabel}
-        </button>
+        {isPdfUrl(activeImage.url) ? (
+          <a href={activeImage.url} target="_blank" rel="noopener noreferrer" className="flex h-full w-full flex-col items-center justify-center gap-3 bg-white text-[var(--navy)]">
+            <FileText size={48} aria-hidden="true" />
+            <span className="text-sm font-extrabold">Abrir planta em PDF</span>
+          </a>
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img className={`h-full w-full ${imageFit}`} src={activeImage.url} alt={activeImage.alt || title} />
+        )}
+        {!isPdfUrl(activeImage.url) && (
+          <button
+            type="button"
+            onClick={() => setIsLightboxOpen(true)}
+            className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-sm bg-[var(--navy)] px-4 py-2 text-sm font-extrabold text-white shadow-lg transition hover:bg-[var(--blue)] focus:outline-none focus:ring-2 focus:ring-white"
+            aria-label={`Ampliar ${contentLabel}`}
+          >
+            <Expand size={17} /> Ver {contentLabel}
+          </button>
+        )}
         {hasMultipleImages && <GalleryNavigation onPrevious={showPrevious} onNext={showNext} />}
       </div>
 
@@ -67,8 +80,12 @@ export function PropertyGallery({ images, title, contentLabel = "fotografia" }: 
               aria-label={`Ver ${contentLabel} ${index + 1} de ${images.length}`}
               aria-pressed={index === activeIndex}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className={`h-full w-full ${imageFit}`} src={image.url} alt="" />
+              {isPdfUrl(image.url) ? (
+                <span className="grid h-full w-full place-items-center bg-white text-[var(--navy)]"><FileText size={22} aria-hidden="true" /></span>
+              ) : (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img className={`h-full w-full ${imageFit}`} src={image.url} alt="" />
+              )}
             </button>
           ))}
         </div>
@@ -77,8 +94,12 @@ export function PropertyGallery({ images, title, contentLabel = "fotografia" }: 
       {isLightboxOpen && (
         <div className="fixed inset-0 z-[100] grid bg-black/95 p-4" role="dialog" aria-modal="true" aria-label={`${contentLabel === "planta" ? "Planta" : "Fotografia"} ${activeIndex + 1} de ${images.length}: ${title}`}>
           <div className="relative m-auto flex h-full w-full max-w-6xl items-center justify-center">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="max-h-full max-w-full object-contain" src={activeImage.url} alt={activeImage.alt || title} />
+            {isPdfUrl(activeImage.url) ? (
+              <a href={activeImage.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-3 text-white"><FileText size={64} aria-hidden="true" /><span className="text-sm font-extrabold">Abrir planta em PDF</span></a>
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img className="max-h-full max-w-full object-contain" src={activeImage.url} alt={activeImage.alt || title} />
+            )}
             <button type="button" onClick={() => setIsLightboxOpen(false)} className="absolute right-0 top-0 grid h-11 w-11 place-items-center rounded-full bg-white/15 text-white transition hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white" aria-label="Fechar fotografia">
               <X size={22} />
             </button>
