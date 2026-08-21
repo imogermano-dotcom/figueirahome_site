@@ -29,7 +29,7 @@ export function PropertyCard({ property, dark = false }: { property: Property; d
           </p>
           <div className={`flex items-end justify-between border-t pt-4 ${dark ? "border-white/10" : "border-[var(--border)]"}`}>
             <div>
-              <div className="display-font text-xl font-extrabold">{formatCurrency(property.price)}</div>
+              <div className="text-xl font-extrabold">{formatCurrency(property.price)}</div>
               <div className={`mt-2 flex flex-wrap gap-3 text-sm ${dark ? "text-white/60" : "text-[var(--muted)]"}`}>
                 <span className="inline-flex items-center gap-1"><BedDouble size={15} />{property.bedrooms ?? "-"}</span>
                 <span className="inline-flex items-center gap-1"><Bath size={15} />{property.bathrooms ?? "-"}</span>

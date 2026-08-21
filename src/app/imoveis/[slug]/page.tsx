@@ -60,7 +60,7 @@ export default async function PropertyDetailPage({ params, searchParams }: { par
               <h1 className="section-title mt-2">{property.title}</h1>
               <p className="mt-3 text-sm font-bold text-[var(--muted)]">Referência: <span className="text-[var(--text)]">{property.id}</span></p>
               <p className="mt-3 flex items-center gap-2 text-[var(--muted)]"><MapPin size={18} />{property.location}</p>
-              <div className="display-font mt-6 text-3xl font-extrabold text-[var(--blue)]">{formatCurrency(property.price)}</div>
+              <div className="mt-6 text-3xl font-extrabold text-[var(--blue)]">{formatCurrency(property.price)}</div>
               <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 <Info icon={<BedDouble size={20} />} label="Quartos" value={String(property.bedrooms ?? "-")} />
                 <Info icon={<Bath size={20} />} label="WC" value={String(property.bathrooms ?? "-")} />
