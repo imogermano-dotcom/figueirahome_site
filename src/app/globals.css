@@ -38,6 +38,12 @@ h1, h2, h3, h4, .display-font {
   font-family: var(--font-body), Arial, ui-sans-serif, system-ui, sans-serif;
 }
 
+.property-detail h1,
+.property-detail h2,
+.property-detail h3 {
+  font-family: var(--font-body), Arial, ui-sans-serif, system-ui, sans-serif;
+}
+
 a { color: inherit; text-decoration: none; }
 button, input, textarea, select { font: inherit; }
 

@@ -40,7 +40,7 @@ export default async function PropertyDetailPage({ params, searchParams }: { par
 
   return (
     <>
-      <main className="pt-28">
+      <main className="property-detail pt-28">
         <section className="container">
           {primaryImage ? (
             <PropertyGallery images={property.images || []} title={property.title} />
