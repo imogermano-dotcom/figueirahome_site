@@ -101,7 +101,7 @@ export function HeroExperience({ properties }: { properties: HeroProperty[] }) {
       <div className="hero-copy-shade absolute inset-y-0 left-0" />
       <div className="container hero-layout relative z-10 grid min-h-[800px] items-center gap-12 py-14 lg:grid-cols-[minmax(0,1.08fr)_minmax(460px,0.82fr)] lg:gap-16">
         <div className="hero-intro">
-          <h1 className="hero-title display-font mt-5 max-w-[650px] text-[clamp(2.6rem,5vw,4.8rem)] leading-[0.98] text-white">A sua imobiliária de referência na <span className="text-[var(--gold-l)]">Figueira da Foz.<span className="hero-title-rule" aria-hidden="true" style={{ display: "block", width: 62, height: 3, marginTop: 22, backgroundColor: "var(--gold-l)" }} /></span></h1>
+          <h1 className="hero-title mt-5 max-w-[650px] text-[clamp(2.6rem,5vw,4.8rem)] leading-[0.98] text-white">A sua imobiliária de referência na <span className="text-[var(--gold-l)]">Figueira da Foz.<span className="hero-title-rule" aria-hidden="true" style={{ display: "block", width: 62, height: 3, marginTop: 22, backgroundColor: "var(--gold-l)" }} /></span></h1>
           <p className="hero-sub mt-7 max-w-[570px] text-[1.05rem] leading-8 text-white/80">Compre, venda ou arrende o seu imóvel com uma equipa local especializada, presente na região desde 2009. Transparência e resultados em cada transação.</p>
           <div className="hero-btns mt-8 flex flex-wrap gap-3"><Link className="btn btn-primary" href="/imoveis">Ver imóveis <MoveRight size={16} /></Link><Link className="btn btn-outline-light" href="/contacto?pedido=avaliacao">Avaliação gratuita</Link></div>
           <div className="hero-proof-grid mt-12">

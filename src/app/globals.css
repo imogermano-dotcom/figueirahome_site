@@ -34,6 +34,10 @@ h1, h2, h3, h4, .display-font {
   font-weight: 600;
 }
 
+.hero-title {
+  font-family: var(--font-body), Arial, ui-sans-serif, system-ui, sans-serif;
+}
+
 a { color: inherit; text-decoration: none; }
 button, input, textarea, select { font: inherit; }
 
