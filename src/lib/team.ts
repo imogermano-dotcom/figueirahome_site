@@ -45,7 +45,7 @@ export const figueiraTeam: TeamMember[] = [
   {
     id: "giulia-almeida",
     name: "Giulia Almeida",
-    role: "Editora de Vídeo",
+    role: "Audiovisual",
     phone: null,
     email: null,
     photo_url: "/equipa/GIULIA%20ALMEIDA.png",
