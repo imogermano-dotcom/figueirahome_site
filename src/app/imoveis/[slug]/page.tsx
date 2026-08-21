@@ -66,7 +66,7 @@ export default async function PropertyDetailPage({ params, searchParams }: { par
                 <Info icon={<Bath size={20} />} label="WC" value={String(property.bathrooms ?? "-")} />
                 <Info icon={<Ruler size={20} />} label="Área" value={formatArea(property.area_sqm)} />
                 <Info icon={<Calendar size={20} />} label="Estado" value={property.status} />
-                {property.energy_certificate && <Info icon={<Zap size={20} />} label="Certificado energético" value={property.energy_certificate} />}
+                {property.energy_certificate && <Info icon={<Zap size={20} />} label="Certificado energético" value={property.energy_certificate} noTranslate />}
                 {property.has_garage && <Info icon={<Car size={20} />} label="Garagem" value="Sim" />}
                 {property.has_balcony && <Info icon={<Sun size={20} />} label="Varanda" value="Sim" />}
               </div>
@@ -126,6 +126,6 @@ export default async function PropertyDetailPage({ params, searchParams }: { par
   );
 }
 
-function Info({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
-  return <div className="rounded-md border border-[var(--border)] p-4">{icon}<div className="mt-2 text-xs font-extrabold uppercase text-[var(--muted)]">{label}</div><div className="font-extrabold" translate="no">{value}</div></div>;
+function Info({ icon, label, value, noTranslate }: { icon: React.ReactNode; label: string; value: string; noTranslate?: boolean }) {
+  return <div className="rounded-md border border-[var(--border)] p-4">{icon}<div className="mt-2 text-xs font-extrabold uppercase text-[var(--muted)]">{label}</div><div className="font-extrabold" translate={noTranslate ? "no" : undefined}>{value}</div></div>;
 }
