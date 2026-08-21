@@ -15,7 +15,7 @@ export default async function PropertiesPage({ searchParams }: { searchParams: P
     <>
       <main className="bg-[var(--offwhite)] pt-28">
         <section className="container pb-10">
-          <h1 className="section-title">Imóveis</h1>
+          <h1 className="section-title font-body-heading">Imóveis</h1>
           <p className="mt-3 max-w-2xl leading-7 text-[var(--muted)]">Lista dinâmica de imóveis publicados. Imóveis não publicados nunca aparecem nesta página.</p>
           <div className="mt-8 rounded-md border border-[var(--border)] bg-white p-5"><QuickSearch compact /></div>
         </section>

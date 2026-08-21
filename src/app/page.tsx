@@ -30,7 +30,7 @@ export default async function HomePage() {
       <section className="bg-[var(--navy)] py-20">
         <div className="container">
           <div className="mb-10 grid items-center gap-8 md:grid-cols-[auto_1fr]">
-            <h2 className="section-title text-white">Imóveis<br />em Destaque</h2>
+            <h2 className="section-title font-body-heading text-white">Imóveis<br />em Destaque</h2>
             <p className="max-w-3xl leading-8 text-white/62">Uma seleção dos imóveis publicados: os destaques surgem primeiro, do mais recente para o mais antigo, seguidos dos restantes imóveis mais recentes.</p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
