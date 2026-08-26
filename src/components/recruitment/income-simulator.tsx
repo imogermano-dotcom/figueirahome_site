@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { AlertTriangle, ArrowRight } from "lucide-react";
+import { AlertTriangle, ArrowRight, UsersRound } from "lucide-react";
 import { calcAno1, calc3anos, estimatedHoursPerWeek, fmt, fmtE, HOURS_GREEN_MAX, HOURS_YELLOW_MAX, INCOME_DEFAULT, INCOME_MAX, INCOME_MIN, INCOME_STEP } from "@/lib/recruitment-sim";
 
 export function IncomeSimulator() {
@@ -57,9 +57,17 @@ export function IncomeSimulator() {
             <Stat label="Rendimento líq. / ano" value={fmtE(result.net_yr)} />
           </div>
 
-          <div className={`mt-6 flex items-start gap-3 rounded-xl border p-4 text-sm ${hoursColor}`}>
-            <AlertTriangle size={18} className="mt-0.5 shrink-0" />
-            <div><strong>Atenção ao ritmo:</strong> ~{hours}h/semana. {hoursNote}</div>
+          <div className={`mt-6 rounded-xl border p-4 text-sm ${hoursColor}`}>
+            <div className="flex items-start gap-3">
+              <AlertTriangle size={18} className="mt-0.5 shrink-0" />
+              <div><strong>Atenção ao ritmo:</strong> ~{hours}h/semana. {hoursNote}</div>
+            </div>
+            {hoursLevel === "red" && (
+              <div className="mt-3 flex items-start gap-2.5 rounded-lg border border-red-200 bg-white/70 p-3">
+                <UsersRound size={17} className="mt-0.5 shrink-0" />
+                <p><strong>Considera constituir uma equipa.</strong> Dividir o trabalho de prospeção e acompanhamento entre consultores é a forma mais eficaz de escalar o rendimento sem sacrificar a qualidade de vida.</p>
+              </div>
+            )}
           </div>
 
           <div className="mt-10 overflow-x-auto">
