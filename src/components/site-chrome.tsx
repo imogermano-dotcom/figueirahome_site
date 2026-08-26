@@ -12,6 +12,7 @@ const links = [
   ["Home", "/"],
   ["Im\u00f3veis", "/imoveis"],
   ["Quem Somos", "/quem-somos"],
+  ["Servi\u00e7os", "/servicos"],
   ["Recrutamento", "/recrutamento"],
   ["Blog", "/blog"]
 ];
