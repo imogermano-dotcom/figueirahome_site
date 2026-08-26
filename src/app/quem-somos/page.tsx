@@ -20,7 +20,7 @@ const principles = [
 export default function AboutPage() {
   return (
     <>
-      <main>
+      <main className="about-page">
         <section className="about-hero relative isolate min-h-[590px] overflow-hidden bg-[var(--navy)] pt-[72px] text-white">
           <Image
             src="/about/figueira-home-office.png"

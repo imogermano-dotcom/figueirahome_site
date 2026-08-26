@@ -52,7 +52,7 @@ export function VideoFooter({ variant = "default" }: { variant?: "default" | "re
       </video>
       <div className="absolute inset-0 bg-[rgba(5,15,30,0.58)]" />
       <section className="container relative py-16 text-center">
-        <h2 className="display-font text-3xl font-extrabold md:text-5xl">{isRecruitment ? "Pronto para perceber se este caminho é para si?" : "Quer vender o seu imóvel ao melhor preço?"}</h2>
+        <h2 className="font-body-heading text-3xl font-extrabold md:text-5xl">{isRecruitment ? "Pronto para perceber se este caminho é para si?" : "Quer vender o seu imóvel ao melhor preço?"}</h2>
         <p className="mx-auto mt-5 max-w-2xl text-white/72">{isRecruitment ? "Comece pelo questionário de perfil. A candidatura demora poucos minutos e a nossa equipa analisa cada passo com atenção." : "Fazemos uma avaliação gratuita e sem compromisso. A nossa equipa coloca o seu imóvel à frente de compradores ativos na região."}</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link href={isRecruitment ? "#perfil" : "/contacto?pedido=avaliacao"} className="btn btn-gold">{isRecruitment ? "Começar candidatura" : "Pedir Avaliação Gratuita"}</Link>

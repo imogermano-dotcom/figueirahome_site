@@ -5,10 +5,10 @@ import { getSupabaseServiceClient } from "@/lib/supabase";
 
 const RecruitmentSchema = z.object({
   name: z.string().trim().min(2).max(120), email: z.string().trim().email(), phone: z.string().trim().min(6).max(40),
-  location: z.string().trim().min(2).max(120), professional_situation: z.string().trim().min(2).max(160),
-  motivation: z.string().trim().min(12).max(2000), contact_preference: z.enum(["telefone", "email", "whatsapp"]),
+  location: z.string().trim().min(2).max(120), professional_situation: z.string().trim().max(160),
+  motivation: z.string().trim().min(12).max(2000), contact_preference: z.enum(["Manhã (9h-13h)", "Tarde (14h-18h)", "Fim de dia (após 18h)", "Qualquer horário"]),
   whatsapp_consent: z.boolean(), privacy_consent: z.literal(true),
-  answers: z.array(z.number().int().min(0).max(2)).length(recruitmentQuestions.length), website: z.string().max(0).optional()
+  answers: z.array(z.number().int().min(0).max(3)).length(recruitmentQuestions.length), website: z.string().max(0).optional()
 });
 
 const groupEnvByLevel = { muito_alinhado: "MAILERLITE_RECRUTAMENTO_GRUPO_MUITO_ALINHADO", bom_potencial: "MAILERLITE_RECRUTAMENTO_GRUPO_BOM_POTENCIAL", potencial_com_reservas: "MAILERLITE_RECRUTAMENTO_GRUPO_COM_RESERVAS", menos_alinhado: "MAILERLITE_RECRUTAMENTO_GRUPO_MENOS_ALINHADO" } as const;
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
   if (!parsed.success) return NextResponse.json({ error: "Dados de candidatura inv\u00e1lidos", details: parsed.error.flatten() }, { status: 400 });
   if (parsed.data.website) return NextResponse.json({ ok: true });
   const { score, level } = scoreRecruitmentAnswers(parsed.data.answers);
-  const answerDetails = parsed.data.answers.map((answer, index) => ({ pergunta: recruitmentQuestions[index].question, resposta: recruitmentQuestions[index].options[answer], pontos: 3 - answer }));
+  const answerDetails = parsed.data.answers.map((answer, index) => ({ pergunta: recruitmentQuestions[index].text, resposta: recruitmentQuestions[index].options[answer].label, pontos: recruitmentQuestions[index].options[answer].points }));
   const supabase = getSupabaseServiceClient();
   if (!supabase) { console.info("Recruitment fallback", { ...parsed.data, answers: answerDetails, score, level }); return NextResponse.json({ ok: true, id: "local-fallback" }); }
   const now = new Date().toISOString();

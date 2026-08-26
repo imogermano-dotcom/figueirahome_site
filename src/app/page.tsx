@@ -18,6 +18,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <main className="home-page">
       <ScrollEffects />
       <HeroExperience properties={allProperties.map((property) => ({
         id: property.id,
@@ -154,6 +155,7 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+      </main>
       <VideoFooter />
     </>
   );

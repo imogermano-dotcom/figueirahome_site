@@ -40,7 +40,13 @@ h1, h2, h3, h4, .display-font {
 
 .property-detail h1,
 .property-detail h2,
-.property-detail h3 {
+.property-detail h3,
+.about-page h1,
+.about-page h2,
+.about-page h3,
+.home-page h1,
+.home-page h2,
+.home-page h3 {
   font-family: var(--font-body), Arial, ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -374,25 +380,37 @@ html.translated-rtl body { top: 0 !important; }
 .prose-ai a { color: var(--blue); font-weight: 700; text-decoration: underline; }
 
 .eyebrow { color: var(--blue); font-size: .75rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
-.recruitment-hero { background: radial-gradient(circle at 78% 38%, rgba(21,101,192,.52), transparent 28%), linear-gradient(118deg, #081c34, var(--navy)); }
-.recruitment-hero-mark { position:absolute; right:-12vw; top:6rem; width:52vw; aspect-ratio:1; border:1px solid rgba(232,184,109,.33); border-radius:50%; box-shadow:0 0 0 4.5rem rgba(232,184,109,.035), 0 0 0 9rem rgba(232,184,109,.03); }
-.recruitment-hero-card { position:relative; overflow:hidden; display:grid; gap:14px; align-self:center; padding:38px; border:1px solid rgba(232,184,109,.38); background:rgba(4,17,33,.45); box-shadow:20px 20px 0 rgba(232,184,109,.12); backdrop-filter:blur(8px); }
-.recruitment-hero-card svg { color:var(--gold-l); }
-.recruitment-hero-card p { color:var(--gold-l); font-size:.75rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; }
-.recruitment-hero-card strong { font-family:var(--font-display), Georgia, serif; font-size:2rem; line-height:1; }
-.recruitment-hero-card span { color:rgba(255,255,255,.7); line-height:1.65; }
-.recruitment-form-shell { margin:48px auto 0; max-width:780px; border:1px solid var(--border); background:#fff; box-shadow:0 18px 40px rgba(13,43,78,.08); }
-.recruitment-progress { padding:22px 28px; display:grid; grid-template-columns:1fr auto; gap:10px; color:var(--muted); font-size:.75rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
-.recruitment-progress div { grid-column:1/-1; height:3px; background:var(--border); }.recruitment-progress i { display:block; height:100%; background:var(--gold); transition:width .25s ease; }
-.recruitment-question { padding:34px 28px 40px; }.recruitment-question h2 { margin-top:14px; font-family:var(--font-display), Georgia, serif; font-size:clamp(1.8rem,4vw,2.6rem); font-weight:800; line-height:1.08; }
-.recruitment-option { display:flex; align-items:center; justify-content:space-between; gap:18px; width:100%; border:1px solid var(--border); padding:17px 18px; background:#fff; color:var(--text); text-align:left; font-weight:700; transition:border-color .2s, background .2s, transform .2s; }.recruitment-option:hover { border-color:var(--blue); background:var(--offwhite); transform:translateX(3px); }.recruitment-option svg { flex:none; color:var(--blue); }
-.recruitment-details-head { padding:38px 28px 0; }.recruitment-details-head p:last-child { margin-top:14px; color:var(--muted); line-height:1.65; }.recruitment-details { display:grid; gap:19px; padding:30px 28px 38px; }
-.recruitment-check { display:flex; gap:10px; align-items:flex-start; color:var(--muted); font-size:.9rem; line-height:1.5; }.recruitment-check input { margin-top:4px; accent-color:var(--blue); }.recruitment-check a { color:var(--blue); font-weight:800; text-decoration:underline; }
 .privacy-check { display:flex; gap:10px; align-items:flex-start; color:var(--muted); font-size:.9rem; line-height:1.5; }.privacy-check input { margin-top:4px; accent-color:var(--blue); }.privacy-check a { color:var(--blue); font-weight:800; text-decoration:underline; }
-.recruitment-success { display:grid; justify-items:center; gap:16px; padding:68px 30px; text-align:center; }.recruitment-success svg { color:var(--blue); }.recruitment-success p:last-of-type { max-width:480px; color:var(--muted); line-height:1.65; }.recruitment-success .btn { margin-top:10px; }
-.recruitment-fit-grid { display:grid; grid-template-columns:repeat(5,1fr); border-top:1px solid var(--border); border-left:1px solid var(--border); }.recruitment-fit-grid p { display:grid; gap:22px; min-height:160px; margin:0; padding:24px; border-right:1px solid var(--border); border-bottom:1px solid var(--border); font-family:var(--font-display), Georgia, serif; font-size:1.25rem; font-weight:700; line-height:1.15; }.recruitment-fit-grid b,.recruitment-method b { color:var(--gold); font-family:var(--font-body),Arial,sans-serif; font-size:.72rem; letter-spacing:.15em; }
-.recruitment-section-head { display:grid; grid-template-columns:.9fr 1.1fr; gap:48px; align-items:end; }.recruitment-section-head > p { max-width:590px; margin:0; color:var(--muted); font-size:1.05rem; line-height:1.8; }.recruitment-learning { display:grid; grid-template-columns:1fr 1fr; gap:1px; overflow:hidden; border:1px solid var(--border); background:var(--border); }.recruitment-learning > div { padding:34px; background:#fff; }.recruitment-learning svg { margin-bottom:28px; color:var(--blue); }.recruitment-learning .eyebrow { margin:0; }.recruitment-learning h3 { max-width:420px; margin:12px 0 25px; font-size:1.75rem; font-weight:800; line-height:1.1; }.recruitment-learning ol { display:grid; gap:0; padding:0; margin:0; list-style:none; }.recruitment-learning li { display:grid; grid-template-columns:34px 1fr; gap:10px; padding:12px 0; border-top:1px solid var(--border); color:var(--muted); font-size:.93rem; line-height:1.4; }.recruitment-learning li b { color:var(--blue); font-size:.7rem; letter-spacing:.08em; }
-.recruitment-method { background:linear-gradient(130deg,#071a30,var(--navy)); }.recruitment-method > .container > div:last-child > div { display:flex; gap:20px; align-items:baseline; padding:25px 20px; border-top:1px solid rgba(255,255,255,.18); }.recruitment-method span { font-family:var(--font-display),Georgia,serif; font-size:1.25rem; font-weight:700; }.recruitment-table { width:100%; min-width:650px; border-collapse:collapse; text-align:left; }.recruitment-table th { padding:15px 20px; background:var(--navy); color:#fff; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; }.recruitment-table td { padding:18px 20px; border-top:1px solid var(--border); font-weight:700; }.recruitment-table td:first-child { color:var(--blue); font-size:1.15rem; }.recruitment-process { display:grid; grid-template-columns:repeat(4,1fr); gap:0; padding:0; margin:0; list-style:none; border-left:1px solid var(--border); }.recruitment-process li { min-height:220px; padding:26px; border-right:1px solid var(--border); border-bottom:1px solid var(--border); border-top:1px solid var(--border); }.recruitment-process b { color:var(--gold); font-size:.75rem; letter-spacing:.15em; }.recruitment-process h3 { margin:34px 0 10px; font-size:1.35rem; font-weight:800; }.recruitment-process p { margin:0; color:var(--muted); font-size:.92rem; line-height:1.6; }.recruitment-faq { border-top:1px solid var(--border); }.recruitment-faq details { border-bottom:1px solid var(--border); }.recruitment-faq summary { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:21px 0; cursor:pointer; font-family:var(--font-display),Georgia,serif; font-size:1.23rem; font-weight:800; list-style:none; }.recruitment-faq summary::after { content:"+"; color:var(--blue); font-family:Arial,sans-serif; font-size:1.5rem; }.recruitment-faq details[open] summary::after { content:"−"; }.recruitment-faq p { max-width:660px; padding:0 0 22px; margin:0; color:var(--muted); line-height:1.7; }
+/* Recrutamento — réplica do estilo da landing antiga (recrutamento.miguelgermano.com), isolado em .recruitment-page */
+.recruitment-page {
+  --r-bg: hsl(220 30% 98%);
+  --r-fg: hsl(222 60% 10%);
+  --r-primary: hsl(222 78% 18%);
+  --r-primary-fg: hsl(46 95% 95%);
+  --r-accent: hsl(46 92% 53%);
+  --r-accent-fg: hsl(222 78% 14%);
+  --r-accent-glow: hsl(46 100% 65%);
+  --r-muted: hsl(220 20% 95%);
+  --r-muted-fg: hsl(222 15% 42%);
+  --r-border: hsl(220 20% 88%);
+  --r-card: #fff;
+  --r-secondary: hsl(220 25% 94%);
+  --r-gradient-hero: linear-gradient(135deg, hsl(222 80% 12%) 0%, hsl(222 75% 20%) 60%, hsl(222 70% 28%) 100%);
+  --r-gradient-gold: linear-gradient(135deg, hsl(46 92% 53%), hsl(42 100% 62%));
+  --r-gradient-dark: linear-gradient(180deg, hsl(222 80% 14%), hsl(222 80% 9%));
+  --r-shadow-card: 0 4px 18px -6px hsl(222 40% 20% / .12);
+  --r-shadow-elegant: 0 20px 50px -20px hsl(222 65% 14% / .25);
+  --r-shadow-gold: 0 12px 32px -8px hsl(42 78% 52% / .45);
+  background: var(--r-bg);
+  color: var(--r-fg);
+  font-family: var(--font-recruit-body), Inter, ui-sans-serif, system-ui, sans-serif;
+}
+.recruitment-page h1, .recruitment-page h2, .recruitment-page h3, .recruitment-page h4 {
+  font-family: var(--font-recruit-display), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+}
+.recruitment-page input[type="range"] { accent-color: var(--r-accent); }
+.recruitment-page details > summary { list-style: none; }
+.recruitment-page details > summary::-webkit-details-marker { display: none; }
 .privacy-prose { display:grid; gap:32px; color:var(--muted); font-size:1rem; line-height:1.8; }.privacy-prose h2 { margin-bottom:10px; color:var(--text); font-size:1.35rem; font-weight:800; }.privacy-prose p + p { margin-top:12px; }.privacy-prose a { color:var(--blue); font-weight:800; text-decoration:underline; }
 
 .hero-experience { min-height:900px; }
@@ -455,8 +473,6 @@ html.translated-rtl body { top: 0 !important; }
   .about-hero-overlay {
     background: linear-gradient(90deg, rgba(5, 17, 33, 0.88), rgba(5, 17, 33, 0.42) 100%);
   }
-  .recruitment-hero { padding-top:64px; }.recruitment-hero-card { padding:28px; }.recruitment-hero-card strong { font-size:1.65rem; }
-  .recruitment-fit-grid { grid-template-columns:repeat(2,1fr); }.recruitment-section-head,.recruitment-learning { grid-template-columns:1fr; gap:28px; }.recruitment-learning { gap:1px; }.recruitment-process { grid-template-columns:repeat(2,1fr); }
   .chat-widget {
     right: 14px;
     bottom: 14px;
@@ -474,7 +490,6 @@ html.translated-rtl body { top: 0 !important; }
   }
 }
 
-@media (max-width: 520px) { .recruitment-fit-grid,.recruitment-process { grid-template-columns:1fr; }.recruitment-section-head { gap:18px; }.recruitment-learning > div { padding:26px 22px; }.recruitment-learning h3 { font-size:1.45rem; }.recruitment-method > .container > div:last-child > div { padding-inline:0; } }
 
 @media (max-width: 420px) {
   .nav-logo,.nav-logo-image { width: auto; height: 42px; }
