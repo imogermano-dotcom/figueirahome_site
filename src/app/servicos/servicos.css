@@ -35,8 +35,8 @@
   --transition:all .35s cubic-bezier(.4,0,.2,1);
 
   /* Tipografia */
-  --ff-display:'Playfair Display', Georgia, 'Times New Roman', serif;
-  --ff-body:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --ff-display:var(--font-display), Georgia, 'Times New Roman', serif;
+  --ff-body:var(--font-body), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   --max:1120px;
   --pad:20px;
