@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, ChevronLeft, Send } from "lucide-react";
+import { ArrowRight, CheckCircle2, ChevronLeft, Mail, Send, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { recruitmentQuestions, scoreRecruitmentAnswers } from "@/lib/recruitment";
 
@@ -21,6 +21,7 @@ export function RecruitmentQuiz() {
   const [quizState, setQuizState] = useState<QuizState>("questions");
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<number[]>(Array(recruitmentQuestions.length).fill(-1));
+  const [reportState, setReportState] = useState<FormState>("idle");
   const question = recruitmentQuestions[current];
   const progressPct = Math.round(((current + (answers[current] >= 0 ? 1 : 0)) / recruitmentQuestions.length) * 100);
 
@@ -42,10 +43,23 @@ export function RecruitmentQuiz() {
     setAnswers(Array(recruitmentQuestions.length).fill(-1));
     setCurrent(0);
     setQuizState("questions");
+    setReportState("idle");
   }
 
   function goToForm() {
     document.getElementById("formulario")?.scrollIntoView({ behavior: "smooth" });
+  }
+
+  async function sendReport(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const name = String(form.get("report_name") || "").trim() || "Visitante";
+    const email = String(form.get("report_email") || "").trim();
+    setReportState("sending");
+    const response = await fetch("/api/leads", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({
+      source: "form", name, email, message: `Relatório do questionário de perfil: ${score}/30 pontos — ${tier.title}.`, request_type: "recrutamento_relatorio", privacy_consent: true
+    }) });
+    setReportState(response.ok ? "success" : "error");
   }
 
   const finalAnswers = answers.every((a) => a >= 0) ? answers : null;
@@ -86,12 +100,33 @@ export function RecruitmentQuiz() {
             </>
           ) : (
             <div className="px-8 py-10 text-center">
-              <span className="inline-flex items-center gap-2 rounded-full bg-[var(--r-accent)] px-4 py-1.5 text-sm font-bold text-[var(--r-accent-fg)]">{score}/30 pontos</span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-[var(--r-accent)] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[var(--r-accent-fg)]"><Sparkles size={14} /> O teu resultado</span>
               <h3 className="mt-5 text-2xl font-extrabold text-[var(--r-primary)] sm:text-3xl">{tier.title}</h3>
-              <p className="mx-auto mt-4 max-w-xl text-[var(--r-muted-fg)]">{tier.body}</p>
+              <div className="mt-6 flex items-baseline justify-center gap-2">
+                <span className="text-5xl font-extrabold text-[var(--r-accent-fg)]">{score}</span>
+                <span className="text-sm font-semibold text-[var(--r-muted-fg)]">/ 30 pontos</span>
+              </div>
+              <div className="mx-auto mt-4 h-2 max-w-sm overflow-hidden rounded-full bg-[var(--r-border)]"><div className="h-full rounded-full" style={{ background: "var(--r-gradient-gold)", width: `${Math.round((score / 30) * 100)}%` }} /></div>
+              <p className="mx-auto mt-6 max-w-xl text-[var(--r-muted-fg)]">{tier.body}</p>
+
+              <div className="mx-auto mt-8 max-w-md rounded-xl border border-[var(--r-accent)]/40 bg-[var(--r-accent)]/10 p-6 text-left">
+                {reportState === "success" ? (
+                  <p className="flex items-center gap-2 text-sm font-bold text-[var(--r-primary)]"><CheckCircle2 size={18} className="text-[var(--r-accent-fg)]" /> Relatório enviado. Verifica o teu email.</p>
+                ) : (
+                  <form onSubmit={sendReport} className="grid gap-3">
+                    <p className="flex items-center gap-2 text-sm font-bold text-[var(--r-primary)]"><Mail size={16} className="text-[var(--r-accent-fg)]" /> Recebe o teu relatório de perfil por email</p>
+                    <p className="text-xs text-[var(--r-muted-fg)]">Enviamos um relatório personalizado com a análise das tuas respostas e os próximos passos recomendados.</p>
+                    <label className="grid gap-1 text-xs font-bold text-[var(--r-primary)]">Nome<input name="report_name" placeholder="O teu nome" className="rounded-lg border border-[var(--r-border)] bg-white px-4 py-2.5 text-sm font-normal text-[var(--r-fg)]" /></label>
+                    <label className="grid gap-1 text-xs font-bold text-[var(--r-primary)]">Email *<input name="report_email" type="email" required placeholder="o.teu@email.com" className="rounded-lg border border-[var(--r-border)] bg-white px-4 py-2.5 text-sm font-normal text-[var(--r-fg)]" /></label>
+                    {reportState === "error" && <p className="text-xs font-bold text-red-700">Não foi possível enviar o relatório. Tenta novamente.</p>}
+                    <button type="submit" disabled={reportState === "sending"} className="mt-1 inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-[var(--r-accent-fg)] shadow-[var(--r-shadow-gold)] transition hover:opacity-90 disabled:opacity-60" style={{ background: "var(--r-gradient-gold)" }}><Send size={15} /> {reportState === "sending" ? "A enviar..." : "Receber o meu relatório"}</button>
+                  </form>
+                )}
+              </div>
+
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                 <button type="button" onClick={goToForm} className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold text-[var(--r-accent-fg)] shadow-[var(--r-shadow-gold)] transition hover:opacity-90" style={{ background: "var(--r-gradient-gold)" }}>{tier.cta} <ArrowRight size={16} /></button>
-                <button type="button" onClick={restart} className="text-sm font-bold text-[var(--r-muted-fg)] underline">Refazer questionário</button>
+                <button type="button" onClick={restart} className="rounded-full border border-[var(--r-border)] bg-white px-6 py-3 text-sm font-bold text-[var(--r-primary)] transition hover:border-[var(--r-accent)] hover:bg-[var(--r-accent)]">Refazer questionário</button>
               </div>
             </div>
           )}
