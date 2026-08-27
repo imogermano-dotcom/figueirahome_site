@@ -96,7 +96,8 @@ export function HeroExperience({ properties }: { properties: HeroProperty[] }) {
 
   return (
     <section className="hero-section hero-experience relative -mt-0 overflow-hidden bg-[var(--navy)] pt-[72px]">
-      <video className="hero-video absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline preload="metadata"><source src="/Video/hero-web.mp4" type="video/mp4" /></video>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img className="hero-video absolute inset-0 h-full w-full object-cover" src="/foto%20fundo.jpg" alt="Figueira da Foz" />
       <div className="hero-video-tint absolute inset-0" />
       <div className="hero-copy-shade absolute inset-y-0 left-0" />
       <div className="container hero-layout relative z-10 grid min-h-[800px] items-center gap-12 py-14 lg:grid-cols-[minmax(0,1.08fr)_minmax(460px,0.82fr)] lg:gap-16">
