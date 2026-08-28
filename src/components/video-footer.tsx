@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Mail, MapPin, Phone, Smartphone } from "lucide-react";
 import { fixedPhone, mobilePhone, phoneCallCost } from "@/lib/contact-details";
+import { CookiePreferencesLink } from "@/components/cookie-preferences-link";
 
 const footerLinks = {
   imoveis: [
@@ -95,6 +96,7 @@ export function VideoFooter({ variant = "default" }: { variant?: "default" | "re
           <div className="mt-3 flex gap-4 md:mt-0">
             <Link href="/politica-privacidade">{"Pol\u00edtica de Privacidade"}</Link>
             <Link href="/politica-cookies">{"Pol\u00edtica de Cookies"}</Link>
+            <CookiePreferencesLink />
             <Link href="https://www.livroreclamacoes.pt/">{"Livro de Reclama\u00e7\u00f5es"}</Link>
           </div>
         </div>

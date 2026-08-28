@@ -3,6 +3,8 @@ import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { SiteChrome } from "@/components/site-chrome";
 import { ChatWidget } from "@/components/chat-widget";
+import { AnalyticsScripts } from "@/components/analytics-scripts";
+import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -55,6 +57,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <SiteChrome>{children}</SiteChrome>
         <ChatWidget />
+        <CookieConsentBanner />
+        <AnalyticsScripts />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       </body>
     </html>
