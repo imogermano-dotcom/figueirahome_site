@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/app/servicos/servicos.css"
+        ],
+        "createdAt": "2026-08-28T10:15:45.857Z",
+        "reason": "User confirmed: literal copy of client's live production CSS, not AI-generated"
+      },
+      {
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "src/app/servicos/servicos.css"
+        ],
+        "createdAt": "2026-08-28T10:15:47.650Z",
+        "reason": "User confirmed: literal copy of client's live production CSS, not AI-generated"
+      }
+    ]
+  }
+}

@@ -87,7 +87,7 @@ export function VideoFooter({ variant = "default" }: { variant?: "default" | "re
             <p className="flex gap-2"><MapPin size={17} /> Av. do Brasil, 48, 3080-323 Buarcos, Figueira da Foz</p>
             <p className="flex gap-2"><Phone className="mt-0.5 shrink-0" size={17} /><span>{fixedPhone}<small className="block text-white/55">{phoneCallCost(fixedPhone)}</small></span></p>
             <p className="flex gap-2"><Smartphone className="mt-0.5 shrink-0" size={17} /><span>{mobilePhone}<small className="block text-white/55">{phoneCallCost(mobilePhone)}</small></span></p>
-            <p className="flex gap-2"><Mail size={17} /> geral.figueirahome@gmail.com</p>
+            <p className="flex gap-2"><Mail size={17} /> geral@figueirahome.pt</p>
           </div>
         </div>
         <div className="border-t border-white/12 pt-6 text-xs text-white/55 md:col-span-4 md:flex md:items-center md:justify-between">

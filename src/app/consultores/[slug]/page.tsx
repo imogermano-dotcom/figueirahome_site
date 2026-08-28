@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Building2, Mail, Phone } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Building2, Mail, MessageCircle, Phone } from "lucide-react";
 import { notFound } from "next/navigation";
 import { PropertyCard } from "@/components/property-card";
 import { VideoFooter } from "@/components/video-footer";
@@ -30,6 +30,7 @@ export default async function ConsultantPage({ params }: { params: Promise<{ slu
   const properties = (await getProperties()).filter((property) => property.agent?.id === member.id || property.agent_id === member.id);
   const directContact = member.phone ? `tel:${member.phone.replace(/\s/g, "")}` : member.email ? `mailto:${member.email}` : "/contacto";
   const contactLabel = member.phone ? `Ligar a ${member.name}` : member.email ? `Enviar email a ${member.name}` : "Falar com a Figueira Home";
+  const whatsappLink = member.phone ? `https://wa.me/${member.phone.replace(/[^0-9]/g, "")}` : null;
   const propertiesHeading = properties.length === 1 ? "1 imóvel atualmente disponível." : `${properties.length} imóveis atualmente disponíveis.`;
   const profileBio = member.profile_bio || [member.bio];
 
@@ -49,6 +50,7 @@ export default async function ConsultantPage({ params }: { params: Promise<{ slu
               <div className="mt-7 max-w-2xl space-y-5 text-[1.05rem] leading-8 text-[var(--muted)]">{profileBio.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
               <div className="mt-9 flex flex-wrap gap-3">
                 <Link href={directContact} className="btn btn-primary">{contactLabel} <ArrowUpRight size={16} /></Link>
+                {whatsappLink && <a href={whatsappLink} target="_blank" rel="noopener" className="btn btn-outline-dark btn-whatsapp"><MessageCircle size={16} /> WhatsApp</a>}
                 <Link href="#imoveis" className="btn btn-outline-dark">Ver imóveis associados</Link>
               </div>
               {(member.phone || member.email) && <div className="mt-9 grid gap-3 border-t border-[var(--border)] pt-6 text-sm text-[var(--muted)] sm:grid-cols-2">

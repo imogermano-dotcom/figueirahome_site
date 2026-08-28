@@ -32,9 +32,6 @@ h1, h2, h3, h4, .display-font {
 .section-title,
 .hero-title {
   font-weight: 600;
-}
-
-.hero-title {
   font-family: var(--font-body), Arial, ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -46,7 +43,10 @@ h1, h2, h3, h4, .display-font {
 .about-page h3,
 .home-page h1,
 .home-page h2,
-.home-page h3 {
+.home-page h3,
+.legal-page h1,
+.legal-page h2,
+.legal-page h3 {
   font-family: var(--font-body), Arial, ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -199,6 +199,7 @@ html.translated-rtl body { top: 0 !important; }
 .btn-outline-light { color: white; border-color: rgba(255,255,255,0.55); background: transparent; }
 .btn-outline-light:hover { border-color: white; background: rgba(255,255,255,0.08); }
 .btn-outline-dark { color: var(--navy); border-color: var(--border); background: white; }
+.btn-whatsapp:hover, .btn-whatsapp:focus-visible { color: white; border-color: #25d366; background: #25d366; }
 
 @keyframes heroUp {
   from { opacity: 1; transform: translateY(18px); }

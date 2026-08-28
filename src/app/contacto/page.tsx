@@ -17,7 +17,7 @@ export default function ContactPage() {
               <p><strong>Morada:</strong> Av. do Brasil, 48, 3080-323 Buarcos, Figueira da Foz</p>
               <p><strong>Telefone:</strong> {fixedPhone} <span className="text-sm text-[var(--muted)]">{phoneCallCost(fixedPhone)}</span></p>
               <p><strong>Telemóvel:</strong> {mobilePhone} <span className="text-sm text-[var(--muted)]">{phoneCallCost(mobilePhone)}</span></p>
-              <p><strong>Email:</strong> geral.figueirahome@gmail.com</p>
+              <p><strong>Email:</strong> geral@figueirahome.pt</p>
               <p><strong>AMI:</strong> 7968</p>
             </div>
           </div>
