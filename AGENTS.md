@@ -93,13 +93,12 @@ Handoff operacional atualizado em 2026-08-29. Manter este ficheiro abaixo de 200
 
 - **Turbopack dev server**: CSS compilado fica preso em cache, HMR não aplica edições. Fix quando acontece: matar processo (`netstat` p/ PID, `taskkill`), `rm -rf .next` (às vezes 2x), reiniciar `npm run dev`, confirmar via `curl` no chunk `.css` compilado.
 - Tabela "Ano/Alteração/Impacto" do artigo de heranças no blog foi corrigida; outras tabelas do mesmo artigo (testamentos, aceitação de herança, impostos) ainda por validar contra o original.
-- Alguns imóveis na origem continuam sem fotos, áreas, WC, descrição, plantas ou vídeo completos.
-- Sandra Silva ainda sem imóveis atribuídos na origem (tem contacto, falta atribuição).
+- Auditoria 2026-08-31 (Supabase, catálogo live = `publicado=true`+`disponibilidade="Disponível"`, só **54 de 4464** imóveis): 2 sem agente (`FH2571`, `FH2483_C`), 19 sem WC, 11 sem área, 1 sem descrição, 50 sem plantas (opcional), 28 sem vídeo (opcional), fotos ok. Sandra Silva com 0 imóveis live (31 no total da tabela, nenhum publicado/disponível).
+- **Fonte destes dados é o eGO** (`ego_id`/`fonte` na tabela `imoveis`) — atribuição de agente e preenchimento de área/WC/descrição fazem-se lá, não neste repo. Site só espelha o que o eGO sincroniza.
 - Confirmar se `message`/`property_id` são persistidos em `contactos`; schema local e migrations remotas podem divergir.
 - QA visual desta sessão foi sobretudo desktop; mobile/tablet por validar.
 
 ## Próximos passos
 
 1. Validar restantes tabelas do artigo de heranças no blog; avaliar se outros dos 68 artigos têm o mesmo problema.
-2. Corrigir dados incompletos em `imoveis`, atribuir imóveis à Sandra Silva.
-3. QA responsivo (mobile/tablet).
+2. QA responsivo (mobile/tablet).
