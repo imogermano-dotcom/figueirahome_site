@@ -95,7 +95,19 @@ export function GoogleTranslate() {
 
   function changeLanguage(language: LanguageCode) {
     if (language === sourceLanguage) {
-      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; SameSite=Lax";
+      const hostname = window.location.hostname;
+      const rootDomain = hostname.split(".").slice(-2).join(".");
+      const expire = "expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; SameSite=Lax";
+      // Google's widget may have set the cookie under any of these domain scopes
+      // (host-only, this exact host, or the shared parent domain across apex/www);
+      // clearing without matching the exact one silently no-ops, so try them all.
+      [
+        `googtrans=; ${expire}`,
+        `googtrans=; ${expire}; domain=${hostname}`,
+        `googtrans=; ${expire}; domain=.${hostname}`,
+        `googtrans=; ${expire}; domain=${rootDomain}`,
+        `googtrans=; ${expire}; domain=.${rootDomain}`
+      ].forEach((cookie) => (document.cookie = cookie));
       window.location.reload();
       return;
     }
