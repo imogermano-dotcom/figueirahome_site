@@ -204,16 +204,13 @@
         "type": "table",
         "lines": [
           "Tipo de Testamento             Características                   Validação",
-          "Testamento Público",
-          "                               Feito perante notário, registrado em ata Não requer testemunhas adicionais",
-          "Testamento Particular          notarial"
+          "Testamento Público             Feito perante notário, registrado em ata notarial  Não requer testemunhas adicionais",
+          "Testamento Particular          Escrito e assinado pelo testador  Requer intervenção de testemunhas"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Escrito e assinado pelo testador  Requer intervenção de testemunhas"
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -279,24 +276,18 @@
         "type": "table",
         "lines": [
           "Forma de Aceitação             Características                    Implicações Legais",
-          "Aceitação Expressa                                                Clareza legal, menos disputas",
-          "Aceitação Tácita               Declaração explícita de aceitar a",
-          "Recusa                         herança                            Pode levar a disputas legais"
+          "Aceitação Expressa             Declaração explícita de aceitar a herança  Clareza legal, menos disputas",
+          "Aceitação Tácita               Atos que demonstram a intenção de aceitar  Pode levar a disputas legais",
+          "Recusa                         Abertura mão dos direitos sobre a herança  Perda de direitos e transferência de responsabilidades"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Atos que demonstram a intenção de  Perda de direitos e transferência de",
-          "                               aceitar                            responsabilidades"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Abertura mão dos direitos sobre a",
-          "                               herança"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -533,11 +524,10 @@
       {
         "type": "table",
         "lines": [
-          "Categoria                        Taxa de Imposto para Residentes  Taxa de Imposto para Não",
-          "                                                                  Residentes",
-          "Herança até 100.000              10%                              15%",
-          "Herança entre 100.001 e 500.000  15%                              20%",
-          "Herança acima de 500.000         20%                              25%"
+          "Categoria                        Taxa de Imposto para Residentes  Taxa de Imposto para Não Residentes",
+          "Herança até €100.000              10%                              15%",
+          "Herança entre €100.001 e €500.000  15%                              20%",
+          "Herança acima de €500.000         20%                              25%"
         ]
       },
       {
@@ -644,24 +634,18 @@
         "type": "table",
         "lines": [
           "Tipo de Imposto                Descrição                           Taxa Aplicável",
-          "IMT",
-          "Imposto de Selo                Imposto Municipal sobre as          Variável",
-          "IRS/IRC                        Transmissões Onerosas de Imóveis"
+          "IMT                             Imposto Municipal sobre as Transmissões Onerosas de Imóveis  Variável",
+          "Imposto de Selo                 Imposto aplicado sobre certos atos jurídicos  0,8%",
+          "IRS/IRC                         Imposto sobre o rendimento das pessoas singulares/coletivas  Variável"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Imposto aplicado sobre certos atos  0,8%",
-          "                               jurídicos"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Imposto sobre o rendimento das pessoas Variável",
-          "                               singulares/coletivas"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
