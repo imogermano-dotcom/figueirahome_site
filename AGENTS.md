@@ -94,7 +94,7 @@ Handoff operacional atualizado em 2026-08-29. Manter este ficheiro abaixo de 200
 - **Turbopack dev server**: CSS compilado fica preso em cache, HMR não aplica edições. Fix quando acontece: matar processo (`netstat` p/ PID, `taskkill`), `rm -rf .next` (às vezes 2x), reiniciar `npm run dev`, confirmar via `curl` no chunk `.css` compilado.
 - Todas as 8 tabelas do artigo de heranças corrigidas e confirmadas contra `client-reference/blog/FigueiraHome_Blog_2025_2026.pdf` (`pdftotext -layout`/sem layout para desambiguar): Ano/Alteração/Impacto, Tipos de Testamento, Formas de Aceitação, Imposto do Selo, Etapas da Partilha, Divórcio, Taxas Residentes/Não-Residentes (também faltava o símbolo `€`), IMT/Selo/IRS-IRC. Verificado renderizado no dev server (`curl localhost:3000/blog/...`).
 - **Causa raiz comum**: `mergeBlogTableBlocks`/`toBlogTable` (`src/lib/blog.ts`) reconstroem tabelas por heurística de espaçamento; quando o PDF quebra uma célula em 2 linhas, o conteúdo às vezes "escorrega" para a linha do rótulo da linha seguinte. Fix aplicado sempre no dado (`blog-archive.json`), nunca no algoritmo — mesmo padrão do commit `b5135d1`.
-- **Scan aos 68 artigos** (heurística: célula vazia fora da última coluna) encontrou **63 tabelas suspeitas em 38 artigos** — o mesmo padrão de scramble é generalizado, não exclusivo do artigo de heranças. Lista completa dos slugs afetados só em memória de sessão; por retomar/persistir se for para corrigir todos.
+- **Scan aos 68 artigos** (heurística: célula vazia fora da última coluna) encontrou 63 tabelas suspeitas em 37 outros artigos — mesmo padrão de scramble. Todas corrigidas 2026-08-31 (reconstrução manual linha a linha a partir dos próprios `lines` já capturados no JSON — sequência real de rótulo→conteúdo dentro do mesmo bloco/blocos vizinhos —, com `pdftotext` do PDF original só como desempate nos casos ambíguos como tabelas numéricas sem pontuação). Scan re-executado no fim: **0 tabelas suspeitas** em todo o arquivo. Verificado renderizado em 2 artigos via dev server.
 - Auditoria 2026-08-31 (Supabase, catálogo live = `publicado=true`+`disponibilidade="Disponível"`, só **54 de 4464** imóveis): 2 sem agente (`FH2571`, `FH2483_C`), 19 sem WC, 11 sem área, 1 sem descrição, 50 sem plantas (opcional), 28 sem vídeo (opcional), fotos ok. Sandra Silva com 0 imóveis live (31 no total da tabela, nenhum publicado/disponível).
 - **Fonte destes dados é o eGO** (`ego_id`/`fonte` na tabela `imoveis`) — atribuição de agente e preenchimento de área/WC/descrição fazem-se lá, não neste repo. Site só espelha o que o eGO sincroniza.
 - Confirmar se `message`/`property_id` são persistidos em `contactos`; schema local e migrations remotas podem divergir.
@@ -102,5 +102,4 @@ Handoff operacional atualizado em 2026-08-29. Manter este ficheiro abaixo de 200
 
 ## Próximos passos
 
-1. Decidir alcance da correção das 63 tabelas suspeitas nos outros 37 artigos (ver "Bugs conhecidos") — corrigir todas, priorizar por tráfego, ou aceitar como dívida.
-2. QA responsivo (mobile/tablet).
+1. QA responsivo (mobile/tablet).

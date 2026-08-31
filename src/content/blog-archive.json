@@ -1208,21 +1208,17 @@
         "type": "table",
         "lines": [
           "Característica                 Compra com Agência  Compra Direta",
-          "Poder Negocial",
-          "Flexibilidade nos Preços       Reduzido devido às comissões e taxas Mais flexibilidade para negociar"
+          "Poder Negocial                 Reduzido devido às comissões e taxas  Mais flexibilidade para negociar",
+          "Flexibilidade nos Preços       Limitada pelas restrições contratuais da agência  Mais oportunidades para negociar preços"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Limitada pelas restrições contratuais da Mais oportunidades para negociar"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               agência             preços"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -1882,30 +1878,22 @@
         "type": "table",
         "lines": [
           "Medida de Segurança              Descrição                          Importância",
-          "Armazenamento de Itens de Valor",
-          "Verificação de Portas e Janelas  Guardar objetos de valor em local  Alta",
-          "Informar os Vizinhos",
-          "                                 seguro."
+          "Armazenamento de Itens de Valor  Guardar objetos de valor em local seguro.  Alta",
+          "Verificação de Portas e Janelas  Assegurar que todas as entradas estejam seguras.  Alta",
+          "Informar os Vizinhos             Comunicar aos vizinhos sobre a troca de casas.  Média"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                                 Assegurar que todas as entradas    Alta"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                                 estejam seguras."
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                                 Comunicar aos vizinhos sobre a troca de Média",
-          "                                 casas."
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -1963,19 +1951,14 @@
         "type": "table",
         "lines": [
           "Questão                        Resposta",
-          "É seguro trocar a casa?",
-          "                               Sim, desde que use um site confiável e discuta claramente as",
-          "O que fazer em caso de danos?  expectativas.",
-          "Como resolver conflitos?",
-          "                               Ter um acordo claro e um seguro adequado pode ajudar."
+          "É seguro trocar a casa?        Sim, desde que use um site confiável e discuta claramente as expectativas.",
+          "O que fazer em caso de danos?  Ter um acordo claro e um seguro adequado pode ajudar.",
+          "Como resolver conflitos?       Mantenha um diálogo aberto e respeitoso com o seu parceiro de troca."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Mantenha um diálogo aberto e respeitoso com o seu parceiro",
-          "                               de troca."
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -2021,19 +2004,14 @@
         "type": "table",
         "lines": [
           "Benefícios da Comunicação  Descrição",
-          "Evitar Mal-entendidos",
-          "                           A comunicação clara evita mal-entendidos sobre a casa e",
-          "Resolução de Problemas     responsabilidades.",
-          "Feedback Construtivo",
-          "                           Manter o contacto ajuda a resolver problemas que surgem."
+          "Evitar Mal-entendidos      A comunicação clara evita mal-entendidos sobre a casa e responsabilidades.",
+          "Resolução de Problemas     Manter o contacto ajuda a resolver problemas que surgem.",
+          "Feedback Construtivo       A discussão pós-troca permite feedback e melhora futuras experiências."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                           A discussão pós-troca permite feedback e melhora futuras",
-          "                           experiências."
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -2342,17 +2320,14 @@
         "type": "table",
         "lines": [
           "Categoria                        Portugal      Média Europa Ocidental",
-          "                                               800-1,200",
-          "Aluguer Apartamento 1 quarto (centro) 400-600  25-40",
-          "                                               50-70",
-          "Comida (3 refeições, restaurante médio) 15-25"
+          "Aluguer Apartamento 1 quarto (centro)  €400-€600  €800-€1,200",
+          "Comida (3 refeições, restaurante médio)  €15-€25  €25-€40",
+          "Passe Mensal Transporte Público  €30-€40  €50-€70"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "Passe Mensal Transporte Público  30-40"
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -3590,28 +3565,22 @@
         "type": "table",
         "lines": [
           "País                           Tendência                            Impacto no Mercado",
-          "Espanha",
-          "Alemanha                       Controle da especulação imobiliária  Redução dos preços"
+          "Espanha                        Controle da especulação imobiliária  Redução dos preços",
+          "Alemanha                       Sustentabilidade e habitações acessíveis  Aumento da oferta de habitações ecológicas",
+          "Reino Unido                    Investimento em tecnologia para gestão de propriedades  Melhoria na eficiência da gestão de propriedades"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "Reino Unido                    Sustentabilidade e habitações acessíveis Aumento da oferta de habitações",
-          "                                                                                                ecológicas"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Investimento em tecnologia para gestão Melhoria na eficiência da gestão de"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               de propriedades                      propriedades"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -5128,22 +5097,18 @@
         "type": "table",
         "lines": [
           "Impacto Econômico                  Descrição                             Efeito Previsto",
-          "Aumento da Atividade Econômica",
-          "Criação de Empregos                Novos projetos de construção e negócios Crescimento do PIB local"
+          "Aumento da Atividade Econômica     Novos projetos de construção e negócios  Crescimento do PIB local",
+          "Criação de Empregos                Empregos diretos e indiretos na construção e serviços  Redução da taxa de desemprego",
+          "Aumento do Valor das Propriedades  Melhoria das infraestruturas e serviços  Aumento da receita municipal"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "Aumento do Valor das Propriedades  Empregos diretos e indiretos na       Redução da taxa de desemprego",
-          "                                   construção e serviços"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                                   Melhoria das infraestruturas e serviços Aumento da receita municipal"
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -5328,27 +5293,19 @@
         "type": "table",
         "lines": [
           "Fator                          Descrição  Impacto no Valor",
-          "Localização",
-          "Condição do Imóvel             A proximidade a serviços, transportes e Alta",
-          "Tamanho e Layout               amenidades.",
-          "Características Especiais",
-          "                               O estado de conservação e manutenção Média/Alta",
-          "                               da propriedade."
+          "Localização                    A proximidade a serviços, transportes e amenidades.  Alta",
+          "Condição do Imóvel             O estado de conservação e manutenção da propriedade.  Média/Alta",
+          "Tamanho e Layout               A área total e a distribuição dos espaços dentro da propriedade.  Média",
+          "Características Especiais      Elementos como vistas, jardins, piscinas, etc.  Variável"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               A área total e a distribuição dos espaços Média",
-          "                               dentro da propriedade."
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Elementos como vistas, jardins, piscinas, Variável",
-          "                               etc."
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -5639,23 +5596,18 @@
         "type": "table",
         "lines": [
           "Método de Avaliação            Descrição                              Vantagens",
-          "Método Comparativo",
-          "Método de Custo                Compara o imóvel com outros similares Reflete o valor de mercado atual",
-          "Método de Renda                vendidos recentemente"
+          "Método Comparativo             Compara o imóvel com outros similares vendidos recentemente  Reflete o valor de mercado atual",
+          "Método de Custo                Calcula o custo de reconstrução do imóvel  Útil para imóveis únicos ou de grande escala",
+          "Método de Renda                Avalia o potencial de renda do imóvel  Relevante para investidores"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Calcula o custo de reconstrução do     Útil para imóveis únicos ou de grande",
-          "                               imóvel                                 escala"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Avalia o potencial de renda do imóvel  Relevante para investidores"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -5745,29 +5697,22 @@
         "type": "table",
         "lines": [
           "Recurso                              Descrição                             Benefício",
-          "Plataformas de Análise de Mercado",
-          "Serviços de Consultoria              Fornecem dados e análises detalhadas  Ajuda a tomar decisões informadas",
-          "Ferramentas de Avaliação de Imóveis  sobre tendências de mercado"
+          "Plataformas de Análise de Mercado    Fornecem dados e análises detalhadas sobre tendências de mercado  Ajuda a tomar decisões informadas",
+          "Serviços de Consultoria              Oferecem aconselhamento personalizado baseado em expertise  Maximiza oportunidades de investimento",
+          "Ferramentas de Avaliação de Imóveis  Permitem avaliar o valor de imóveis com precisão  Facilita a compra e venda de propriedades"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                                     Oferecem aconselhamento               Maximiza oportunidades de",
-          "                                     personalizado baseado em expertise    investimento"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                                     Permitem avaliar o valor de imóveis com Facilita a compra e venda de"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                                     precisão                              propriedades"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -8825,24 +8770,18 @@
         "type": "table",
         "lines": [
           "Tipo de Documento              Descrição                            Exemplos",
-          "Identificação Pessoal",
-          "Comprovativos de Rendimentos   Documentos que comprovam a           Bilhete de Identidade, Passaporte",
-          "Informações sobre o Imóvel     identidade do requerente"
+          "Identificação Pessoal          Documentos que comprovam a identidade do requerente  Bilhete de Identidade, Passaporte",
+          "Comprovativos de Rendimentos   Documentos que comprovam a renda do requerente  Recibos de salário, declarações de IRS",
+          "Informações sobre o Imóvel     Documentos relacionados à compra do imóvel  Contrato de promessa de compra e venda"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Documentos que comprovam a renda do Recibos de salário, declarações de IRS",
-          "                               requerente"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Documentos relacionados à compra do  Contrato de promessa de compra e",
-          "                               imóvel                               venda"
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -9171,19 +9110,14 @@
         "type": "table",
         "lines": [
           "Responsabilidade               Descrição",
-          "Manutenção do Imóvel",
-          "                               Realizar reparos e manutenções regulares para manter o",
-          "Pagamento de Impostos          imóvel em boas condições.",
-          "Seguro do Imóvel",
-          "                               Pagar impostos e taxas associadas à propriedade, como o IMI."
+          "Manutenção do Imóvel           Realizar reparos e manutenções regulares para manter o imóvel em boas condições.",
+          "Pagamento de Impostos          Pagar impostos e taxas associadas à propriedade, como o IMI.",
+          "Seguro do Imóvel               Contratar um seguro para proteger o imóvel contra danos ou perdas."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Contratar um seguro para proteger o imóvel contra danos ou",
-          "                               perdas."
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -10718,16 +10652,13 @@
         "type": "table",
         "lines": [
           "Tipo de Sistema                Custo Inicial  Poupança Anual  Retorno do Investimento",
-          "                                               800            12 anos",
-          "Painéis Solares                 10.000         200            15 anos"
+          "Painéis Solares                 €10.000       €800            12 anos",
+          "Sistema de Captação de Água da Chuva  €3.000  €200            15 anos"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "Sistema de Captação de Água  3.000",
-          "da Chuva"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -11194,24 +11125,18 @@
         "type": "table",
         "lines": [
           "Benefícios                     Descrição",
-          "Transparência",
-          "Confiança                      Informações claras e precisas sobre as propriedades e o",
-          "Avaliações de Clientes         processo de compra."
+          "Transparência                  Informações claras e precisas sobre as propriedades e o processo de compra.",
+          "Confiança                      Relacionamento de confiança construído através de práticas éticas e comunicação eficaz.",
+          "Avaliações de Clientes         Testemunhos de clientes satisfeitos que reforçam a credibilidade da agência."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Relacionamento de confiança construído através de práticas",
-          "                               éticas e comunicação eficaz."
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Testemunhos de clientes satisfeitos que reforçam a",
-          "                               credibilidade da agência."
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -11261,17 +11186,13 @@
         "type": "table",
         "lines": [
           "Serviços de Mudança            Descrição                            Benefícios",
-          "Organização da Mudança",
-          "                               Planejamento detalhado da mudança,   Reduz o estresse e torna o processo",
-          "Execução da Mudança            incluindo data, hora e logística.    mais eficiente."
+          "Organização da Mudança         Planejamento detalhado da mudança, incluindo data, hora e logística.  Reduz o estresse e torna o processo mais eficiente.",
+          "Execução da Mudança            Equipe profissional para realizar a mudança de forma segura e rápida.  Protege seus pertences e economiza tempo."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Equipe profissional para realizar a  Protege seus pertences e economiza",
-          "                               mudança de forma segura e rápida.    tempo."
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -11972,24 +11893,18 @@
         "type": "table",
         "lines": [
           "Obrigações Fiscais             Descrição                              Prazos Importantes",
-          "Declaração de Permuta",
-          "Pagamento de IVA               Fornecer informações precisas sobre a  Até ao final do mês de maio do ano",
-          "IMT                            transação.                             seguinte"
+          "Declaração de Permuta          Fornecer informações precisas sobre a transação.  Até ao final do mês de maio do ano seguinte",
+          "Pagamento de IVA               Pagar o imposto sobre o valor acrescentado.  Até ao dia 20 do mês seguinte ao da ocorrência do facto tributário",
+          "IMT                            Pagar o imposto sobre a transmissão onerosa de imóveis.  Até ao dia da escritura pública ou documento equivalente"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Pagar o imposto sobre o valor          Até ao dia 20 do mês seguinte ao da",
-          "                               acrescentado.                          ocorrência do facto tributário"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Pagar o imposto sobre a transmissão    Até ao dia da escritura pública ou",
-          "                               onerosa de imóveis.                    documento equivalente"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -12502,29 +12417,22 @@
         "type": "table",
         "lines": [
           "Característica                 Solo Arenoso                        Solo Argiloso",
-          "Drenagem",
-          "Estabilidade                   Boa drenagem devido ao tamanho das  Drenagem pobre devido à baixa",
-          "Custo de Fundação              partículas                          permeabilidade"
+          "Drenagem                       Boa drenagem devido ao tamanho das partículas  Drenagem pobre devido à baixa permeabilidade",
+          "Estabilidade                   Pode ser instável em condições de muita água  Pode ser estável, mas sujeito a expansão e contração",
+          "Custo de Fundação              Geralmente mais baixo devido à boa drenagem  Pode ser mais alto devido à necessidade de fundações especiais"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Pode ser instável em condições de muita Pode ser estável, mas sujeito a"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               água                                expansão e contração"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Geralmente mais baixo devido à boa  Pode ser mais alto devido à necessidade",
-          "                               drenagem                            de fundações especiais"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -12832,17 +12740,13 @@
         "type": "table",
         "lines": [
           "Serviço                        Descrição                        Custo Aproximado",
-          "Levantamento Topográfico",
-          "                               Serviço que mapeia os limites e  500 ­ 1,500",
-          "Marcação de Lotação            características do terreno."
+          "Levantamento Topográfico       Serviço que mapeia os limites e características do terreno.  €500 ­ €1,500",
+          "Marcação de Lotação            Identificação e marcação dos limites do terreno.  €300 ­ €1,000"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Identificação e marcação dos limites do 300 ­ 1,000",
-          "                               terreno."
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -13451,24 +13355,18 @@
         "type": "table",
         "lines": [
           "Estratégia                        Descrição                           Vantagens",
-          "Avaliação Comparativa de Mercado                                      Reflete as condições atuais do mercado.",
-          "Método do Custo                   Analisa preços de propriedades      Útil para propriedades únicas ou novas.",
-          "Método da Renda                   semelhantes vendidas recentemente.  Relevante para investidores."
+          "Avaliação Comparativa de Mercado  Analisa preços de propriedades semelhantes vendidas recentemente.  Reflete as condições atuais do mercado.",
+          "Método do Custo                   Calcula o custo de reconstruir a propriedade.  Útil para propriedades únicas ou novas.",
+          "Método da Renda                   Baseia-se no potencial de renda da propriedade.  Relevante para investidores."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                                  Calcula o custo de reconstruir a",
-          "                                  propriedade."
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                                  Baseia-se no potencial de renda da",
-          "                                  propriedade."
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -13964,24 +13862,18 @@
         "type": "table",
         "lines": [
           "Plataforma                     Descrição                          Custo",
-          "OLX",
-          "                               Plataforma popular para venda de   Gratuito para anúncios básicos",
-          "Imovirtual                     diversos tipos de bens, incluindo",
-          "Facebook Marketplace           imóveis."
+          "OLX                            Plataforma popular para venda de diversos tipos de bens, incluindo imóveis.  Gratuito para anúncios básicos",
+          "Imovirtual                     Especializado em anúncios de imóveis.  Variado, dependendo do tipo de anúncio",
+          "Facebook Marketplace           Plataforma de marketplace integrada ao Facebook.  Gratuito"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Especializado em anúncios de imóveis. Variado, dependendo do tipo de anúncio"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Plataforma de marketplace integrada ao Gratuito",
-          "                               Facebook."
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -14550,8 +14442,7 @@
           "Tipo de Aquisição                    Taxa Anterior  Taxa Atual",
           "Aquisição de imóvel urbano           6%             8%",
           "Aquisição de imóvel rural            5%             7%",
-          "Aquisição de imóvel para residência  2%             3%",
-          "principal"
+          "Aquisição de imóvel para residência principal  2%  3%"
         ]
       },
       {
@@ -15239,24 +15130,18 @@
         "type": "table",
         "lines": [
           "Sinal                          Descrição",
-          "Comunicação Eficaz",
-          "Proatividade                   A imobiliária mantém você informado sobre o progresso da",
-          "Conhecimento do Mercado        venda."
+          "Comunicação Eficaz             A imobiliária mantém você informado sobre o progresso da venda.",
+          "Proatividade                   Os agentes imobiliários tomam a iniciativa de resolver problemas e encontrar oportunidades.",
+          "Conhecimento do Mercado        A imobiliária demonstra um entendimento profundo do mercado local."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Os agentes imobiliários tomam a iniciativa de resolver",
-          "                               problemas e encontrar oportunidades."
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               A imobiliária demonstra um entendimento profundo do",
-          "                               mercado local."
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -15302,24 +15187,18 @@
         "type": "table",
         "lines": [
           "Estratégia de Marketing        Descrição  Eficácia",
-          "Anúncios Online",
-          "Redes Sociais                  Publicidade em sites de imóveis e redes Alta",
-          "Marketing Direcionado          sociais"
+          "Anúncios Online                Publicidade em sites de imóveis e redes sociais  Alta",
+          "Redes Sociais                  Promoção através de plataformas como Facebook e Instagram  Média-Alta",
+          "Marketing Direcionado          Envio de informações para compradores específicos  Alta"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Promoção através de plataformas como Média-Alta",
-          "                               Facebook e Instagram"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Envio de informações para compradores Alta",
-          "                               específicos"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -15999,25 +15878,18 @@
         "type": "table",
         "lines": [
           "Medidas                        Descrição                          Benefícios",
-          "Incentivos fiscais",
-          "Subsídios para inquilinos      Redução de impostos para proprietários Estimula a adesão dos proprietários",
-          "Monitoramento contínuo         que aderem à Renda Moderada"
+          "Incentivos fiscais             Redução de impostos para proprietários que aderem à Renda Moderada  Estimula a adesão dos proprietários",
+          "Subsídios para inquilinos      Apoio financeiro para inquilinos que não conseguem pagar o arrendamento  Reduz o risco de inadimplência",
+          "Monitoramento contínuo         Acompanhamento regular da implementação e dos resultados da Renda Moderada  Permite ajustes e melhorias contínuas"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Apoio financeiro para inquilinos que não Reduz o risco de inadimplência",
-          "                               conseguem pagar o arrendamento"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Acompanhamento regular da          Permite ajustes e melhorias contínuas",
-          "                               implementação e dos resultados da",
-          "                               Renda Moderada"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -16801,24 +16673,18 @@
         "type": "table",
         "lines": [
           "Expectativa                           Descrição",
-          "Integração de tecnologias emergentes",
-          "Simplificação adicional               Uso de IA e realidade aumentada para melhorar a submissão",
-          "Formação e suporte                    e análise de projetos."
+          "Integração de tecnologias emergentes  Uso de IA e realidade aumentada para melhorar a submissão e análise de projetos.",
+          "Simplificação adicional               Redução ainda maior da burocracia e dos prazos de licenciamento.",
+          "Formação e suporte                    Disponibilização de formação e suporte para os profissionais se adaptarem às novas tecnologias e procedimentos."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                                      Redução ainda maior da burocracia e dos prazos de",
-          "                                      licenciamento."
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                                      Disponibilização de formação e suporte para os profissionais",
-          "                                      se adaptarem às novas tecnologias e procedimentos."
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -16872,23 +16738,18 @@
         "type": "table",
         "lines": [
           "Área de Foco                   Previsões                       Benefícios",
-          "Tecnologia",
-          "Legislação                     Adoção de plataformas digitais  Processos mais rápidos e transparentes",
-          "Colaboração                    avançadas"
+          "Tecnologia                     Adoção de plataformas digitais avançadas  Processos mais rápidos e transparentes",
+          "Legislação                     Revisões periódicas do RJUE  Legislação mais adaptada às necessidades atuais",
+          "Colaboração                    Aumento da cooperação entre entidades  Decisões mais coerentes e eficazes"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Revisões periódicas do RJUE     Legislação mais adaptada às",
-          "                                                               necessidades atuais"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Aumento da cooperação entre entidades Decisões mais coerentes e eficazes"
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -17247,29 +17108,22 @@
         "type": "table",
         "lines": [
           "Oportunidades                  Benefícios                              Exemplos",
-          "Estratégias de Marketing",
-          "Colaboração com o Governo      Aumento da visibilidade e atração de    Campanhas de publicidade, eventos de",
-          "Novos Modelos de Negócio       novos clientes                          lançamento"
+          "Estratégias de Marketing       Aumento da visibilidade e atração de novos clientes  Campanhas de publicidade, eventos de lançamento",
+          "Colaboração com o Governo      Desenvolvimento de projetos conjuntos, impulso económico  Projetos de habitação social, infraestrutura",
+          "Novos Modelos de Negócio       Diversificação de serviços, aumento da competitividade  Pacotes de serviços integrados, financiamentos atraentes"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Desenvolvimento de projetos conjuntos, Projetos de habitação social,"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               impulso económico                       infraestrutura"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Diversificação de serviços, aumento da  Pacotes de serviços integrados,",
-          "                               competitividade                         financiamentos atraentes"
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -18741,24 +18595,18 @@
         "type": "table",
         "lines": [
           "Benefícios do Planeamento Urbanístico    Descrição",
-          "Equilíbrio entre Urbanização e Natureza",
-          "Sustentabilidade                         Criação de espaços verdes para melhorar a qualidade de vida",
-          "Participação Comunitária                 e preservar a biodiversidade."
+          "Equilíbrio entre Urbanização e Natureza  Criação de espaços verdes para melhorar a qualidade de vida e preservar a biodiversidade.",
+          "Sustentabilidade                         Adoção de práticas sustentáveis para reduzir o impacto ambiental e promover a eficiência.",
+          "Participação Comunitária                 Envolvimento dos residentes no processo de planeamento para garantir que as necessidades locais sejam atendidas."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                                         Adoção de práticas sustentáveis para reduzir o impacto",
-          "                                         ambiental e promover a eficiência."
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                                         Envolvimento dos residentes no processo de planeamento",
-          "                                         para garantir que as necessidades locais sejam atendidas."
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -19433,24 +19281,18 @@
         "type": "table",
         "lines": [
           "Soluções                       Descrição                              Benefícios",
-          "Incentivos Governamentais",
-          "Parcerias Público-Privadas     Subsídios e benefícios fiscais para a  Aumento da oferta de habitação",
-          "Iniciativas Sustentáveis       construção de habitação social         acessível"
+          "Incentivos Governamentais      Subsídios e benefícios fiscais para a construção de habitação social  Aumento da oferta de habitação acessível",
+          "Parcerias Público-Privadas     Colaboração entre setor público e privado para projetos habitacionais  Entrega acelerada de projetos habitacionais",
+          "Iniciativas Sustentáveis       Utilização de materiais ecológicos e práticas de construção sustentáveis  Redução do impacto ambiental"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Colaboração entre setor público e      Entrega acelerada de projetos",
-          "                               privado para projetos habitacionais    habitacionais"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Utilização de materiais ecológicos e   Redução do impacto ambiental",
-          "                               práticas de construção sustentáveis"
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -19804,17 +19646,13 @@
         "type": "table",
         "lines": [
           "Especialista                   Opinião                               Solução Proposta",
-          "Urbanista João Silva",
-          "                               O défice habitacional é resultado de  Revisão das políticas de habitação e",
-          "Economista Maria Santos        políticas de habitação inadequadas.   aumento do investimento na construção."
+          "Urbanista João Silva           O défice habitacional é resultado de políticas de habitação inadequadas.  Revisão das políticas de habitação e aumento do investimento na construção.",
+          "Economista Maria Santos        A falta de oferta de habitações acessíveis é o principal problema.  Incentivos para a construção de habitações a preços controlados."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               A falta de oferta de habitações       Incentivos para a construção de",
-          "                               acessíveis é o principal problema.    habitações a preços controlados."
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -20415,24 +20253,18 @@
         "type": "table",
         "lines": [
           "Barreira Financeira            Descrição                                Impacto",
-          "Custo de Reabilitação",
-          "Falta de Financiamento         Custos elevados para reabilitar imóveis  Limita o número de projetos viáveis",
-          "Incentivos Fiscais             antigos"
+          "Custo de Reabilitação          Custos elevados para reabilitar imóveis antigos  Limita o número de projetos viáveis",
+          "Falta de Financiamento         Recursos limitados para habitação social  Reduz a capacidade de executar projetos",
+          "Incentivos Fiscais             Falta de benefícios fiscais para investidores  Desencoraja a participação de investidores privados"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Recursos limitados para habitação social Reduz a capacidade de executar",
-          "                                                                                                projetos"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Falta de benefícios fiscais para         Desencoraja a participação de",
-          "                               investidores                             investidores privados"
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -20526,17 +20358,13 @@
         "type": "table",
         "lines": [
           "Entidade                               Contacto               Descrição",
-          "Câmara Municipal de Figueira da Foz    +351 233 422 100",
-          "                                                              Informações sobre programas de",
-          "INH ­ Instituto Nacional de Habitação  +351 213 512 020       habitação pública."
+          "Câmara Municipal de Figueira da Foz    +351 233 422 100       Informações sobre programas de habitação pública.",
+          "INH ­ Instituto Nacional de Habitação  +351 213 512 020       Apoio e financiamento para habitação social."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                                                              Apoio e financiamento para habitação",
-          "                                                              social."
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -20997,23 +20825,18 @@
         "type": "table",
         "lines": [
           "Vantagens                      Descrição                             Benefícios",
-          "Renda Passiva",
-          "Valorização do Imóvel          Geração de renda através de aluguéis  Estabilidade financeira"
+          "Renda Passiva                  Geração de renda através de aluguéis  Estabilidade financeira",
+          "Valorização do Imóvel          Aumento do valor do imóvel ao longo do tempo  Aumento do patrimônio",
+          "Diversificação                 Inclusão de imóveis na carteira de investimentos  Redução do risco e aumento da rentabilidade"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "Diversificação                 Aumento do valor do imóvel ao longo do Aumento do patrimônio",
-          "                               tempo"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Inclusão de imóveis na carteira de    Redução do risco e aumento da",
-          "                               investimentos                         rentabilidade"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -21925,24 +21748,18 @@
         "type": "table",
         "lines": [
           "Etapa                          Descrição                            Prazo",
-          "Verificação de elegibilidade",
-          "Reunião de documentação        Verificar se cumpre os critérios de idade, Antes de submeter a candidatura",
-          "Submissão da candidatura       residência e rendimentos"
+          "Verificação de elegibilidade   Verificar se cumpre os critérios de idade, residência e rendimentos  Antes de submeter a candidatura",
+          "Reunião de documentação        Preparar toda a documentação necessária  Até à data limite de submissão",
+          "Submissão da candidatura       Submeter a candidatura online ou em entidades parceiras  Até à data limite de submissão"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Preparar toda a documentação         Até à data limite de submissão",
-          "                               necessária"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Submeter a candidatura online ou em  Até à data limite de submissão",
-          "                               entidades parceiras"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -22406,24 +22223,18 @@
         "type": "table",
         "lines": [
           "Condição                       Descrição",
-          "Projeto Viável",
-          "Capacidade de Gestão           Apresentação de um projeto de habitação pública com plano",
-          "Diretrizes do BEI              de execução claro."
+          "Projeto Viável                 Apresentação de um projeto de habitação pública com plano de execução claro.",
+          "Capacidade de Gestão           Demonstração de capacidade técnica e financeira para gerir o projeto.",
+          "Diretrizes do BEI              Compromisso de seguir as diretrizes e regulamentos estabelecidos pelo BEI."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Demonstração de capacidade técnica e financeira para gerir o",
-          "                               projeto."
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Compromisso de seguir as diretrizes e regulamentos",
-          "                               estabelecidos pelo BEI."
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -22509,23 +22320,18 @@
         "type": "table",
         "lines": [
           "Requisito                      Descrição                              Observações",
-          "Renda Familiar",
-          "Propriedade Imobiliária        Dentro dos limites estabelecidos       Verificar os limites atuais"
+          "Renda Familiar                 Dentro dos limites estabelecidos       Verificar os limites atuais",
+          "Propriedade Imobiliária        Não possuir propriedade que atenda às necessidades  Avaliar a situação de cada candidato",
+          "Residência Fixa                Ter residência fixa ou ter sido deslocado  Documentação comprobatória necessária"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "Residência Fixa                Não possuir propriedade que atenda às  Avaliar a situação de cada candidato",
-          "                               necessidades"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Ter residência fixa ou ter sido deslocado Documentação comprobatória",
-          "                                                                                                necessária"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -23117,17 +22923,13 @@
         "type": "table",
         "lines": [
           "Tipo de Fundo                         Descrição                                Vantagens",
-          "Fundos de Investimento Direto",
-          "                                      Investem diretamente em propriedades. Controle sobre os ativos, potencial para",
-          "Fundos de Investimento Indireto                                                                        altos retornos."
+          "Fundos de Investimento Direto         Investem diretamente em propriedades.  Controle sobre os ativos, potencial para altos retornos.",
+          "Fundos de Investimento Indireto       Investem em ações de empresas imobiliárias.  Diversificação, menor exposição ao risco de mercado."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                                      Investem em ações de empresas            Diversificação, menor exposição ao risco",
-          "                                      imobiliárias.                            de mercado."
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -23181,25 +22983,18 @@
         "type": "table",
         "lines": [
           "Tipo de Investidor                    Características                          Contribuição para o Mercado",
-          "Empresas e Grupos de Investimento",
-          "                                      Investem em diversas classes de ativos,  Desenvolvimento de projetos de grande",
-          "Agências e Consultorias Imobiliárias  trazendo capital e expertise.            escala, impulsionando o crescimento do",
-          "Investidores Individuais                                                       mercado."
+          "Empresas e Grupos de Investimento     Investem em diversas classes de ativos, trazendo capital e expertise.  Desenvolvimento de projetos de grande escala, impulsionando o crescimento do mercado.",
+          "Agências e Consultorias Imobiliárias  Fornecem serviços de consultoria e intermediação.  Facilitam transações e ajudam a navegar no mercado.",
+          "Investidores Individuais              Investem diretamente ou através de fundos imobiliários.  Diversificam o mercado com diferentes estratégias de investimento."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                                      Fornecem serviços de consultoria e       Facilitam transações e ajudam a",
-          "                                      intermediação.                           navegar no mercado."
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                                      Investem diretamente ou através de       Diversificam o mercado com diferentes",
-          "                                      fundos imobiliários.                     estratégias de investimento."
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -23471,24 +23266,18 @@
         "type": "table",
         "lines": [
           "Tendência                      Descrição                             Impacto Previsível",
-          "Digitalização",
-          "Sustentabilidade               Adoção de tecnologias para gestão de  Melhoria na eficiência operacional",
-          "Espaços de Trabalho Flexíveis  propriedades e espaços de trabalho"
+          "Digitalização                  Adoção de tecnologias para gestão de propriedades e espaços de trabalho  Melhoria na eficiência operacional",
+          "Sustentabilidade               Investimentos em eficiência energética e práticas sustentáveis  Redução do impacto ambiental",
+          "Espaços de Trabalho Flexíveis  Crescente demanda por espaços de trabalho compartilhados e flexíveis  Maior atratividade para empresas e talentos"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Investimentos em eficiência energética e Redução do impacto ambiental",
-          "                               práticas sustentáveis"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Crescente demanda por espaços de      Maior atratividade para empresas e",
-          "                               trabalho compartilhados e flexíveis   talentos"
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -24000,18 +23789,14 @@
         "type": "table",
         "lines": [
           "Documento                      Descrição                               Requisito",
-          "Identificação",
-          "Comprovativo de Residência     Documento de identificação válido       Obrigatório",
-          "Certificado de Habilitação",
-          "                               Comprovativo de residência em Portugal Obrigatório"
+          "Identificação                  Documento de identificação válido       Obrigatório",
+          "Comprovativo de Residência     Comprovativo de residência em Portugal  Obrigatório",
+          "Certificado de Habilitação     Certificado que comprove a habilitação necessária  Obrigatório"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Certificado que comprove a habilitação  Obrigatório",
-          "                               necessária"
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -24782,24 +24567,18 @@
         "type": "table",
         "lines": [
           "Estratégia                     Descrição                          Benefício",
-          "Preços Dinâmicos",
-          "Otimização de Anúncios         Ajuste preços de acordo com a      Aumenta a rentabilidade durante",
-          "Avaliações Positivas           demanda.                           períodos de alta demanda."
+          "Preços Dinâmicos               Ajuste preços de acordo com a demanda.  Aumenta a rentabilidade durante períodos de alta demanda.",
+          "Otimização de Anúncios         Melhore descrições e use fotos de qualidade.  Aumenta a visibilidade e atrai mais hóspedes.",
+          "Avaliações Positivas           Incentive hóspedes a deixar avaliações.  Melhora a reputação e aumenta a confiança de futuros hóspedes."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Melhore descrições e use fotos de  Aumenta a visibilidade e atrai mais",
-          "                               qualidade.                         hóspedes."
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Incentive hóspedes a deixar avaliações. Melhora a reputação e aumenta a",
-          "                                                                                                confiança de futuros hóspedes."
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -25117,17 +24896,14 @@
         "type": "table",
         "lines": [
           "Tipo de Programa               Benefícios                        Impacto",
-          "Descontos para Retornados",
-          "Serviços Exclusivos            10% off em estadias subsequentes  Aumenta a taxa de retenção",
-          "Reconhecimento Especial",
-          "                               Acesso a amenidades premium       Melhora a satisfação do hóspede"
+          "Descontos para Retornados      10% off em estadias subsequentes  Aumenta a taxa de retenção",
+          "Serviços Exclusivos            Acesso a amenidades premium       Melhora a satisfação do hóspede",
+          "Reconhecimento Especial        Mensagem personalizada de boas-vindas  Cria uma experiência memorável"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Mensagem personalizada de boas-vindas Cria uma experiência memorável"
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -25993,17 +25769,13 @@
         "type": "table",
         "lines": [
           "Benefícios                     Descrição",
-          "Melhoria da qualidade de vida",
-          "                               O projecto oferece espaços de lazer de alta qualidade para os",
-          "Potencialização do turismo     residentes."
+          "Melhoria da qualidade de vida  O projecto oferece espaços de lazer de alta qualidade para os residentes.",
+          "Potencialização do turismo     A atracção de mais turistas cria oportunidades económicas para os negócios locais."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               A atracção de mais turistas cria oportunidades económicas",
-          "                               para os negócios locais."
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -26269,24 +26041,18 @@
         "type": "table",
         "lines": [
           "Projeto                             Descrição                              Investimento",
-          "Novo Hotel na Praia",
-          "Requalificação do Centro Histórico  Construção de um hotel de luxo na praia  20 milhões",
-          "Programa de Turismo Sustentável     da Figueira da Foz"
+          "Novo Hotel na Praia                 Construção de um hotel de luxo na praia da Figueira da Foz  20 milhões",
+          "Requalificação do Centro Histórico  Requalificação do centro histórico da cidade  15 milhões",
+          "Programa de Turismo Sustentável     Implementação de práticas de turismo sustentável na região  5 milhões"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                                    Requalificação do centro histórico da   15 milhões",
-          "                                    cidade"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                                    Implementação de práticas de turismo    5 milhões",
-          "                                    sustentável na região"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -26425,24 +26191,18 @@
         "type": "table",
         "lines": [
           "Impacto                        Benefícios                          Desafios",
-          "Económico",
-          "Social                         Criação de empregos e mais receita  Podem aumentar o custo de vida",
-          "Cultural                       local"
+          "Económico                      Criação de empregos e mais receita local  Podem aumentar o custo de vida",
+          "Social                         Melhorias nas infraestruturas e serviços comunitários  Risco de deslocamento de comunidades",
+          "Cultural                       Valorização da cultura local e preservação do património  Risco de perda da identidade cultural"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Melhorias nas infraestruturas e serviços Risco de deslocamento de comunidades",
-          "                               comunitários"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Valorização da cultura local e      Risco de perda da identidade cultural",
-          "                               preservação do património"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -26627,23 +26387,18 @@
         "type": "table",
         "lines": [
           "Fator                          Preparação                           Venda Rápida",
-          "Preço",
-          "Apresentação                   Ajustar o preço de acordo com o      Definir um preço competitivo desde o",
-          "Demanda                        mercado                              início"
+          "Preço                          Ajustar o preço de acordo com o mercado  Definir um preço competitivo desde o início",
+          "Apresentação                   Melhorar a apresentação estética e estrutural  Utilizar marketing eficaz para atrair compradores",
+          "Demanda                        Entender a demanda atual do mercado  Aproveitar períodos de alta demanda"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Melhorar a apresentação estética e   Utilizar marketing eficaz para atrair",
-          "                               estrutural                           compradores"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Entender a demanda atual do mercado  Aproveitar períodos de alta demanda"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -26911,23 +26666,18 @@
         "type": "table",
         "lines": [
           "Pergunta                                          Resposta",
-          "Qual é o estado de conservação do imóvel?",
-          "Existem documentos de propriedade disponíveis?    O imóvel foi recentemente reformado e está em excelente",
-          "Há alguma despesa adicional associada ao imóvel?  estado de conservação."
+          "Qual é o estado de conservação do imóvel?         O imóvel foi recentemente reformado e está em excelente estado de conservação.",
+          "Existem documentos de propriedade disponíveis?    Sim, todos os documentos necessários estão disponíveis e em ordem.",
+          "Há alguma despesa adicional associada ao imóvel?  Sim, há condomínio e impostos a serem considerados."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                                                  Sim, todos os documentos necessários estão disponíveis e em",
-          "                                                  ordem."
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                                                  Sim, há condomínio e impostos a serem considerados."
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -27419,23 +27169,17 @@
         "type": "table",
         "lines": [
           "Habilidade de Negociação       Descrição                     Benefício",
-          "Comunicação assertiva",
-          "                               Capacidade de expressar claramente as Reduz mal-entendidos e aumenta a",
-          "Resolução de conflitos",
-          "                               necessidades e expectativas.  confiança."
+          "Comunicação assertiva          Capacidade de expressar claramente as necessidades e expectativas.  Reduz mal-entendidos e aumenta a confiança.",
+          "Resolução de conflitos         Habilidade de mediar e resolver disputas de forma justa.  Promove a satisfação do cliente e mantém a reputação."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Habilidade de mediar e resolver disputas Promove a satisfação do cliente e"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               de forma justa.               mantém a reputação."
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -27625,24 +27369,18 @@
         "type": "table",
         "lines": [
           "Benefícios                        Descrição",
-          "Melhoria das Competências",
-          "Aumento da Satisfação do Cliente  A formação contínua ajuda a melhorar as competências dos",
-          "Desenvolvimento Profissional      consultores."
+          "Melhoria das Competências         A formação contínua ajuda a melhorar as competências dos consultores.",
+          "Aumento da Satisfação do Cliente  Consultores bem treinados prestam um serviço de alta qualidade, aumentando a satisfação do cliente.",
+          "Desenvolvimento Profissional      Programas de mentoria e autoaperfeiçoamento contribuem para o crescimento profissional."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                                  Consultores bem treinados prestam um serviço de alta",
-          "                                  qualidade, aumentando a satisfação do cliente."
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                                  Programas de mentoria e autoaperfeiçoamento contribuem",
-          "                                  para o crescimento profissional."
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -27688,18 +27426,14 @@
         "type": "table",
         "lines": [
           "Benefícios                     Descrição                      Impacto",
-          "Comissões Competitivas",
-          "Bonos por Desempenho           Remuneração baseada no desempenho Motiva os consultores a vender mais",
-          "Benefícios Adicionais",
-          "                               Recompensa por alcançar metas  Aumenta a produtividade"
+          "Comissões Competitivas         Remuneração baseada no desempenho  Motiva os consultores a vender mais",
+          "Bonos por Desempenho           Recompensa por alcançar metas  Aumenta a produtividade",
+          "Benefícios Adicionais          Seguro de saúde e planos de aposentadoria  Melhora a satisfação e retenção"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Seguro de saúde e planos de    Melhora a satisfação e retenção",
-          "                               aposentadoria"
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -28469,24 +28203,18 @@
         "type": "table",
         "lines": [
           "Vantagens                      Descrição                              Benefícios",
-          "Personalização",
-          "Investimento                   Liberdade para modificar o imóvel de   Melhora a qualidade de vida",
-          "Estabilidade                   acordo com as suas necessidades"
+          "Personalização                 Liberdade para modificar o imóvel de acordo com as suas necessidades  Melhora a qualidade de vida",
+          "Investimento                   Potencial de valorização do imóvel ao longo do tempo  Rentabilidade a longo prazo",
+          "Estabilidade                   Proporciona uma sensação de segurança e estabilidade para a família  Melhora a qualidade de vida"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Potencial de valorização do imóvel ao  Rentabilidade a longo prazo",
-          "                               longo do tempo"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Proporciona uma sensação de segurança Melhora a qualidade de vida",
-          "                               e estabilidade para a família"
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -28725,29 +28453,22 @@
         "type": "table",
         "lines": [
           "Estratégia                     Descrição                            Benefício",
-          "Fazer uma Oferta Inicial",
-          "Conhecer o Limite de Preço     Iniciar a negociação com uma oferta  Estabelece o tom para a negociação",
-          "Responder às Contraofertas     razoável"
+          "Fazer uma Oferta Inicial       Iniciar a negociação com uma oferta razoável  Estabelece o tom para a negociação",
+          "Conhecer o Limite de Preço     Saber o preço máximo que você está disposto a pagar  Evita ultrapassar o orçamento",
+          "Responder às Contraofertas     Estar preparado para negociar após uma contraoferta  Permite chegar a um acordo mutuamente benéfico"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Saber o preço máximo que você está   Evita ultrapassar o orçamento",
-          "                               disposto a pagar"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Estar preparado para negociar após uma Permite chegar a um acordo"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               contraoferta                         mutuamente benéfico"
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -29015,24 +28736,18 @@
         "type": "table",
         "lines": [
           "Questão                         Descrição                            Considerações Legais",
-          "Disputas de Fronteira",
-          "Direitos de Passagem            Conflitos sobre os limites da        É crucial ter documentação precisa e, se",
-          "Responsabilidades com Vizinhos  propriedade.                         necessário, buscar mediação."
+          "Disputas de Fronteira           Conflitos sobre os limites da propriedade.  É crucial ter documentação precisa e, se necessário, buscar mediação.",
+          "Direitos de Passagem            Direitos de passagem para acesso a propriedades vizinhas.  Devem ser claramente definidos e registrados.",
+          "Responsabilidades com Vizinhos  Responsabilidade por danos ou perturbações causadas aos vizinhos.  É importante manter boas relações e resolver questões prontamente."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                                Direitos de passagem para acesso a   Devem ser claramente definidos e",
-          "                                propriedades vizinhas.               registrados."
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                                Responsabilidade por danos ou        É importante manter boas relações e",
-          "                                perturbações causadas aos vizinhos.  resolver questões prontamente."
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -30061,23 +29776,14 @@
         "type": "table",
         "lines": [
           "Critério                       Descrição                              Importância",
-          "Localização                                                           Alta",
-          "                               A localização do imóvel é fundamental",
-          "Estado do Imóvel               para o seu valor e potencial de        Média",
-          "                               valorização.",
-          "Potencial de Rendimento                                               Alta",
-          "                               O estado de conservação do imóvel",
-          "                               afeta diretamente o seu valor e os",
-          "                               custos de manutenção."
+          "Localização                    A localização do imóvel é fundamental para o seu valor e potencial de valorização.  Alta",
+          "Estado do Imóvel               O estado de conservação do imóvel afeta diretamente o seu valor e os custos de manutenção.  Média",
+          "Potencial de Rendimento        O potencial de rendimento do imóvel, seja através de aluguer ou venda, é crucial para a sua valorização.  Alta"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               O potencial de rendimento do imóvel,",
-          "                               seja através de aluguer ou venda, é",
-          "                               crucial para a sua valorização."
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -30792,23 +30498,14 @@
         "type": "table",
         "lines": [
           "Serviço                        Benefício",
-          "Avaliação de Imóveis",
-          "Gestão de Manutenção           Determinar o valor justo do mercado para o seu imóvel."
+          "Avaliação de Imóveis           Determinar o valor justo do mercado para o seu imóvel.",
+          "Gestão de Manutenção           Manter as propriedades em boas condições, aumentando a satisfação dos inquilinos.",
+          "Procura de Inquilinos          Encontrar inquilinos confiáveis, reduzindo o risco de não pagamento."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "Procura de Inquilinos          Manter as propriedades em boas condições, aumentando a",
-          "                               satisfação dos inquilinos."
-        ]
-      },
-      {
-        "type": "table",
-        "lines": [
-          "                               Encontrar inquilinos confiáveis, reduzindo o risco de não",
-          "                               pagamento."
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -31587,29 +31284,22 @@
         "type": "table",
         "lines": [
           "Elemento                       Descrição                                Benefício",
-          "Assunto",
-          "Conteúdo                       O título da sua mensagem que aparece     Aumenta a taxa de abertura.",
-          "Chamada para Ação              na caixa de entrada."
+          "Assunto                        O título da sua mensagem que aparece na caixa de entrada.  Aumenta a taxa de abertura.",
+          "Conteúdo                       O corpo da mensagem, incluindo texto e imagens.  Engaja o leitor e comunica a sua mensagem.",
+          "Chamada para Ação              Um botão ou link que direciona o leitor para uma ação específica.  Converte o interesse em ação."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               O corpo da mensagem, incluindo texto e Engaja o leitor e comunica a sua"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               imagens.                                 mensagem."
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Um botão ou link que direciona o leitor  Converte o interesse em ação.",
-          "                               para uma ação específica."
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -31647,24 +31337,18 @@
         "type": "table",
         "lines": [
           "Ferramenta                     Funcionalidades                       Preço",
-          "Google Analytics",
-          "SEMrush                        Análise de tráfego, comportamento do  Grátis",
-          "Ahrefs                         usuário, conversões"
+          "Google Analytics               Análise de tráfego, comportamento do usuário, conversões  Grátis",
+          "SEMrush                        Análise de SEO, auditoria de site, análise de concorrentes  A partir de €99,95/mês",
+          "Ahrefs                         Análise de backlinks, pesquisa de palavras-chave, análise de conteúdo  A partir de €99/mês"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Análise de SEO, auditoria de site, análise A partir de 99,95/mês",
-          "                               de concorrentes"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Análise de backlinks, pesquisa de     A partir de 99/mês",
-          "                               palavras-chave, análise de conteúdo"
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -32546,24 +32230,18 @@
         "type": "table",
         "lines": [
           "Vantagens                                Descrição",
-          "Acesso a uma ampla gama de propriedades",
-          "Negociação especializada                 Os agentes têm acesso a muitos imóveis. Isso aumenta as",
-          "Conhecimento do mercado                  chances de achar o que você procura."
+          "Acesso a uma ampla gama de propriedades  Os agentes têm acesso a muitos imóveis. Isso aumenta as chances de achar o que você procura.",
+          "Negociação especializada                 Os agentes sabem como negociar. Isso beneficia os compradores, ajudando a obter melhores condições.",
+          "Conhecimento do mercado                  Os profissionais estão sempre atualizados. Eles ajudam a tomar decisões informadas."
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                                         Os agentes sabem como negociar. Isso beneficia os",
-          "                                         compradores, ajudando a obter melhores condições."
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                                         Os profissionais estão sempre atualizados. Eles ajudam a",
-          "                                         tomar decisões informadas."
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -32898,30 +32576,22 @@
         "type": "table",
         "lines": [
           "Fator                          Descrição                        Importância",
-          "Localização",
-          "Tipologia de Imóvel            Acessibilidade a serviços e      Alta",
-          "Exigências do Mercado-Alvo",
-          "                               infraestruturas"
+          "Localização                    Acessibilidade a serviços e infraestruturas  Alta",
+          "Tipologia de Imóvel            Tipo de propriedade (apartamento, casa, etc.)  Média",
+          "Exigências do Mercado-Alvo     Necessidades e preferências dos inquilinos  Alta"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Tipo de propriedade (apartamento, casa, Média",
-          "                               etc.)"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Necessidades e preferências dos  Alta"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               inquilinos"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -33728,18 +33398,14 @@
         "type": "table",
         "lines": [
           "Tipo de Imóvel                 Características                        Vantagens",
-          "Apartamentos e Estúdios",
-          "Moradias e Vivendas            Compactos, modernos, vistas para o mar Manutenção reduzida, segurança",
-          "Terrenos para Construção",
-          "                               Espaçosos, jardins privados, piscinas  Espaço amplo, privacidade"
+          "Apartamentos e Estúdios        Compactos, modernos, vistas para o mar  Manutenção reduzida, segurança",
+          "Moradias e Vivendas            Espaçosos, jardins privados, piscinas  Espaço amplo, privacidade",
+          "Terrenos para Construção       Flexibilidade para construção personalizada  Potencial de valorização, liberdade criativa"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Flexibilidade para construção          Potencial de valorização, liberdade",
-          "                               personalizada                          criativa"
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -35229,17 +34895,14 @@
         "type": "table",
         "lines": [
           "Factor                         Descrição  Impacto na Valorização",
-          "Localização",
-          "Características Estruturais    Proximidade a serviços e infraestruturas Alta",
-          "Condições Económicas",
-          "                               Estado de conservação e acabamentos Média/Alta"
+          "Localização                    Proximidade a serviços e infraestruturas  Alta",
+          "Características Estruturais    Estado de conservação e acabamentos  Média/Alta",
+          "Condições Económicas           Taxas de juro e crescimento económico  Alta"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Taxas de juro e crescimento económico Alta"
-        ]
+        "lines": []
       },
       {
         "type": "paragraph",
@@ -35489,22 +35152,18 @@
         "type": "table",
         "lines": [
           "Aspecto                        Descrição                            Impacto na Avaliação",
-          "Localização",
-          "Estado do Imóvel               Acessibilidade e visibilidade        Alta"
+          "Localização                    Acessibilidade e visibilidade  Alta",
+          "Estado do Imóvel               Condições físicas e necessidade de reparos  Média",
+          "Condições de Mercado           Demanda e oferta de imóveis comerciais  Alta"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "Condições de Mercado           Condições físicas e necessidade de   Média",
-          "                               reparos"
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Demanda e oferta de imóveis comerciais Alta"
-        ]
+        "lines": []
       },
       {
         "type": "heading",
@@ -35763,24 +35422,18 @@
         "type": "table",
         "lines": [
           "Aspecto                        Descrição  Importância",
-          "Histórico de Propriedade",
-          "Estado de Conservação          Verificar se há disputas ou ônus sobre a Alta",
-          "Localização                    propriedade."
+          "Histórico de Propriedade       Verificar se há disputas ou ônus sobre a propriedade.  Alta",
+          "Estado de Conservação          Avaliar se o imóvel necessita de reparos significativos.  Média/Alta",
+          "Localização                    Considerar a proximidade a serviços e infraestruturas.  Alta"
         ]
       },
       {
         "type": "table",
-        "lines": [
-          "                               Avaliar se o imóvel necessita de reparos Média/Alta",
-          "                               significativos."
-        ]
+        "lines": []
       },
       {
         "type": "table",
-        "lines": [
-          "                               Considerar a proximidade a serviços e Alta",
-          "                               infraestruturas."
-        ]
+        "lines": []
       },
       {
         "type": "heading",
