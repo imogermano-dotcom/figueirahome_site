@@ -4,23 +4,24 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, ChevronRight } from "lucide-react";
 import { VideoFooter } from "@/components/video-footer";
-import { blogPosts, formatBlogDate, getBlogPost, getRelatedBlogPosts, mergeBlogTableBlocks, toBlogTable } from "@/lib/blog";
+import { getAllBlogPosts, formatBlogDate, getBlogPost, getRelatedBlogPosts, mergeBlogTableBlocks, toBlogTable } from "@/lib/blog";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const post = getBlogPost(slug);
+  const post = await getBlogPost(slug);
   return post ? { title: post.title, description: post.description } : { title: "Artigo não encontrado" };
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const blogPosts = await getAllBlogPosts();
   return blogPosts.map(({ slug }) => ({ slug }));
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = getBlogPost(slug);
+  const post = await getBlogPost(slug);
   if (!post) notFound();
-  const relatedPosts = getRelatedBlogPosts(slug);
+  const relatedPosts = await getRelatedBlogPosts(slug);
   const articleBlocks = mergeBlogTableBlocks(post.blocks);
 
   return (

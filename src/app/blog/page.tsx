@@ -3,14 +3,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, BookOpen, ChevronRight } from "lucide-react";
 import { VideoFooter } from "@/components/video-footer";
-import { blogPosts, formatBlogDate } from "@/lib/blog";
+import { getAllBlogPosts, formatBlogDate } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "Blog",
   description: "Guias práticos da Figueira Home para comprar e vender casa na Figueira da Foz."
 };
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const blogPosts = await getAllBlogPosts();
   const featuredPost = [...blogPosts].sort((first, second) => (second.publishedAt ?? "").localeCompare(first.publishedAt ?? ""))[0];
   const remainingPosts = blogPosts.filter((post) => post.slug !== featuredPost.slug);
   const featuredParagraphs = featuredPost.blocks.filter((block) => block.type === "paragraph").slice(0, 2);

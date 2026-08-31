@@ -1,5 +1,3 @@
-import archive from "@/content/blog-archive.json";
-
 export type BlogBlock =
   | { type: "heading"; text: string }
   | { type: "paragraph"; text: string }
@@ -37,7 +35,22 @@ export type BlogPost = {
   blocks: BlogBlock[];
 };
 
-export const blogPosts = archive as BlogPost[];
+// Lazy-loaded: blog-archive.json is ~3MB, and importing it at module top-level
+// forces every cold Worker isolate to parse it even for requests that never
+// touch the blog (OpenNext bundles all routes into one script). Loading it
+// only when a blog function actually runs keeps non-blog cold starts fast.
+let cachedPosts: BlogPost[] | null = null;
+async function loadBlogPosts(): Promise<BlogPost[]> {
+  if (!cachedPosts) {
+    const archive = await import("@/content/blog-archive.json");
+    cachedPosts = archive.default as BlogPost[];
+  }
+  return cachedPosts;
+}
+
+export async function getAllBlogPosts() {
+  return loadBlogPosts();
+}
 
 function splitTableLine(line: string, columnCount: number) {
   const cells = line.replace(/\u00a0/g, " ").trimEnd().split(/ {2,}/).map((cell) => cell.trim());
@@ -121,15 +134,17 @@ export function mergeBlogTableBlocks(blocks: BlogBlock[]) {
   return mergedBlocks;
 }
 
-export function getBlogPost(slug: string) {
-  return blogPosts.find((post) => post.slug === slug);
+export async function getBlogPost(slug: string) {
+  const posts = await loadBlogPosts();
+  return posts.find((post) => post.slug === slug);
 }
 
-export function getRelatedBlogPosts(slug: string, max = 3) {
-  const currentPost = getBlogPost(slug);
+export async function getRelatedBlogPosts(slug: string, max = 3) {
+  const posts = await loadBlogPosts();
+  const currentPost = posts.find((post) => post.slug === slug);
   if (!currentPost) return [];
 
-  const otherPosts = blogPosts.filter((post) => post.slug !== slug);
+  const otherPosts = posts.filter((post) => post.slug !== slug);
   const sameCategory = otherPosts.filter((post) => post.category === currentPost.category);
   const remainingPosts = otherPosts.filter((post) => post.category !== currentPost.category);
 
