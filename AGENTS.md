@@ -5,7 +5,8 @@ Handoff operacional atualizado em 2026-08-29. Manter este ficheiro abaixo de 200
 ## Estado atual
 
 - Site institucional e catálogo imobiliário em Next.js App Router, Supabase, Cloudflare Workers, contactos, recrutamento e chat AI.
-- Produção: `https://figueira-home.miguel-germano.workers.dev` (Worker `figueira-home`). Último deploy validado: `a8373bf2-0fe9-4c56-ae74-5dab510ac398`, em 2026-08-28 (commit `cd060f9`).
+- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains, desde 2026-08-31). `https://figueira-home.miguel-germano.workers.dev` continua ativo como preview/backup (`workers_dev: true` em `wrangler.jsonc`). Último deploy: `fa6e45cb-9889-43d6-9051-993fcb2d0588`, em 2026-08-31.
+- Domínio `figueirahome.pt` já estava na Cloudflare, mesma conta do Worker (`miguel.germano@gmail.com`). Site antigo (WordPress, VPS CloudPanel `165.22.31.75`) continua a correr no VPS, só deixou de ser apontado pelo domínio — acessível por IP direto se precisar. Cutover exigiu apagar manualmente 6 registos DNS (A+2×AAAA em `figueirahome.pt` e `www`) "geridos externamente" que bloqueavam a criação do Custom Domain (erro Cloudflare 100117). Email (MX Microsoft 365 + SendGrid, SPF/DKIM/DMARC), `cloudpanel.`, `lp.`, `sip.` — todos intocados, confirmado.
 - Branch: `teste/alteracao-cliente`. HEAD local em `cd060f9`; nada por commitar (só `next-env.d.ts` modificado por tooling e os ficheiros locais fora de escopo abaixo).
 - Servidor local: `http://localhost:3000` (`npm run dev`, Turbopack). Bug recorrente: CSS compilado fica preso em cache e HMR não aplica edições a `globals.css`/CSS scoped — ver "Bugs conhecidos".
 - Produção usa `npm run deploy` (`opennextjs-cloudflare build && deploy`); não usar Turbopack para produção.
