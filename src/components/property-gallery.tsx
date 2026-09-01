@@ -93,7 +93,7 @@ export function PropertyGallery({ images, title, contentLabel = "fotografia" }: 
 
       {isLightboxOpen && (
         <div className="fixed inset-0 z-[100] grid bg-black/95 p-4" role="dialog" aria-modal="true" aria-label={`${contentLabel === "planta" ? "Planta" : "Fotografia"} ${activeIndex + 1} de ${images.length}: ${title}`}>
-          <div className="relative m-auto flex h-full w-full max-w-6xl items-center justify-center">
+          <div className="relative m-auto flex h-full w-full items-center justify-center">
             {isPdfUrl(activeImage.url) ? (
               <a href={activeImage.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-3 text-white"><FileText size={64} aria-hidden="true" /><span className="text-sm font-extrabold">Abrir planta em PDF</span></a>
             ) : (
