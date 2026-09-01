@@ -3,7 +3,7 @@ import { ContactForm } from "@/components/contact-form";
 import { VideoFooter } from "@/components/video-footer";
 import { fixedPhone, mobilePhone, phoneCallCost } from "@/lib/contact-details";
 
-export const metadata: Metadata = { title: "Contacto", description: "Contacte a Figueira Home para comprar, vender, arrendar ou pedir avaliação gratuita." };
+export const metadata: Metadata = { title: "Contacto", description: "Contacte a Figueira Home para comprar, vender, arrendar ou pedir avaliação gratuita.", alternates: { canonical: "/contacto" } };
 
 export default function ContactPage() {
   return (

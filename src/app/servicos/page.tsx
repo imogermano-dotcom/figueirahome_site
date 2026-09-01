@@ -9,7 +9,8 @@ import { ServicosContactForm } from "@/components/servicos/contact-form";
 
 export const metadata: Metadata = {
   title: "Serviços para Proprietários",
-  description: "Figueira Home · AMI 7968 · Desde 2009. Pré-venda nas redes sociais com minifilmes e IA: 247 leads por imóvel em média e imóveis vendidos sem chegarem aos portais."
+  description: "Figueira Home · AMI 7968 · Desde 2009. Pré-venda nas redes sociais com minifilmes e IA: 247 leads por imóvel em média e imóveis vendidos sem chegarem aos portais.",
+  alternates: { canonical: "/servicos" }
 };
 
 const metrics = [

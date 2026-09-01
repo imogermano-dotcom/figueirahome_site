@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { BarChart3, Camera, ClipboardList, Home, KeyRound, Megaphone, MoveRight, ShieldCheck } from "lucide-react";
 import Image from "next/image";
@@ -9,6 +10,8 @@ import { ScrollEffects } from "@/components/scroll-effects";
 import { VideoFooter } from "@/components/video-footer";
 import { HeroExperience } from "@/components/hero-experience";
 import { PropertyTotal } from "@/components/property-total";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default async function HomePage() {
   const [featured, allProperties] = await Promise.all([

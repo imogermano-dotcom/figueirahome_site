@@ -9,7 +9,9 @@ import { getAllBlogPosts, formatBlogDate, getBlogPost, getRelatedBlogPosts, merg
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getBlogPost(slug);
-  return post ? { title: post.title, description: post.description } : { title: "Artigo não encontrado" };
+  return post
+    ? { title: post.title, description: post.description, alternates: { canonical: `/blog/${slug}` } }
+    : { title: "Artigo não encontrado" };
 }
 
 export async function generateStaticParams() {

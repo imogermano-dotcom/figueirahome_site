@@ -7,7 +7,8 @@ import { VideoFooter } from "@/components/video-footer";
 
 export const metadata: Metadata = {
   title: "Quem Somos",
-  description: "Conhe\u00e7a a Figueira Home, imobili\u00e1ria local na Figueira da Foz, licenciada com AMI 7968."
+  description: "Conhe\u00e7a a Figueira Home, imobili\u00e1ria local na Figueira da Foz, licenciada com AMI 7968.",
+  alternates: { canonical: "/quem-somos" }
 };
 
 const principles = [

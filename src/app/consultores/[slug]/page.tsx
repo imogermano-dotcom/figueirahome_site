@@ -14,12 +14,14 @@ function getMember(slug: string) {
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const member = getMember((await params).slug);
+  const { slug } = await params;
+  const member = getMember(slug);
   if (!member) return { title: "Consultor não encontrado" };
 
   return {
     title: member.name,
-    description: `${member.name} — ${member.role} na Figueira Home, imobiliária na Figueira da Foz.`
+    description: `${member.name} — ${member.role} na Figueira Home, imobiliária na Figueira da Foz.`,
+    alternates: { canonical: `/consultores/${slug}` }
   };
 }
 

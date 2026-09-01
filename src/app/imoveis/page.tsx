@@ -6,7 +6,8 @@ import { PropertyResults } from "@/components/property-results";
 
 export const metadata: Metadata = {
   title: "Imóveis",
-  description: "Imóveis publicados da Figueira Home na Figueira da Foz, com filtros por negócio, tipo, localização, preço, quartos e área em m²."
+  description: "Imóveis publicados da Figueira Home na Figueira da Foz, com filtros por negócio, tipo, localização, preço, quartos e área em m².",
+  alternates: { canonical: "/imoveis" }
 };
 
 export default async function PropertiesPage({ searchParams }: { searchParams: Promise<PropertyFilters> }) {

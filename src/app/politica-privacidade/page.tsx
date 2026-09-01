@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { VideoFooter } from "@/components/video-footer";
 
-export const metadata: Metadata = { title: "Política de Privacidade", description: "Política de privacidade da Figueira Home." };
+export const metadata: Metadata = { title: "Política de Privacidade", description: "Política de privacidade da Figueira Home.", alternates: { canonical: "/politica-privacidade" } };
 
 export default function PrivacyPage() {
   return <><main className="legal-page bg-[var(--offwhite)] pt-28"><article className="container max-w-4xl py-14 md:py-20"><Link href="/" className="text-sm font-bold text-[var(--blue)]">← Voltar ao início</Link><p className="eyebrow mt-10">Figueira Home</p><h1 className="section-title mt-4">Política de Privacidade</h1><p className="mt-4 text-sm text-[var(--muted)]">Última atualização: 28 de agosto de 2026</p><div className="privacy-prose mt-12">

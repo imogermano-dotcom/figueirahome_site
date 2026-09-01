@@ -22,7 +22,8 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
 
   return {
     title: property.title,
-    description: `${summary}.`
+    description: `${summary}.`,
+    alternates: { canonical: `/imoveis/${slug}` }
   };
 }
 

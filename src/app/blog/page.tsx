@@ -7,7 +7,8 @@ import { getAllBlogPosts, formatBlogDate } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "Blog",
-  description: "Guias práticos da Figueira Home para comprar e vender casa na Figueira da Foz."
+  description: "Guias práticos da Figueira Home para comprar e vender casa na Figueira da Foz.",
+  alternates: { canonical: "/blog" }
 };
 
 export default async function BlogPage() {

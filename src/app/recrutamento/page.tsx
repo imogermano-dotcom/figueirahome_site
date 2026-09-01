@@ -12,7 +12,7 @@ import { VideoFooter } from "@/components/video-footer";
 const recruitBody = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-recruit-body", display: "swap" });
 const recruitDisplay = Plus_Jakarta_Sans({ subsets: ["latin"], weight: ["600", "700", "800"], variable: "--font-recruit-display", display: "swap" });
 
-export const metadata: Metadata = { title: "Recrutamento", description: "O imobiliário pode transformar a tua vida. Recrutamento na Figueira Home: método, acompanhamento e formação, mesmo sem experiência." };
+export const metadata: Metadata = { title: "Recrutamento", description: "O imobiliário pode transformar a tua vida. Recrutamento na Figueira Home: método, acompanhamento e formação, mesmo sem experiência.", alternates: { canonical: "/recrutamento" } };
 
 const fitReasons = [
   [Briefcase, "Estás insatisfeito com o teu trabalho atual", "Trabalhas muito, mas sentes pouco reconhecimento, pouca margem de crescimento ou pouca perspetiva de evolução."],

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { VideoFooter } from "@/components/video-footer";
 
-export const metadata: Metadata = { title: "Empreendimentos", description: "Empreendimentos e projetos acompanhados pela Figueira Home." };
+export const metadata: Metadata = { title: "Empreendimentos", description: "Empreendimentos e projetos acompanhados pela Figueira Home.", alternates: { canonical: "/empreendimentos" } };
 
 export default function DevelopmentsPage() {
   return (
