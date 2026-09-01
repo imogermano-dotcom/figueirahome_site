@@ -91,7 +91,7 @@ export function ServicosContactForm() {
 
       <button type="submit" className="btn btn--gold btn--block" disabled={state === "sending"}>{state === "sending" ? "A enviar..." : "Quero saber mais"}</button>
       {state === "error" && (
-        <p className="form__err is-visible" role="alert">Não foi possível enviar o pedido. Tente novamente ou fale connosco diretamente: <a href="tel:+351233408130">233 408 130</a> · <a href="https://wa.me/351928318953" target="_blank" rel="noopener">WhatsApp 928 318 953</a>.</p>
+        <p className="form__err is-visible" role="alert">Não foi possível enviar o pedido. Tente novamente ou fale connosco diretamente: <a href="tel:+351233408130">233 408 130</a> · <a href="https://wa.me/351913702002" target="_blank" rel="noopener">WhatsApp 913 702 002</a>.</p>
       )}
     </form>
   );

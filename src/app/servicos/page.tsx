@@ -498,9 +498,9 @@ export default function ServicosPage() {
                   <div className="contact__direct">
                     <a href="tel:+351233408130"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1.5 1.5 0 0 1-1.7 1.5A16.5 16.5 0 0 1 3.5 5.7 1.5 1.5 0 0 1 5 4z" /></svg>233 408 130</a>
                     <a href="mailto:geral@figueirahome.pt"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5" /><path d="m3.5 7 8.5 6 8.5-6" /></svg>geral@figueirahome.pt</a>
-                    <a href="https://wa.me/351928318953" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.7a8.5 8.5 0 0 1-12.6 7.5L3.5 20.5l1.4-4.3A8.5 8.5 0 1 1 20.5 11.7z" /><path d="M9 9.2c.3-.7.6-.7.9-.7h.7c.2 0 .5 0 .7.6l.7 1.7c0 .3 0 .5-.2.7l-.4.5c-.2.2-.3.4-.1.7a6 6 0 0 0 2.8 2.4c.3.1.5.1.7-.1l.6-.7c.2-.2.4-.2.6-.1l1.6.8c.3.1.4.3.4.5 0 .8-.6 1.6-1.4 1.8-1.6.4-4-.7-5.6-2.3-1.5-1.6-2.4-3.4-2-4.9z" /></svg>WhatsApp · 928 318 953</a>
+                    <a href="https://wa.me/351913702002" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.7a8.5 8.5 0 0 1-12.6 7.5L3.5 20.5l1.4-4.3A8.5 8.5 0 1 1 20.5 11.7z" /><path d="M9 9.2c.3-.7.6-.7.9-.7h.7c.2 0 .5 0 .7.6l.7 1.7c0 .3 0 .5-.2.7l-.4.5c-.2.2-.3.4-.1.7a6 6 0 0 0 2.8 2.4c.3.1.5.1.7-.1l.6-.7c.2-.2.4-.2.6-.1l1.6.8c.3.1.4.3.4.5 0 .8-.6 1.6-1.4 1.8-1.6.4-4-.7-5.6-2.3-1.5-1.6-2.4-3.4-2-4.9z" /></svg>WhatsApp · 913 702 002</a>
                   </div>
-                  <p className="contact__custo">233 408 130 — custo de uma chamada para um operador fixo nacional.<br />928 318 953 — custo da chamada para a rede móvel nacional.</p>
+                  <p className="contact__custo">233 408 130 — custo de uma chamada para um operador fixo nacional.<br />913 702 002 — custo da chamada para a rede móvel nacional.</p>
                 </div>
                 <div className="reveal">
                   <ServicosContactForm />
