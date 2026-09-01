@@ -81,7 +81,7 @@ export default async function HomePage() {
         </div>
         <div className="mt-16 grid gap-8 md:grid-cols-[260px_1fr]">
           <div>
-            <h2 className="section-title">Os Nossos Diferenciais</h2>
+            <h2 className="section-title">Não é só pôr a casa à venda</h2>
             <p className="mt-4 leading-7 text-[var(--muted)]">Tecnologia, transparência e dedicação total ao seu processo imobiliário.</p>
           </div>
           <div className="fade grid gap-6 sm:grid-cols-2">
