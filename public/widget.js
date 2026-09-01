@@ -6,9 +6,12 @@
  *
  *   <script src="/caminho/para/widget.js" defer></script>
  *
- * Para apontar a outro backend (ex.: staging), define ANTES do <script>:
+ * Por omissão fala com /api/site-chat (mesma origem) -- essa rota é um proxy
+ * no Worker do site que reencaminha para o backend real e injeta a chave
+ * partilhada (o browser nunca a vê). Para apontar a outro backend/proxy
+ * (ex.: staging), define ANTES do <script>:
  *
- *   <script>window.FIGUEIRAHOME_CHAT_API = "https://outro-host/api/site/chat";</script>
+ *   <script>window.FIGUEIRAHOME_CHAT_API = "https://outro-host/api/site-chat";</script>
  *
  * Cada visitante recebe um id aleatório guardado em localStorage -- mesma
  * conversa ao navegar entre páginas do site, sem histórico entre
@@ -17,7 +20,7 @@
 (function () {
   "use strict";
 
-  var API_URL = window.FIGUEIRAHOME_CHAT_API || "https://figueirahome-agentos.fly.dev/api/site/chat";
+  var API_URL = window.FIGUEIRAHOME_CHAT_API || "/api/site-chat";
   var STORAGE_KEY = "fh_chat_participante";
   var MAX_MENSAGEM = 2000;
 
