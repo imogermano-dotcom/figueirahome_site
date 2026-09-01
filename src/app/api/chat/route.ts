@@ -14,7 +14,16 @@ Para recomendar imóveis, usa a ferramenta searchProperties e sugere apenas resu
 Antes de criar um lead por chat, confirma que tens nome e pelo menos email ou telefone.`;
 
 export async function POST(req: Request) {
-  const { messages }: { messages: UIMessage[] } = await req.json();
+  let messages: UIMessage[];
+  try {
+    ({ messages } = await req.json());
+  } catch {
+    return Response.json({ error: "invalid JSON" }, { status: 400 });
+  }
+  if (!Array.isArray(messages) || messages.length === 0) {
+    return Response.json({ error: "messages must be a non-empty array" }, { status: 400 });
+  }
+
   const result = streamText({
     model: process.env.AI_MODEL || "openai/gpt-5.4",
     system: instructions,
