@@ -57,7 +57,7 @@ export default async function HomePage() {
             <p className="mt-5 leading-8 text-[var(--muted)]">A Figueira Home nasceu em 2009 com o objetivo de fazer a diferença no mercado imobiliário local. Apostamos em métodos de trabalho inovadores, tecnologia digital avançada e numa abordagem transparente.</p>
             <p className="mt-4 leading-8 text-[var(--muted)]">Somos uma equipa local, licenciada pela IMPIC (AMI 7968), com conhecimento de cada zona, rua e bairro da Figueira da Foz.</p>
             <div className="mt-8 flex flex-wrap gap-8">
-              {[[allProperties.length || 78, "Imóveis disponíveis"], [15, "Anos de experiência"], [500, "Transações"]].map(([n, label]) => (
+              {[[300, "Famílias satisfeitas"], [15, "Anos de experiência"], [500, "Transações"]].map(([n, label]) => (
                 <div key={String(label)}>
                   <div className="display-font text-3xl font-extrabold text-[var(--blue)]"><span className="count-num" data-count={n}>{n}</span><span className="text-[var(--gold)]">+</span></div>
                   <div className="text-sm font-bold text-[var(--muted)]">{label}</div>
