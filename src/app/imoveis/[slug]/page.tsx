@@ -74,7 +74,7 @@ export default async function PropertyDetailPage({ params, searchParams }: { par
               <h2 className="mt-10 text-2xl font-extrabold">Descrição</h2>
               <p className="mt-4 whitespace-pre-line leading-8 text-[var(--muted)]">{property.description}</p>
               {property.floor_plans && property.floor_plans.length > 0 && (
-                <section className="mt-10 border-l-4 border-[var(--gold)] pl-5" aria-labelledby="floor-plans-title">
+                <section className="mt-10" aria-labelledby="floor-plans-title">
                   <p className="text-sm font-extrabold uppercase tracking-[1.5px] text-[var(--gold)]">Documentação do imóvel</p>
                   <h2 id="floor-plans-title" className="mt-2 text-2xl font-extrabold">Plantas do imóvel</h2>
                   <div className="mt-5"><PropertyGallery images={property.floor_plans} title={property.title} contentLabel="planta" /></div>
