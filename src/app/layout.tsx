@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { SiteChrome } from "@/components/site-chrome";
-import { ChatWidget } from "@/components/chat-widget";
 import { AnalyticsScripts } from "@/components/analytics-scripts";
 import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 
@@ -56,7 +56,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="pt-PT" className={`${dmSans.variable} ${displaySerif.variable}`}>
       <body>
         <SiteChrome>{children}</SiteChrome>
-        <ChatWidget />
+        <Script src="/widget.js" strategy="afterInteractive" />
         <CookieConsentBanner />
         <AnalyticsScripts />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />

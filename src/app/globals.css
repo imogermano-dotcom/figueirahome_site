@@ -474,21 +474,6 @@ html.translated-rtl body { top: 0 !important; }
   .about-hero-overlay {
     background: linear-gradient(90deg, rgba(5, 17, 33, 0.88), rgba(5, 17, 33, 0.42) 100%);
   }
-  .chat-widget {
-    right: 14px;
-    bottom: 14px;
-  }
-  .chat-toggle {
-    width: 48px;
-    height: 48px;
-    min-height: 48px;
-    padding: 0;
-  }
-  .chat-panel {
-    width: calc(100vw - 28px);
-    height: min(560px, calc(100dvh - 92px));
-    max-height: calc(100dvh - 92px);
-  }
 }
 
 
