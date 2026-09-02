@@ -412,6 +412,7 @@ html.translated-rtl body { top: 0 !important; }
 .recruitment-page input[type="range"] { accent-color: var(--r-accent); }
 .recruitment-page details > summary { list-style: none; }
 .recruitment-page details > summary::-webkit-details-marker { display: none; }
+.pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
 .privacy-prose { display:grid; gap:32px; color:var(--muted); font-size:1rem; line-height:1.8; }.privacy-prose h2 { margin-bottom:10px; color:var(--text); font-size:1.35rem; font-weight:800; }.privacy-prose p + p { margin-top:12px; }.privacy-prose a { color:var(--blue); font-weight:800; text-decoration:underline; }
 
 .hero-experience { min-height:900px; }

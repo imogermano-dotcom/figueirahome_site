@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { recruitmentQuestions, scoreRecruitmentAnswers } from "@/lib/recruitment";
+import { recruitmentQuestions, scoreRecruitmentAnswers, mailerliteGroupEnvByLevel } from "@/lib/recruitment";
 import { getSupabaseServiceClient } from "@/lib/supabase";
+import { upsertMailerLiteSubscriber } from "@/lib/mailerlite";
 
 const RecruitmentSchema = z.object({
   name: z.string().trim().min(2).max(120), email: z.string().trim().email(), phone: z.string().trim().min(6).max(40),
@@ -11,19 +12,12 @@ const RecruitmentSchema = z.object({
   answers: z.array(z.number().int().min(0).max(3)).length(recruitmentQuestions.length), website: z.string().max(0).optional()
 });
 
-const groupEnvByLevel = { muito_alinhado: "MAILERLITE_RECRUTAMENTO_GRUPO_MUITO_ALINHADO", bom_potencial: "MAILERLITE_RECRUTAMENTO_GRUPO_BOM_POTENCIAL", potencial_com_reservas: "MAILERLITE_RECRUTAMENTO_GRUPO_COM_RESERVAS", menos_alinhado: "MAILERLITE_RECRUTAMENTO_GRUPO_MENOS_ALINHADO" } as const;
-
-async function syncMailerLite(input: z.infer<typeof RecruitmentSchema>, level: keyof typeof groupEnvByLevel) {
-  const apiKey = process.env.MAILERLITE_API_KEY;
-  const groupId = process.env[groupEnvByLevel[level]];
-  if (!apiKey || !groupId) return { status: "pendente", error: "Configura\u00e7\u00e3o MailerLite em falta" };
-  try {
-    const response = await fetch("https://connect.mailerlite.com/api/subscribers", { method: "POST", headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" }, body: JSON.stringify({ email: input.email, groups: [groupId], fields: { name: input.name, phone: input.phone, localidade: input.location, nivel_recrutamento: level } }) });
-    return response.ok ? { status: "sincronizado", error: null } : { status: "erro", error: `MailerLite respondeu ${response.status}` };
-  } catch (error) {
-    console.error("MailerLite request failed", error);
-    return { status: "erro", error: "N\u00e3o foi poss\u00edvel contactar o MailerLite" };
-  }
+async function syncMailerLite(input: z.infer<typeof RecruitmentSchema>, level: keyof typeof mailerliteGroupEnvByLevel) {
+  return upsertMailerLiteSubscriber({
+    email: input.email,
+    groupId: process.env[mailerliteGroupEnvByLevel[level]],
+    fields: { name: input.name, phone: input.phone, localidade: input.location, nivel_recrutamento: level }
+  });
 }
 
 export async function POST(request: Request) {

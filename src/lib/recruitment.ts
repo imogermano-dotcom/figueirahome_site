@@ -77,6 +77,13 @@ export const recruitmentQuestions = [
   ] }
 ] as const;
 
+export const mailerliteGroupEnvByLevel: Record<RecruitmentLevel, string> = {
+  muito_alinhado: "MAILERLITE_RECRUTAMENTO_GRUPO_MUITO_ALINHADO",
+  bom_potencial: "MAILERLITE_RECRUTAMENTO_GRUPO_BOM_POTENCIAL",
+  potencial_com_reservas: "MAILERLITE_RECRUTAMENTO_GRUPO_COM_RESERVAS",
+  menos_alinhado: "MAILERLITE_RECRUTAMENTO_GRUPO_MENOS_ALINHADO"
+};
+
 export function getRecruitmentLevel(score: number): RecruitmentLevel {
   if (score >= 24) return "muito_alinhado";
   if (score >= 18) return "bom_potencial";

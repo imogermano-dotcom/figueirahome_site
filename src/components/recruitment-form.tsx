@@ -52,18 +52,24 @@ export function RecruitmentQuiz() {
 
   async function sendReport(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!finalAnswers) return;
     const form = new FormData(event.currentTarget);
     const name = String(form.get("report_name") || "").trim() || "Visitante";
     const email = String(form.get("report_email") || "").trim();
     setReportState("sending");
-    const response = await fetch("/api/leads", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({
-      source: "form", name, email, message: `Relatório do questionário de perfil: ${score}/30 pontos — ${tier.title}.`, request_type: "recrutamento_relatorio", privacy_consent: true
+    const breakdown = finalAnswers.map((answerIndex, index) => {
+      const q = recruitmentQuestions[index];
+      const option = q.options[answerIndex];
+      return { pergunta: q.text, dimensao: q.measures, resposta: option.label, pontos: option.points };
+    });
+    const response = await fetch("/api/quiz-report", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({
+      name, email, score, level, breakdown
     }) });
     setReportState(response.ok ? "success" : "error");
   }
 
   const finalAnswers = answers.every((a) => a >= 0) ? answers : null;
-  const { score } = finalAnswers ? scoreRecruitmentAnswers(finalAnswers) : { score: 0 };
+  const { score, level } = finalAnswers ? scoreRecruitmentAnswers(finalAnswers) : { score: 0, level: "menos_alinhado" as const };
   const tier = TIERS.find((t) => score >= t.min && score <= t.max) ?? TIERS[TIERS.length - 1];
 
   return (
@@ -111,7 +117,10 @@ export function RecruitmentQuiz() {
 
               <div className="mx-auto mt-8 max-w-md rounded-xl border border-[var(--r-accent)]/40 bg-[var(--r-accent)]/10 p-6 text-left">
                 {reportState === "success" ? (
-                  <p className="flex items-center gap-2 text-sm font-bold text-[var(--r-primary)]"><CheckCircle2 size={18} className="text-[var(--r-accent-fg)]" /> Relatório enviado. Verifica o teu email.</p>
+                  <div>
+                    <p className="flex items-center gap-2 text-sm font-bold text-[var(--r-primary)]"><CheckCircle2 size={18} className="text-[var(--r-accent-fg)]" /> Relatório enviado. Verifica o teu email.</p>
+                    <p className="mt-2 text-xs text-[var(--r-muted-fg)]">Não encontras o email? Verifica a pasta de spam ou lixo.</p>
+                  </div>
                 ) : (
                   <form onSubmit={sendReport} className="grid gap-3">
                     <p className="flex items-center gap-2 text-sm font-bold text-[var(--r-primary)]"><Mail size={16} className="text-[var(--r-accent-fg)]" /> Recebe o teu relatório de perfil por email</p>

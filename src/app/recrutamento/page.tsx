@@ -7,6 +7,8 @@ import { RecruitmentLeadForm, RecruitmentQuiz } from "@/components/recruitment-f
 import { IncomeSimulator } from "@/components/recruitment/income-simulator";
 import { PotentialChart } from "@/components/recruitment/potential-chart";
 import { Trainers } from "@/components/recruitment/trainers";
+import { ScrollProgress } from "@/components/recruitment/scroll-progress";
+import { MobileCtaBar } from "@/components/recruitment/mobile-cta-bar";
 import { VideoFooter } from "@/components/video-footer";
 
 const recruitBody = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-recruit-body", display: "swap" });
@@ -70,7 +72,13 @@ const processSteps = [
   ["04", "Decidimos o próximo passo", "Se houver alinhamento, avançamos para uma fase seguinte com mais detalhe."]
 ];
 
-const commonDoubts = ["“Mas eu não tenho experiência.”", "“E se eu não conseguir?”", "“Vou estar sozinho no início?”", "“E se isto não for para mim?”", "“Tenho de decidir já?”"];
+const commonDoubts = [
+  ["“Mas eu não tenho experiência.”", "Não. Valorizamos mais perfil, atitude, vontade de aprender e capacidade de evoluir."],
+  ["“E se eu não conseguir?”", "Ninguém entra sozinho nem sem preparação — tens formação estruturada, acompanhamento próximo e um método testado. O risco de tentares com essa base é muito menor do que tentares sozinho."],
+  ["“Vou estar sozinho no início?”", "Não. Um dos pontos fortes da proposta é a proximidade no acompanhamento."],
+  ["“E se isto não for para mim?”", "É exatamente para perceberes isso que existe uma conversa inicial, sem compromisso. Não tens de decidir uma carreira — só de dar o primeiro passo."],
+  ["“Tenho de decidir já?”", "Não. O primeiro passo é só uma conversa. A decisão de avançar é sempre tua, com toda a informação que precisares."]
+];
 
 const faqs = [
   ["Preciso de experiência no imobiliário?", "Não. Valorizamos mais perfil, atitude, vontade de aprender e capacidade de evoluir."],
@@ -87,6 +95,8 @@ export default function RecruitmentPage() {
   return (
     <>
       <main className={`recruitment-page ${recruitBody.variable} ${recruitDisplay.variable}`}>
+        <ScrollProgress />
+        <MobileCtaBar />
         {/* Hero */}
         <section className="relative isolate overflow-hidden pt-[72px] text-white" style={{ background: "var(--r-gradient-hero)" }}>
           <div className="container relative z-10 mx-auto grid gap-12 px-6 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-24">
@@ -442,13 +452,18 @@ export default function RecruitmentPage() {
         </section>
 
         {/* Common doubts */}
-        <section className="bg-[var(--r-secondary)] py-16">
+        <section className="bg-[var(--r-secondary)] py-20 lg:py-28">
           <div className="container mx-auto max-w-2xl px-6 text-center">
             <span className="text-sm font-bold uppercase tracking-wider text-[var(--r-accent-fg)]">Dúvidas comuns</span>
             <h2 className="mt-3 text-2xl font-extrabold text-[var(--r-primary)] sm:text-3xl">Talvez estejas a pensar...</h2>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              {commonDoubts.map((doubt) => <span key={doubt} className="rounded-full border border-[var(--r-border)] bg-[var(--r-card)] px-4 py-2 text-sm font-semibold text-[var(--r-muted-fg)]">{doubt}</span>)}
-            </div>
+          </div>
+          <div className="container mx-auto mt-10 grid max-w-2xl gap-4 px-6">
+            {commonDoubts.map(([doubt, answer]) => (
+              <div key={doubt} className="rounded-2xl border border-[var(--r-border)] bg-[var(--r-card)] p-6 shadow-[var(--r-shadow-card)]">
+                <p className="font-extrabold italic text-[var(--r-primary)]">{doubt}</p>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--r-muted-fg)]">{answer}</p>
+              </div>
+            ))}
           </div>
         </section>
 
