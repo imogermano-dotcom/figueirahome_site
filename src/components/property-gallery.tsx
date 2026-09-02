@@ -98,7 +98,7 @@ export function PropertyGallery({ images, title, contentLabel = "fotografia" }: 
               <a href={activeImage.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-3 text-white"><FileText size={64} aria-hidden="true" /><span className="text-sm font-extrabold">Abrir planta em PDF</span></a>
             ) : (
               // eslint-disable-next-line @next/next/no-img-element
-              <img className="h-full w-full object-cover" src={activeImage.url} alt={activeImage.alt || title} />
+              <img className="max-h-full max-w-full object-contain" src={activeImage.url} alt={activeImage.alt || title} />
             )}
             <button type="button" onClick={() => setIsLightboxOpen(false)} className="absolute right-0 top-0 grid h-11 w-11 place-items-center rounded-full bg-white/15 text-white transition hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white" aria-label="Fechar fotografia">
               <X size={22} />
