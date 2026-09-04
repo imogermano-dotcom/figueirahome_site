@@ -22,6 +22,8 @@ Handoff operacional. Reescrito em 2026-09-02 — secção de estado consolidada,
 
 ### Contactos, recrutamento e leads
 - 3 funis confirmados end-to-end em produção (teste real + verificação na BD + limpeza): `/contacto` → `/api/leads`, ficha de imóvel → `/api/leads` (`source:"property_detail"`), candidatura de recrutamento → `/api/recrutamento`.
+- `createLead()` (`src/lib/properties.ts`) grava sempre em `contactos` (Supabase, tabela de Pessoa do CRM eGO, sync unidirecional eGO→Supabase feito por scraper externo — nunca escrever esperando roundtrip). Coluna `mensagem` adicionada em 2026-09-03 (não existia; texto do pedido era descartado desde sempre).
+- **Push para eGO** (`src/lib/ego.ts`, `sendLeadToEgo`, `PUT websiteapi.egorealestate.com/v1/Lead`, secret `EGO_LEAD_API_TOKEN`) só dispara quando há `property_id` (ou seja, só na ficha de imóvel) **e** o imóvel está `publicado` com `ego_id`. Este gate é responsabilidade nossa, não do eGO — confirmado ao vivo que a API do eGO **não valida o RID** (aceita imóvel retirado e até `RID` inventado, sempre `Success:true`; o eGO tem atraso a mostrar leads novos na UI). Um `RID` que não corresponde a nenhum imóvel real cria mesmo assim um "Pedido de Informação" no eGO, mas **órfão** (sem imóvel associado) e **mal-encaminhado** (cai no dono da conta em vez do agente responsável pelo imóvel) — reforça a necessidade do gate `publicado`+`ego_id` real antes de enviar. `/contacto` e `/servicos` nunca enviam `property_id`, por isso nunca tocam no eGO — ainda por definir com o cliente o que fazer a esses. Confirmado ao vivo: **não há dedupe** — cada submissão cria um "Pedido de Informação" separado no eGO, mesmo repetindo email/telefone/imóvel.
 - **Quiz de recrutamento + relatório de perfil por IA** (`/recrutamento`): 10 perguntas/dimensões, pontuação 0-30, 4 níveis (`src/lib/recruitment.ts`). Ao terminar, `sendReport()` chama `/api/quiz-report` → Anthropic Messages API gera relatório personalizado em PT-PT → grava em `quiz_reports` (token público, RLS leitura-por-token) → `/recrutamento/relatorio?t=...` renderiza → upsert MailerLite (grupos dedicados por nível, ex. `Quiz Recrutamento - Alto`). Confirmado ao vivo: email entregue, aberto e clicado (100%).
 - `ScrollProgress` e `MobileCtaBar` (barra de progresso + CTA fixo mobile) montados em `/recrutamento`; secção "Dúvidas comuns" tem resposta a cada dúvida.
 - Rate-limit Cloudflare (`URI Path starts with /api/`, 5 pedidos/10s por IP) cobre todos os endpoints `/api/*`.
@@ -48,6 +50,7 @@ Handoff operacional. Reescrito em 2026-09-02 — secção de estado consolidada,
 - `src/app/api/quiz-report/route.ts`, `src/app/recrutamento/relatorio/page.tsx`, `src/components/recruitment/relatorio-view.tsx` — relatório de perfil por IA.
 - `src/components/recruitment/scroll-progress.tsx`, `mobile-cta-bar.tsx` — UX de conversão do `/recrutamento`.
 - `src/lib/mailerlite.ts` — helper partilhado de upsert de subscriber (usado por `/api/recrutamento` e `/api/quiz-report`).
+- `src/lib/ego.ts` — push de lead para o eGO (só ficha de imóvel; ver "Contactos, recrutamento e leads").
 - `public/widget.js` + `src/app/api/site-chat/route.ts` — widget de chat do portal + proxy protegido.
 - `src/lib/supabase.ts` — clientes Supabase (browser/service/public-server).
 - `src/app/globals.css` — design tokens; `.recruitment-page` (`--r-*`) para toda a área de recrutamento.

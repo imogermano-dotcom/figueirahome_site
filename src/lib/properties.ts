@@ -2,6 +2,7 @@ import { unstable_noStore as noStore } from "next/cache";
 import { getSupabasePublicServerClient, getSupabaseServiceClient } from "./supabase";
 import { sampleAgents, sampleProperties } from "./sample-data";
 import { figueiraTeam } from "./team";
+import { sendLeadToEgo } from "./ego";
 import type { Agent, LeadInput, Property, PropertyFilters, PropertyImage } from "./types";
 
 let lastSuccessfulProperties: Property[] | null = null;
@@ -324,10 +325,30 @@ export async function createLead(input: LeadInput) {
       email: input.email || null,
       telemovel: input.phone || null,
       tipos: [input.request_type, input.source],
+      mensagem: input.property_id ? `[Imóvel ${input.property_id}]\n${input.message}` : input.message,
       criado_em: new Date().toISOString().slice(0, 10)
     })
     .select("nome")
     .single();
   if (error) throw error;
+
+  if (input.property_id) {
+    const { data: imovel } = await supabase
+      .from("imoveis")
+      .select("ego_id,publicado")
+      .eq("imovel_ref", input.property_id)
+      .maybeSingle();
+    if (imovel?.publicado && imovel.ego_id) {
+      const egoResult = await sendLeadToEgo({
+        egoId: imovel.ego_id,
+        name: input.name,
+        email: input.email,
+        phone: input.phone,
+        message: input.message
+      });
+      if (egoResult.status === "erro") console.error("eGO lead sync falhou", egoResult.error);
+    }
+  }
+
   return { ok: true, id: data.nome as string };
 }

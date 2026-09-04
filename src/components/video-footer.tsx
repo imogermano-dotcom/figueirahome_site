@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Mail, MapPin, Phone, Smartphone } from "lucide-react";
 import { fixedPhone, mobilePhone, phoneCallCost } from "@/lib/contact-details";
@@ -48,9 +49,7 @@ export function VideoFooter({ variant = "default" }: { variant?: "default" | "re
     : footerLinks.empresa;
   return (
     <div className="relative overflow-hidden bg-[var(--navy)] text-white">
-      <video className="absolute inset-0 h-full w-full object-cover opacity-70" autoPlay muted loop playsInline preload="metadata">
-        <source src="/Video/hero-web.mp4" type="video/mp4" />
-      </video>
+      <Image src={isRecruitment ? "/recrutamento.png" : "/blog.png"} alt="" fill priority={false} className="object-cover opacity-70" sizes="100vw" />
       <div className="absolute inset-0 bg-[rgba(5,15,30,0.58)]" />
       <section className="container relative py-16 text-center">
         <h2 className="font-body-heading text-3xl font-extrabold md:text-5xl">{isRecruitment ? "Pronto para perceber se este caminho é para si?" : "Quer vender o seu imóvel ao melhor preço?"}</h2>
