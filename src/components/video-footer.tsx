@@ -1,8 +1,23 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Mail, MapPin, Phone, Smartphone } from "lucide-react";
 import { fixedPhone, mobilePhone, phoneCallCost } from "@/lib/contact-details";
 import { CookiePreferencesLink } from "@/components/cookie-preferences-link";
+
+// Página de recrutamento é muito comprida (~23000px); com `scroll-behavior:
+// smooth` global (globals.css), o salto do footer até ao topo falha em
+// silêncio no Chrome. Scroll instantâneo aqui contorna isso.
+function jumpToAnchor(event: React.MouseEvent<HTMLAnchorElement>, href: string) {
+  const [path, hash] = href.split("#");
+  if (!hash || (path && path !== window.location.pathname)) return;
+  const target = document.getElementById(hash);
+  if (!target) return;
+  event.preventDefault();
+  target.scrollIntoView({ behavior: "auto", block: "start" });
+  window.history.pushState(null, "", `#${hash}`);
+}
 
 const footerLinks = {
   imoveis: [
@@ -33,9 +48,9 @@ const socialLinks = [
 export function VideoFooter({ variant = "default" }: { variant?: "default" | "recruitment" }) {
   const isRecruitment = variant === "recruitment";
   const opportunityLinks = [
-    { href: "#perfil", label: "Questionário de perfil" },
-    { href: "#processo", label: "Como funciona" },
-    { href: "#candidatura", label: "Candidatar-me" },
+    { href: "/recrutamento#quiz", label: "Questionário de perfil" },
+    { href: "/recrutamento#processo", label: "Como funciona" },
+    { href: "/recrutamento#formulario", label: "Candidatar-me" },
     { href: "/politica-privacidade", label: "Privacidade no recrutamento" },
   ];
   const companyLinks = isRecruitment
@@ -55,8 +70,8 @@ export function VideoFooter({ variant = "default" }: { variant?: "default" | "re
         <h2 className="font-body-heading text-3xl font-extrabold md:text-5xl">{isRecruitment ? "Pronto para perceber se este caminho é para si?" : "Quer vender o seu imóvel ao melhor preço?"}</h2>
         <p className="mx-auto mt-5 max-w-2xl text-white/72">{isRecruitment ? "Comece pelo questionário de perfil. A candidatura demora poucos minutos e a nossa equipa analisa cada passo com atenção." : "Fazemos uma avaliação gratuita e sem compromisso. A nossa equipa coloca o seu imóvel à frente de compradores ativos na região."}</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Link href={isRecruitment ? "#perfil" : "/contacto?pedido=avaliacao"} className="btn btn-gold">{isRecruitment ? "Começar candidatura" : "Pedir Avaliação Gratuita"}</Link>
-          <Link href={isRecruitment ? "#processo" : "/contacto"} className="btn btn-outline-light">{isRecruitment ? "Ver o processo" : "Falar com a Equipa"}</Link>
+          {isRecruitment ? <a href="/recrutamento#quiz" onClick={(e) => jumpToAnchor(e, "/recrutamento#quiz")} className="btn btn-gold">Começar candidatura</a> : <Link href="/contacto?pedido=avaliacao" className="btn btn-gold">Pedir Avaliação Gratuita</Link>}
+          {isRecruitment ? <a href="/recrutamento#processo" onClick={(e) => jumpToAnchor(e, "/recrutamento#processo")} className="btn btn-outline-light">Ver o processo</a> : <Link href="/contacto" className="btn btn-outline-light">Falar com a Equipa</Link>}
         </div>
       </section>
       <footer className="container relative grid gap-8 border-t border-white/12 py-12 md:grid-cols-4">
@@ -124,7 +139,7 @@ function FooterCol({ title, items }: { title: string; items: ReadonlyArray<{ hre
     <div>
       <h3 className="mb-4 font-extrabold">{title}</h3>
       <ul className="grid gap-2 text-sm text-white/65">
-        {items.map((item) => <li key={item.label}><Link href={item.href}>{item.label}</Link></li>)}
+        {items.map((item) => <li key={item.label}>{item.href.includes("#") ? <a href={item.href} onClick={(e) => jumpToAnchor(e, item.href)}>{item.label}</a> : <Link href={item.href}>{item.label}</Link>}</li>)}
       </ul>
     </div>
   );

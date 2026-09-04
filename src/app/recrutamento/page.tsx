@@ -432,7 +432,7 @@ export default function RecruitmentPage() {
         </section>
 
         {/* Process */}
-        <section className="bg-[var(--r-bg)] py-20 lg:py-28">
+        <section id="processo" className="bg-[var(--r-bg)] py-20 lg:py-28">
           <div className="container mx-auto px-6">
             <div className="mx-auto max-w-2xl text-center">
               <span className="text-sm font-bold uppercase tracking-wider text-[var(--r-accent-fg)]">Processo</span>

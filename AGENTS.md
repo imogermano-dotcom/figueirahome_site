@@ -38,6 +38,8 @@ Handoff operacional. Reescrito em 2026-09-02 — secção de estado consolidada,
 - Banner de cookies (`cookie-consent-banner.tsx` + `consent.ts`) bloqueia GA4/Meta Pixel até "Aceitar" — verificado (scripts só carregam com consentimento e com os IDs do cliente configurados).
 - `/politica-privacidade` e `/politica-cookies` cobrem WhatsApp, profiling do quiz, Google Translate vs GA/Pixel. Emails de contacto uniformizados para `geral@figueirahome.pt`.
 
+- **`html{scroll-behavior:smooth}` (globals.css) quebra saltos de âncora muito longos.** `/recrutamento` tem ~23000px; o CTA do footer ("Começar candidatura"/"Ver o processo") saltava do fundo até ao `#quiz`/`#processo` (~19000px) e o scroll simplesmente não se movia (browser engasga-se com a animação suave numa distância dessa ordem — confirmado: `scroll-behavior:auto` corrige na hora). Corrigido em `video-footer.tsx` com `jumpToAnchor()` (scroll instantâneo via JS, ignora o CSS global) nos links de âncora do footer. Os links "curtos" já existentes dentro da própria página (`recruitment-form.tsx`, `mobile-cta-bar.tsx`) não foram tocados — mesmo risco teórico se alguém clicar de um extremo ao outro, mas não reportado.
+
 ### Conteúdo e design
 - Blog: 68 artigos em `src/content/blog-archive.json` (import lazy, ver "Decisões"), tabelas verificadas contra o PDF original, sem inconsistências conhecidas.
 - Fontes: `.section-title`/`.hero-title` é o único ponto de override de fonte sans, usado em todo o site (incl. `/servicos`, páginas legais).
