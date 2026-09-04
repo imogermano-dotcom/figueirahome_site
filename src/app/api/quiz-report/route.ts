@@ -14,7 +14,8 @@ const QuizReportSchema = z.object({
     dimensao: z.string(),
     resposta: z.string(),
     pontos: z.number().int().min(0).max(3)
-  })).length(10)
+  })).length(10),
+  privacy_consent: z.literal(true)
 });
 
 const AVOID_TERMS = "engajado (usar \"motivado\"), alavancar (usar \"potenciar\"), expertise (usar \"experiência\"), deletar (usar \"eliminar\"), você, gerúndio excessivo";

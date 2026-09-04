@@ -63,7 +63,7 @@ export function RecruitmentQuiz() {
       return { pergunta: q.text, dimensao: q.measures, resposta: option.label, pontos: option.points };
     });
     const response = await fetch("/api/quiz-report", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({
-      name, email, score, level, breakdown
+      name, email, score, level, breakdown, privacy_consent: form.get("report_privacy_consent") === "on"
     }) });
     setReportState(response.ok ? "success" : "error");
   }
@@ -127,6 +127,7 @@ export function RecruitmentQuiz() {
                     <p className="text-xs text-[var(--r-muted-fg)]">Enviamos um relatório personalizado com a análise das tuas respostas e os próximos passos recomendados.</p>
                     <label className="grid gap-1 text-xs font-bold text-[var(--r-primary)]">Nome<input name="report_name" placeholder="O teu nome" className="rounded-lg border border-[var(--r-border)] bg-white px-4 py-2.5 text-sm font-normal text-[var(--r-fg)]" /></label>
                     <label className="grid gap-1 text-xs font-bold text-[var(--r-primary)]">Email *<input name="report_email" type="email" required placeholder="o.teu@email.com" className="rounded-lg border border-[var(--r-border)] bg-white px-4 py-2.5 text-sm font-normal text-[var(--r-fg)]" /></label>
+                    <label className="flex items-start gap-2 text-xs text-[var(--r-muted-fg)]"><input name="report_privacy_consent" type="checkbox" required className="mt-0.5 accent-[var(--r-accent)]" /> Autorizo o tratamento dos meus dados para receber este relatório e comunicações relacionadas, de acordo com a <Link href="/politica-privacidade" target="_blank" className="font-bold text-[var(--r-primary)] underline">Política de Privacidade</Link>. *</label>
                     {reportState === "error" && <p className="text-xs font-bold text-red-700">Não foi possível enviar o relatório. Tenta novamente.</p>}
                     <button type="submit" disabled={reportState === "sending"} className="mt-1 inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-[var(--r-accent-fg)] shadow-[var(--r-shadow-gold)] transition hover:opacity-90 disabled:opacity-60" style={{ background: "var(--r-gradient-gold)" }}><Send size={15} /> {reportState === "sending" ? "A enviar..." : "Receber o meu relatório"}</button>
                   </form>
@@ -153,11 +154,11 @@ export function RecruitmentLeadForm() {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     setState("sending"); setError("");
-    let quizAnswers = Array(recruitmentQuestions.length).fill(0);
+    let quizAnswers: number[] | null = null;
     try {
       const saved = localStorage.getItem("quiz_perfil");
-      if (saved) quizAnswers = JSON.parse(saved).answers ?? quizAnswers;
-    } catch { /* localStorage indisponível ou dados corrompidos — segue com respostas por omissão */ }
+      if (saved) quizAnswers = JSON.parse(saved).answers ?? null;
+    } catch { /* localStorage indisponível ou dados corrompidos — candidatura segue sem quiz associado */ }
     const response = await fetch("/api/recrutamento", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({
       name: String(form.get("name") || ""), email: String(form.get("email") || ""), phone: String(form.get("phone") || ""),
       location: String(form.get("location") || ""), professional_situation: String(form.get("professional_situation") || ""),
