@@ -2,12 +2,12 @@
 
 Handoff operacional. Reescrito em 2026-09-05 — secção de estado consolidada, histórico de fixes já resolvidos removido. Manter este ficheiro abaixo de 200 linhas; substituir informação ultrapassada em vez de acumular.
 
-**2026-09-09**: headers de segurança implementados (`421d3e8`); fix z-index menu mobile (`be7aa4c`); correção sobre fallback de RID inválido no eGO (`b394bf6`). HEAD ainda não deployado — só código local + commits, sem `npm run deploy` nesta sessão.
+**2026-09-09**: headers de segurança implementados (`421d3e8`); fix z-index menu mobile (`be7aa4c`); correção sobre fallback de RID inválido no eGO (`b394bf6`). Deployado (Version `6b3ae8ee`).
 
 ## Estado atual
 
 - Site institucional e catálogo imobiliário: Next.js App Router, Supabase (Postgres/PostgREST), Cloudflare Workers (via OpenNext). Formulários de contacto, recrutamento (com quiz + relatório de perfil por IA) e chat (widget externo do portal).
-- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true` em `wrangler.jsonc`). HEAD: `828b285` (branch `teste/alteracao-cliente`). Último deploy: Version `2d08ce3b` (2026-09-03) — footer de `/recrutamento` (imagens + botões).
+- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true` em `wrangler.jsonc`). HEAD: `b02a95a` (branch `teste/alteracao-cliente`). Último deploy: Version `6b3ae8ee` (2026-09-09) — headers de segurança + fix z-index menu mobile, confirmado ao vivo (`curl -I` mostra CSP/HSTS/etc. em `figueirahome.pt`).
 - Site antigo (WordPress) continua vivo no VPS CloudPanel (`165.22.31.75`), só deixou de ser apontado pelo domínio. Email (MX Microsoft 365 + SendGrid), `cloudpanel.`, `lp.`, `sip.` — todos intocados.
 - Dev local: `http://localhost:3000` (`npm run dev`, Turbopack). Bug recorrente: CSS/HMR fica preso em cache — fix: matar processo na porta 3000, `rm -rf .next` (às vezes 2x), reiniciar.
 - Deploy: `npm run deploy` (`opennextjs-cloudflare build && deploy`). Nunca usar Turbopack para produção.
