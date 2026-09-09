@@ -2,6 +2,8 @@
 
 Handoff operacional. Reescrito em 2026-09-05 — secção de estado consolidada, histórico de fixes já resolvidos removido. Manter este ficheiro abaixo de 200 linhas; substituir informação ultrapassada em vez de acumular.
 
+**2026-09-09**: headers de segurança implementados (`421d3e8`); fix z-index menu mobile (`be7aa4c`); correção sobre fallback de RID inválido no eGO (`b394bf6`). HEAD ainda não deployado — só código local + commits, sem `npm run deploy` nesta sessão.
+
 ## Estado atual
 
 - Site institucional e catálogo imobiliário: Next.js App Router, Supabase (Postgres/PostgREST), Cloudflare Workers (via OpenNext). Formulários de contacto, recrutamento (com quiz + relatório de perfil por IA) e chat (widget externo do portal).
@@ -41,6 +43,9 @@ Handoff operacional. Reescrito em 2026-09-05 — secção de estado consolidada,
 - **Footer (`video-footer.tsx`)**: vídeo de fundo substituído por imagem estática (`public/blog.png` em geral, `public/recrutamento.png` na variante recrutamento) — pedido do cliente, sem lógica de vídeo no componente.
 - **Botões do footer em `/recrutamento` corrigidos (2026-09-05)**, 3 causas empilhadas: (1) âncoras erradas/inexistentes (`#perfil` não existia; secção "Processo" não tinha `id`, adicionado `id="processo"` em `recrutamento/page.tsx`); (2) `next/link` não faz scroll em navegação de âncora para a mesma rota; (3) `html{scroll-behavior:smooth}` (globals.css) falha em silêncio em saltos muito longos — `/recrutamento` tem ~23000px, saltar do fundo até `#quiz`/`#processo` (~19000px) simplesmente não movia o scroll (confirmado: `scroll-behavior:auto` corrige na hora). Fix: `jumpToAnchor()` em `video-footer.tsx` — `<a>` nativo + `scrollIntoView({behavior:"auto"})` via `onClick`, ignora CSS global e o `Link` do Next. Os links "curtos" já existentes dentro da própria página (`recruitment-form.tsx`, `mobile-cta-bar.tsx`) não foram tocados — mesmo risco teórico se clicarem de um extremo ao outro da página, mas não reportado.
 
+### Segurança
+- **Headers de segurança** (`next.config.ts`, `headers()`): CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy. CSP sem nonces (dynamic rendering em todas as páginas seria incompatível com o Worker de CPU limitada — ver "Decisões arquiteturais"); domínios enumerados por auditoria de código (GA4/Pixel/Google Translate/widget de chat/Supabase/fotos eGO `images.egorealestate.com`/YouTube-nocookie/Vimeo/Google Maps) e testados ao vivo em localhost sem violações. `img-src`/`frame-src` ficam largos (`https:`) de propósito: fotos de imóveis vêm de CDN do eGO (não Supabase) e `videoSourceFromUrl()` (`property-video.tsx`) já aceita qualquer URL https como iframe (decisão de produto pré-existente, não deste commit).
+
 ### Conteúdo e design
 - Blog: 68 artigos em `src/content/blog-archive.json` (import lazy, ver "Decisões"), tabelas verificadas contra o PDF original, sem inconsistências conhecidas.
 - Fontes: `.section-title`/`.hero-title` é o único ponto de override de fonte sans, usado em todo o site (incl. `/servicos`, páginas legais).
@@ -77,17 +82,17 @@ Handoff operacional. Reescrito em 2026-09-05 — secção de estado consolidada,
 - Favicon em falta (404): o ícone da marca está fundido com o texto "FIGUEIRA HOME" no logo, sem recorte quadrado limpo possível — precisa de asset dedicado do cliente/designer.
 - Opt-out "PARAR" prometido na política de privacidade (§9) sem implementação no backend do agente WhatsApp (`Figueirahome-Agent-call`, repo externo) — decisão de quem implementa fica com o cliente.
 - Testemunhos da homepage ("Ana Carvalho", "Ricardo Silva", "Luísa Monteiro") por confirmar com o cliente se são reais/autorizados ou placeholder — risco de confiança/legal se forem inventados e apresentados como reais.
-- `MobileCtaBar` do `/recrutamento` (mobile) revisto no código mas não confirmado visualmente ao vivo — Claude-in-Chrome fica instável ao redimensionar para viewport mobile neste ambiente; confirmar num telemóvel real.
-- Headers de segurança (CSP/HSTS/X-Frame-Options/etc.) ainda não implementados.
+- `MobileCtaBar` do `/recrutamento` (mobile) revisto no código (incl. fix de z-index vs. menu mobile, 2026-09-09) mas não confirmado visualmente ao vivo — Claude-in-Chrome não consegue emular viewport mobile neste ambiente (`resize_window` não sai do estado maximizado da janela, confirmado via `window.outerWidth`); confirmar num telemóvel real.
 - QA responsivo geral foi sobretudo desktop nesta sessão; mobile/tablet por validar em várias páginas.
 - 6 leads de teste ficaram no eGO CRM dos testes da integração (`Teste eGO QA`, `Teste eGO QA2`, `Teste eGO Direto`, `Teste Node Fetch`, `Teste RID Invalido`, `Teste RID Invalido 2`) — API não tem endpoint de delete, apagar manualmente na UI do eGO.
 
 ## Próximos passos
 
-1. QA responsivo (mobile/tablet), incl. `MobileCtaBar` do `/recrutamento`.
+1. QA responsivo mobile real (telemóvel físico) — revisão de código já feita nesta sessão (achado e corrigido: z-index do menu mobile sobreposto pela `MobileCtaBar` em `/recrutamento`); Claude-in-Chrome não consegue emular viewport mobile neste ambiente (janela fica presa maximizada, resize não aplica).
 2. Decidir com o cliente o futuro do `figueira-home-portal` (trocar `anon` por `service_role`) para poder aplicar a migração RLS com segurança.
-3. Implementar headers de segurança (CSP/HSTS/etc.) e favicon dedicado quando houver asset do cliente.
+3. Favicon dedicado quando houver asset do cliente.
 4. Confirmar com o cliente: testemunhos da homepage (reais?) e quem implementa o opt-out "PARAR" do WhatsApp.
+5. Confirmar mecanismo real de fallback do eGO para RID inválido junto do suporte eGO (testado 2x, resultado inconsistente — ver "Contactos, recrutamento e leads").
 
 <!-- BEGIN:nextjs-agent-rules -->
 
