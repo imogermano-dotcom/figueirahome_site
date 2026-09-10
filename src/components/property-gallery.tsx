@@ -19,7 +19,8 @@ export function PropertyGallery({ images, title, contentLabel = "fotografia" }: 
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const hasMultipleImages = images.length > 1;
   const activeImage = images[activeIndex] || images[0];
-  const imageFit = contentLabel === "planta" ? "object-contain bg-white" : "object-cover";
+  const thumbFit = contentLabel === "planta" ? "object-contain bg-white" : "object-cover";
+  const mainFit = contentLabel === "planta" ? "object-contain bg-white" : "object-fill";
 
   const showPrevious = useCallback(() => {
     setActiveIndex((index) => (index - 1 + images.length) % images.length);
@@ -54,7 +55,7 @@ export function PropertyGallery({ images, title, contentLabel = "fotografia" }: 
           </a>
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
-          <img className={`h-full w-full ${imageFit}`} src={activeImage.url} alt={activeImage.alt || title} />
+          <img className={`h-full w-full ${mainFit}`} src={activeImage.url} alt={activeImage.alt || title} />
         )}
         {!isPdfUrl(activeImage.url) && (
           <button
@@ -84,7 +85,7 @@ export function PropertyGallery({ images, title, contentLabel = "fotografia" }: 
                 <span className="grid h-full w-full place-items-center bg-white text-[var(--navy)]"><FileText size={22} aria-hidden="true" /></span>
               ) : (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img className={`h-full w-full ${imageFit}`} src={image.url} alt="" />
+                <img className={`h-full w-full ${thumbFit}`} src={image.url} alt="" />
               )}
             </button>
           ))}
@@ -98,7 +99,7 @@ export function PropertyGallery({ images, title, contentLabel = "fotografia" }: 
               <a href={activeImage.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-3 text-white"><FileText size={64} aria-hidden="true" /><span className="text-sm font-extrabold">Abrir planta em PDF</span></a>
             ) : (
               // eslint-disable-next-line @next/next/no-img-element
-              <img className="h-full w-full object-cover" src={activeImage.url} alt={activeImage.alt || title} />
+              <img className="h-full w-full object-fill" src={activeImage.url} alt={activeImage.alt || title} />
             )}
             <button type="button" onClick={() => setIsLightboxOpen(false)} className="absolute right-0 top-0 grid h-11 w-11 place-items-center rounded-full bg-white/15 text-white transition hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white" aria-label="Fechar fotografia">
               <X size={22} />
