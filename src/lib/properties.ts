@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { unstable_noStore as noStore } from "next/cache";
 import { getSupabasePublicServerClient, getSupabaseServiceClient } from "./supabase";
 import { sampleAgents, sampleProperties } from "./sample-data";
@@ -256,7 +257,7 @@ export async function getFeaturedProperties(limit = 3) {
   return featuredOrNewest(await getPublishedProperties(), limit);
 }
 
-export async function getPropertyBySlug(slug: string, reference?: string) {
+export const getPropertyBySlug = cache(async (slug: string, reference?: string) => {
   noStore();
   const requestedReference = reference?.trim();
   const supabase = getSupabaseServiceClient();
@@ -293,7 +294,7 @@ export async function getPropertyBySlug(slug: string, reference?: string) {
     || sampleProperties.find((item) => item.slug === slug && item.published)
     || null;
   return property;
-}
+});
 
 export async function getAgents() {
   noStore();
