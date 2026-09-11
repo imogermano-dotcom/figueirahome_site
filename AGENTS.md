@@ -5,7 +5,7 @@ Handoff operacional. Reescrito em 2026-09-10 — estado atual consolidado num re
 ## Estado atual
 
 - Site institucional e catálogo imobiliário: Next.js App Router, Supabase (Postgres/PostgREST), Cloudflare Workers (via OpenNext). Formulários de contacto, recrutamento (quiz + relatório de perfil por IA) e chat (widget externo do portal).
-- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true` em `wrangler.jsonc`). HEAD: `b397ef0` (branch `teste/alteracao-cliente`). Último deploy: Version `b54adccc` (2026-09-10) — fix fotos de imóvel (`object-fill` em vez de cortar), confirmado ao vivo em produção.
+- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true` em `wrangler.jsonc`). HEAD: `3c238ee` (branch `teste/alteracao-cliente`). Último deploy: Version `8d457f62` (2026-09-11) — hero `object-cover` + lightbox `object-contain` (esticar foi testado e rejeitado, distorcia), confirmado ao vivo em produção.
 - Site antigo (WordPress) continua vivo no VPS CloudPanel (`165.22.31.75`), só deixou de ser apontado pelo domínio. Email (MX Microsoft 365 + SendGrid), `cloudpanel.`, `lp.`, `sip.` — todos intocados.
 - Dev local: `http://localhost:3000` (`npm run dev`, Turbopack). Bug recorrente: CSS/HMR fica preso em cache — fix: matar processo na porta 3000, `rm -rf .next` (às vezes 2x), reiniciar. Mudar `next.config.ts` exige sempre reiniciar o servidor (não recarrega sozinho).
 - Deploy: `npm run deploy` (`opennextjs-cloudflare build && deploy`). Nunca usar Turbopack para produção.
