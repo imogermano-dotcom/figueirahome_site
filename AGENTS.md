@@ -17,7 +17,7 @@ Handoff operacional. Reescrito em 2026-09-10 — estado atual consolidado num re
 ### Catálogo e fichas de imóvel
 - Fonte runtime é a tabela `imoveis` (Supabase); só entram publicados, disponíveis, com referência e preço válidos. Dados (agente, área, WC, descrição, fotos) vêm do eGO (`images.egorealestate.com`) — preenchimento não se corrige neste repo.
 - SSR normal + fallback client-side (`PropertyDetailBrowserFallback`) quando o SSR não encontra o imóvel.
-- Foto principal e lightbox (`property-gallery.tsx`) usam `object-fill` (2026-09-11, provisório a avaliar): `object-cover` cortava a foto (reportado como bug), `object-contain` deixava barras vazias — cliente preferiu esticar a imagem em vez de barras, por agora. Miniaturas continuam `object-cover`. Mapa só mostra zona/freguesia/concelho, nunca morada exacta.
+- Foto principal (hero, `property-gallery.tsx`) usa `object-cover` (corte ligeiro, normal p/ preview) + lightbox usa `object-contain` (foto sempre inteira, margem preta se a proporção não bater — convenção padrão de visualizador de fotos). Testado `object-fill` (esticar) e rejeitado por distorcer. Miniaturas usam `object-cover`. Mapa só mostra zona/freguesia/concelho, nunca morada exacta.
 - Vídeo de imóvel (`property-video.tsx`, `videoSourceFromUrl()`) reconhece YouTube/Vimeo e aceita qualquer outra URL https como iframe genérico — decisão de produto existente, relevante para a CSP (ver "Segurança").
 
 ### Contactos, recrutamento e leads
