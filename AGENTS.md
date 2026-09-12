@@ -5,11 +5,12 @@ Handoff operacional. Reescrito em 2026-09-10 — estado atual consolidado num re
 ## Estado atual
 
 - Site institucional e catálogo imobiliário: Next.js App Router, Supabase (Postgres/PostgREST), Cloudflare Workers (via OpenNext). Formulários de contacto, recrutamento (quiz + relatório de perfil por IA) e chat (widget externo do portal).
-- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true` em `wrangler.jsonc`). HEAD: `83e974a` (branch `teste/alteracao-cliente`). Último deploy: Version `53619bc3` (2026-09-11) — fix fotos (hero `object-cover` + lightbox `object-contain`) + `getPropertyBySlug` envolto em `React.cache()` (evita 2x Supabase por pedido em `/imoveis/[slug]`, ver "Bugs conhecidos" sobre outage de CPU-limit).
+- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true` em `wrangler.jsonc`). HEAD: `9460253` (branch `teste/alteracao-cliente`). Último deploy: Version `ae040fa8` (2026-09-12) — migração das chaves Supabase legacy (JWT) para o novo formato `sb_publishable_`/`sb_secret_` (ver "Segredos").
 - Site antigo (WordPress) continua vivo no VPS CloudPanel (`165.22.31.75`), só deixou de ser apontado pelo domínio. Email (MX Microsoft 365 + SendGrid), `cloudpanel.`, `lp.`, `sip.` — todos intocados.
 - Dev local: `http://localhost:3000` (`npm run dev`, Turbopack). Bug recorrente: CSS/HMR fica preso em cache — fix: matar processo na porta 3000, `rm -rf .next` (às vezes 2x), reiniciar. Mudar `next.config.ts` exige sempre reiniciar o servidor (não recarrega sozinho).
 - Deploy: `npm run deploy` (`opennextjs-cloudflare build && deploy`). Nunca usar Turbopack para produção.
 - Segredos: `.env.local` local (gitignored) + `wrangler secret put <NOME>` para produção (nunca em `vars` do `wrangler.jsonc`). Nunca expor valores de Supabase/Anthropic/MailerLite/Cloudflare/Widget/eGO em texto.
+- **Chaves Supabase (2026-09-12): migradas de JWT legacy para o novo formato `sb_publishable_...`/`sb_secret_...`** (cliente desligou as chaves antigas). `SUPABASE_SERVICE_ROLE_KEY` é secret do Worker (`wrangler secret put`, runtime, sem rebuild necessário). `NEXT_PUBLIC_SUPABASE_ANON_KEY` fica **gravada no build** (inlined pelo Next em build-time) — mudar `.env.local` sozinho não basta, é preciso `npm run deploy` para o valor novo ir para produção. Sintoma quando a chave expira/desliga: `/imoveis` fica vazio sem erro visível no browser (Supabase devolve 401, código trata como "sem resultados"). Diagnóstico rápido: `curl` directo ao REST do Supabase com a chave (`.../rest/v1/imoveis?select=...`) — 401 com mensagem "Legacy API keys are disabled" confirma.
 - `client-reference/` é gitignored — docs internos do cliente (briefings, PDFs) que nunca podem ficar em `public/`. `property-catalogue-local.png` e `tsconfig.tsbuildinfo` são ficheiros locais fora de escopo, não commitar.
 
 ## Implementado
@@ -77,6 +78,7 @@ Handoff operacional. Reescrito em 2026-09-10 — estado atual consolidado num re
 - Favicon em falta (404): ícone da marca fundido com o texto no logo, sem recorte quadrado limpo — precisa de asset dedicado do cliente/designer.
 - Opt-out "PARAR" prometido na política de privacidade (§9) sem implementação no backend do agente WhatsApp (repo externo) — decisão de quem implementa fica com o cliente.
 - Testemunhos da homepage ("Ana Carvalho", "Ricardo Silva", "Luísa Monteiro") por confirmar com o cliente se são reais/autorizados ou placeholder.
+- `.env.local` tem `SUPABASE_SERVICE_ROLE_KEY` ainda no formato JWT antigo (desligado) — só afecta `npm run dev` local (queries com service role falham localmente); produção usa o secret novo do Worker, já correcto. Trocar por um `sb_secret_...` quando o cliente partilhar.
 - 6 leads de teste ficaram no eGO CRM (`Teste eGO QA`, `Teste eGO QA2`, `Teste eGO Direto`, `Teste Node Fetch`, `Teste RID Invalido`, `Teste RID Invalido 2`) — API não tem endpoint de delete, apagar manualmente na UI do eGO.
 
 ## Monitorização
