@@ -79,6 +79,11 @@ Handoff operacional. Reescrito em 2026-09-10 — estado atual consolidado num re
 - Testemunhos da homepage ("Ana Carvalho", "Ricardo Silva", "Luísa Monteiro") por confirmar com o cliente se são reais/autorizados ou placeholder.
 - 6 leads de teste ficaram no eGO CRM (`Teste eGO QA`, `Teste eGO QA2`, `Teste eGO Direto`, `Teste Node Fetch`, `Teste RID Invalido`, `Teste RID Invalido 2`) — API não tem endpoint de delete, apagar manualmente na UI do eGO.
 
+## Monitorização
+
+- Notificação Cloudflare "Site em baixo" já criada (Manage account → Notifications, tipo "Health Checks status notification", emails miguel.germano@gmail.com + jm.workflow2024@gmail.com, dispara em fica saudável/não saudável, "include future healthchecks" ligado) — **mas inactiva**: o plano `free` da zona `figueirahome.pt` inclui 0 Health Checks (precisa Pro). Se/quando fizer upgrade, só falta criar o Health Check em si (Traffic → Health Checks, apontar a `https://www.figueirahome.pt`) que a notificação já o apanha automaticamente.
+- Alternativa combinada decidida com o cliente (2026-09-11): UptimeRobot (free, externo) por agora; segundo check a construir no `figueira-home-portal` (Fly.io, provider diferente = mais independente) — por fazer, fora deste repo.
+
 ## Próximos passos
 
 1. QA responsivo mobile num telemóvel físico real (`/recrutamento` e `MobileCtaBar` em particular).
@@ -86,6 +91,7 @@ Handoff operacional. Reescrito em 2026-09-10 — estado atual consolidado num re
 3. Confirmar junto do suporte eGO o mecanismo real de fallback para RID inválido.
 4. Favicon dedicado quando houver asset do cliente.
 5. Confirmar com o cliente: testemunhos da homepage (reais?) e quem implementa o opt-out "PARAR" do WhatsApp.
+6. Configurar UptimeRobot (free) a apontar a figueirahome.pt; construir 2º check no figueira-home-portal.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
