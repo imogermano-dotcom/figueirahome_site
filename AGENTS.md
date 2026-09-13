@@ -78,7 +78,6 @@ Handoff operacional. Reescrito em 2026-09-10 — estado atual consolidado num re
 - Favicon em falta (404): ícone da marca fundido com o texto no logo, sem recorte quadrado limpo — precisa de asset dedicado do cliente/designer.
 - Opt-out "PARAR" prometido na política de privacidade (§9) sem implementação no backend do agente WhatsApp (repo externo) — decisão de quem implementa fica com o cliente.
 - Testemunhos da homepage ("Ana Carvalho", "Ricardo Silva", "Luísa Monteiro") por confirmar com o cliente se são reais/autorizados ou placeholder.
-- `.env.local` tem `SUPABASE_SERVICE_ROLE_KEY` ainda no formato JWT antigo (desligado) — só afecta `npm run dev` local (queries com service role falham localmente); produção usa o secret novo do Worker, já correcto. Trocar por um `sb_secret_...` quando o cliente partilhar.
 - 6 leads de teste ficaram no eGO CRM (`Teste eGO QA`, `Teste eGO QA2`, `Teste eGO Direto`, `Teste Node Fetch`, `Teste RID Invalido`, `Teste RID Invalido 2`) — API não tem endpoint de delete, apagar manualmente na UI do eGO.
 
 ## Monitorização
