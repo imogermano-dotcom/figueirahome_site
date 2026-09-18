@@ -314,12 +314,22 @@ export async function getAgents() {
   return agents.length ? agents : sampleAgents;
 }
 
+const REQUEST_TYPE_TO_TIPO_CONTACTO: Record<string, string> = {
+  servicos: "vendedor",
+  vender: "vendedor",
+  avaliacao: "vendedor",
+  comprar: "comprador",
+  visita: "comprador",
+  arrendar: "arrendatario"
+};
+
 export async function createLead(input: LeadInput) {
   const supabase = getSupabaseServiceClient();
   if (!supabase) {
     console.info("Lead fallback", input);
     return { ok: true, id: "local-fallback" };
   }
+  const tipoContacto = REQUEST_TYPE_TO_TIPO_CONTACTO[input.request_type];
   const { data, error } = await supabase
     .from("contactos")
     .insert({
@@ -327,6 +337,7 @@ export async function createLead(input: LeadInput) {
       email: input.email || null,
       telemovel: input.phone || null,
       tipos: [input.request_type, input.source],
+      tipo_contacto: tipoContacto ? [tipoContacto] : null,
       mensagem: input.property_id ? `[Imóvel ${input.property_id}]\n${input.message}` : input.message,
       criado_em: new Date().toISOString().slice(0, 10)
     })
