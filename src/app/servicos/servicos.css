@@ -157,6 +157,19 @@
   background:linear-gradient(to top,rgba(7,26,49,.55),transparent 45%);
 }
 .servicos-page .hero__inner{position:relative;z-index:2;max-width:880px;}
+@media(min-width:1000px){
+  .servicos-page .hero__inner{max-width:var(--max);display:grid;align-items:center;gap:52px;
+    grid-template-columns:minmax(0,1fr) minmax(0,.7fr);}
+}
+.servicos-page .hero__foto{margin:38px 0 0;}
+.servicos-page .hero__foto img{
+  display:block;width:100%;height:auto;
+  aspect-ratio:941/1120;object-fit:cover;object-position:50% 50%;
+  border-radius:var(--radius-lg);border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 26px 60px rgba(4,16,32,.45);
+}
+.servicos-page .hero__foto figcaption{margin-top:10px;font-size:.66rem;line-height:1.55;color:rgba(255,255,255,.42);}
+@media(min-width:1000px){.servicos-page .hero__foto{margin:0;}}
 .servicos-page .hero h1{color:#fff;max-width:15ch;}
 .servicos-page .hero h1 em{font-style:normal;background:var(--gradient-gold);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .servicos-page .hero__sub{
@@ -181,7 +194,12 @@
   color:rgba(255,255,255,.6);margin-top:5px;}
 .servicos-page .hero__val .btn{flex:0 0 auto;pointer-events:none;}
 @media(max-width:559px){.servicos-page .hero__val .btn{width:100%;text-align:center;}}
-.servicos-page .hero__badges{display:flex;flex-wrap:wrap;gap:12px;margin-top:44px;}
+.servicos-page .hero__badges{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:44px;}
+.servicos-page .hero__badges .hero__badge:last-child{grid-column:1/-1;}
+@media(min-width:700px){
+  .servicos-page .hero__badges{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .servicos-page .hero__badges .hero__badge:last-child{grid-column:auto;}
+}
 .servicos-page .hero__badge{
   display:flex;flex-direction:column;gap:4px;
   background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);
@@ -225,7 +243,8 @@
    ============================================================ */
 .servicos-page .steps{display:grid;grid-template-columns:1fr;gap:14px;}
 @media(min-width:600px){.servicos-page .steps{grid-template-columns:repeat(2,1fr);gap:18px;}}
-@media(min-width:1000px){.servicos-page .steps{grid-template-columns:repeat(4,1fr);}}
+/* nove etapas: tres colunas dao 3x3, quatro deixavam a ultima linha coxa */
+@media(min-width:1000px){.servicos-page .steps{grid-template-columns:repeat(3,1fr);gap:20px;}}
 .servicos-page .step{
   background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
   padding:28px 24px;position:relative;overflow:hidden;
@@ -237,8 +256,18 @@
 .servicos-page .step__num{
   width:40px;height:40px;border-radius:var(--radius-sm);display:grid;place-items:center;
   font-family:var(--ff-display);font-size:1.02rem;font-weight:600;
-  background:var(--surface-soft);color:var(--navy);margin-bottom:18px;transition:var(--transition);
+  background:var(--surface-soft);color:var(--navy);transition:var(--transition);
 }
+/* numero a esquerda, icone a direita; a margem passou para o cabecalho */
+.servicos-page .step__head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;}
+.servicos-page .step__ico{
+  width:40px;height:40px;border-radius:var(--radius-sm);display:grid;place-items:center;
+  background:var(--surface-soft);transition:var(--transition);
+}
+.servicos-page .step__ico svg{width:21px;height:21px;stroke:var(--teal);fill:none;stroke-width:1.5;
+  stroke-linecap:round;stroke-linejoin:round;transition:stroke .35s ease;}
+.servicos-page .step:hover .step__ico{background:var(--gradient-gold);box-shadow:var(--shadow-gold);}
+.servicos-page .step:hover .step__ico svg{stroke:var(--navy);}
 .servicos-page .step:hover .step__num{background:var(--gradient-gold);color:var(--navy);box-shadow:var(--shadow-gold);}
 .servicos-page .step h3{margin-bottom:9px;font-size:1.04rem;}
 .servicos-page .step p{font-size:.885rem;color:var(--muted-fg);line-height:1.6;margin:0;}
@@ -411,47 +440,68 @@
 /* ============================================================
    8. QUEM SOMOS
    ============================================================ */
-.servicos-page .about{display:grid;grid-template-columns:1fr;gap:40px;align-items:start;}
-@media(min-width:960px){.servicos-page .about{grid-template-columns:1.05fr .95fr;gap:68px;}}
-.servicos-page .about__card{
-  background:var(--gradient-dark);color:#fff;border-radius:var(--radius-lg);
-  padding:36px 28px;box-shadow:var(--shadow-elegant);position:relative;overflow:hidden;
+.servicos-page .about{display:grid;gap:40px;}
+@media(min-width:960px){.servicos-page .about{grid-template-columns:1fr 1fr;gap:58px;align-items:start;}}
+.servicos-page .about__stats{display:grid;grid-template-columns:1fr;gap:10px;margin-top:28px;}
+@media(min-width:480px){.servicos-page .about__stats{grid-template-columns:repeat(3,1fr);gap:12px;}}
+.servicos-page .about__stat{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:18px 12px;text-align:center;box-shadow:var(--shadow-card);
 }
-@media(min-width:640px){.servicos-page .about__card{padding:42px 36px;}}
-.servicos-page .about__card::before{
-  content:"";position:absolute;top:-38%;right:-28%;width:330px;height:330px;border-radius:50%;
-  background:radial-gradient(circle,rgba(201,168,76,.18),transparent 68%);
+.servicos-page .about__stat b{
+  display:block;font-family:var(--ff-display);font-weight:600;letter-spacing:-.02em;
+  font-size:clamp(.95rem,2.2vw,1.22rem);color:var(--navy);
 }
-.servicos-page .about__card-inner{position:relative;z-index:2;}
-.servicos-page .about__avatar{
-  width:66px;height:66px;border-radius:50%;display:grid;place-items:center;
-  background:var(--gradient-gold);box-shadow:var(--shadow-gold);
-  font-family:var(--ff-display);font-size:1.35rem;font-weight:600;color:var(--navy);margin-bottom:20px;
-}
-.servicos-page .about__name{font-family:var(--ff-display);font-size:1.48rem;font-weight:600;color:#fff;}
-.servicos-page .about__role{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-top:7px;}
-.servicos-page .about__card p{color:rgba(255,255,255,.7);font-size:.92rem;margin-top:18px;}
-.servicos-page .about__quote{font-family:var(--ff-display);font-style:italic;font-size:1.02rem;color:rgba(255,255,255,.86)!important;
-  border-left:2px solid var(--gold);padding-left:16px;}
-.servicos-page .about__stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:28px;}
-.servicos-page .about__stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-sm);padding:16px 12px;text-align:center;}
-.servicos-page .about__stat b{display:block;font-family:var(--ff-display);font-size:1.42rem;font-weight:600;color:var(--gold);line-height:1.1;}
-.servicos-page .about__stat span{display:block;font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-top:6px;}
+.servicos-page .about__stat span{display:block;margin-top:7px;font-size:.7rem;line-height:1.45;color:var(--muted-soft);}
 
-.servicos-page .facts{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:12px;}
-.servicos-page .facts li{
-  display:flex;gap:15px;background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow-card);transition:var(--transition);
+.servicos-page .team__title{color:var(--navy);margin-bottom:20px;}
+.servicos-page .team{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+@media(min-width:640px){.servicos-page .team{gap:18px;}}
+.servicos-page .team__card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px 16px;text-align:center;box-shadow:var(--shadow-card);transition:var(--transition);
+  overflow-wrap:break-word;
 }
-.servicos-page .facts li:hover{transform:translateX(4px);border-color:rgba(201,168,76,.5);}
-.servicos-page .facts__ico{
-  flex:0 0 38px;height:38px;border-radius:var(--radius-sm);display:grid;place-items:center;
-  background:var(--surface-soft);
+.servicos-page .team__card:hover{transform:translateY(-4px);box-shadow:var(--shadow-elegant);border-color:rgba(201,168,76,.5);}
+.servicos-page .team__photo{
+  width:84px;height:84px;display:block;margin:0 auto 14px;border-radius:50%;
+  background:var(--surface-soft);object-fit:cover;
 }
-.servicos-page .facts__ico svg{width:17px;height:17px;stroke:var(--teal);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
-.servicos-page .facts b{display:block;font-size:.96rem;font-weight:600;color:var(--navy);margin-bottom:3px;}
-.servicos-page .facts p{font-size:.865rem;color:var(--muted-fg);margin:0;line-height:1.58;}
-.servicos-page .facts a{color:var(--teal);text-decoration:underline;text-underline-offset:2px;}
+.servicos-page .team__role{font-size:.62rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:var(--gold);}
+.servicos-page .team__name{font-family:var(--ff-display);font-size:1.04rem;font-weight:600;color:var(--navy);margin-top:6px;}
+.servicos-page .team__bio{font-size:.78rem;line-height:1.55;color:var(--muted-soft);margin:10px 0 0;}
+
+/* ============================================================
+   8b. O PREÇO CERTO (secção escura)
+   ============================================================ */
+.servicos-page .preco__grid{display:grid;grid-template-columns:1fr;gap:34px;align-items:start;}
+@media(min-width:1000px){.servicos-page .preco__grid{grid-template-columns:minmax(0,1fr) 400px;gap:52px;}}
+.servicos-page .preco__quote{
+  border-left:3px solid var(--gold);padding-left:20px;margin:26px 0 0;
+  font-family:var(--ff-display);font-size:clamp(1.02rem,2.2vw,1.24rem);
+  font-weight:600;color:#fff;line-height:1.42;max-width:56ch;
+}
+.servicos-page .preco__txt p{font-size:.95rem;line-height:1.72;color:rgba(255,255,255,.72);margin:0 0 16px;}
+.servicos-page .preco__txt p:last-child{margin-bottom:0;}
+.servicos-page .preco__txt b{color:#fff;font-weight:600;}
+.servicos-page .preco__nums{display:grid;grid-template-columns:1fr;gap:14px;margin-top:34px;}
+@media(min-width:640px){.servicos-page .preco__nums{grid-template-columns:repeat(3,1fr);gap:18px;}}
+.servicos-page .preco__foto{
+  margin:0;border-radius:var(--radius);overflow:hidden;
+  border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);
+}
+.servicos-page .preco__foto img{display:block;width:100%;height:auto;}
+.servicos-page .preco__foto figcaption{
+  font-size:.72rem;color:rgba(255,255,255,.45);line-height:1.45;padding:12px 16px 14px;
+}
+.servicos-page .pnum{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);
+  border-radius:var(--radius);padding:22px 24px;transition:var(--transition);
+}
+.servicos-page .pnum:hover{border-color:rgba(201,168,76,.5);transform:translateY(-4px);}
+.servicos-page .pnum__v{font-family:var(--ff-display);font-size:2rem;font-weight:700;color:var(--gold);line-height:1;}
+.servicos-page .pnum__l{font-size:.86rem;font-weight:600;color:#fff;margin-top:9px;line-height:1.35;}
+.servicos-page .pnum__n{font-size:.72rem;color:rgba(255,255,255,.45);margin-top:6px;line-height:1.45;}
 
 /* ============================================================
    9. FORMULÁRIO + RODAPÉ
@@ -581,6 +631,10 @@
 /* ============================================================
    RESULTADOS REAIS — BARRA DE LEADS + CASOS
    ============================================================ */
+.servicos-page .leadbar__t{
+  font-family:var(--ff-display);font-size:1.06rem;font-weight:600;
+  color:var(--navy);text-align:center;margin:0 0 16px;
+}
 .servicos-page .leadbar{
   display:grid;grid-template-columns:repeat(2,1fr);
   border-radius:var(--radius);overflow:hidden;

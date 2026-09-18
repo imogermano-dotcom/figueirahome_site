@@ -2,33 +2,37 @@ import type { Metadata } from "next";
 import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Noto_Color_Emoji } from "next/font/google";
 import "./servicos.css";
+
+const notoEmoji = Noto_Color_Emoji({ weight: "400", subsets: ["emoji"], display: "swap" });
 import { ServicosScrollEffects } from "@/components/servicos/scroll-effects";
 import { VideoLightboxProvider, VideoCard, CaseFilmButton } from "@/components/servicos/video-lightbox";
 import { ServicosContactForm } from "@/components/servicos/contact-form";
 
 export const metadata: Metadata = {
-  title: "Serviços para Proprietários",
-  description: "Figueira Home · AMI 7968 · Desde 2009. Pré-venda nas redes sociais com minifilmes e IA: 247 leads por imóvel em média e imóveis vendidos sem chegarem aos portais.",
+  title: "Quero Vender",
+  description: "Figueira Home · AMI 7968 · Desde 2009. Pré-venda nas redes sociais com minifilmes e IA: 97% do valor pedido obtido e imóveis vendidos sem chegarem aos portais.",
   alternates: { canonical: "/servicos" }
 };
 
 const metrics = [
-  { value: 3, suffix: "%", label: "Desconto médio", note: "Face ao valor anunciado. A média nacional varia entre 3% e 10%." },
-  { value: 50, suffix: "", label: "Dias até proposta", note: "Tempo médio até proposta aceite — menos 54% face ao ano anterior." },
-  { value: 3, suffix: "", label: "Visitas para fechar", note: "Compradores qualificados e visita virtual 3D antes da visita presencial." },
+  { value: 8, suffix: " em 10", label: "Angariações vendidas", note: "Dos imóveis que angariamos, 8 em cada 10 acabam vendidos. Últimos 12 meses." },
+  { value: 62, suffix: " dias", label: "Tempo até proposta aceite", note: "Mediana dos últimos 24 meses, da angariação até à proposta aceite." },
+  { value: 3, suffix: "", label: "Visitas para fechar", note: "Média por imóvel, nas escrituras de 2026. A visita virtual 3D filtra antes da visita presencial." },
   { value: 0, suffix: "", label: "Escrituras falhadas", note: "Acompanhamento jurídico e documental do início ao fim do processo." }
 ];
 
 const steps = [
-  ["Análise de Expectativas", "Ouvimo-lo primeiro: valor pretendido, urgência, responsabilidades financeiras e a sua situação específica. A estratégia constrói-se à sua medida."],
-  ["Estudo de Mercado", "Transações recentes, concorrência direta, tendências da zona e conhecimento local. Chegamos a um preço justo — e defendemo-lo com dados."],
-  ["Análise da Documentação", "Caderneta, registo, licença de utilização e certificado energético. Resolvemos pendências antes de ir a mercado, não à porta do cartório."],
-  ["Divulgação", "Fotografia e vídeo profissionais, visita virtual 3D, campanhas pagas, portais nacionais e internacionais e montra na Avenida Marginal."],
-  ["Qualificação de Clientes", "Antes de qualquer visita validamos motivação, orçamento, necessidade de financiamento e prazo de decisão. Menos visitas, mais qualidade."],
-  ["Negociação de Propostas", "Cada proposta é analisada e apresentada com contexto. Não cedemos por pressão — cedemos apenas quando os dados o justificam."],
-  ["Preparação para Escritura", "CPCV, financiamento, IMT e articulação com advogados, bancos, solicitadores e cartórios. Sem surpresas de última hora."],
-  ["Escritura", "Acompanhamo-lo até ao fim. Recebe o valor da sua venda com segurança, transparência e no menor tempo possível."]
+  { title: "Análise de Expectativas", text: "Ouvimo-lo primeiro: valor pretendido, urgência, responsabilidades financeiras e a sua situação específica. A estratégia constrói-se à sua medida.", icon: <><path d="M21 12a8 8 0 0 1-11.7 7.1L4 20.5l1.4-5A8 8 0 1 1 21 12Z" /><path d="M9 12h.01M12 12h.01M15 12h.01" /></> },
+  { title: "Estudo de Mercado", text: "Transações recentes, concorrência direta, tendências da zona e conhecimento local. Chegamos a um preço justo — e defendemo-lo com dados.", icon: <><path d="M4 4v16h16" /><path d="M8 20v-6M12.5 20v-10M17 20v-4" /><path d="m7 11 4-4 3 2.5 5-4.5" /></> },
+  { title: "Análise da Documentação", text: "Caderneta, registo, licença de utilização e certificado energético. Resolvemos pendências antes de ir a mercado, não à porta do cartório.", icon: <><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z" /><path d="M14 3v5h5" /><path d="m9 14.5 2 2 4-4" /></> },
+  { title: "Divulgação", text: "Fotografia e vídeo profissionais, visita virtual 3D, campanhas pagas, portais nacionais e internacionais e montra na Avenida Marginal.", icon: <><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1Z" /><path d="M16.5 8.5a5 5 0 0 1 0 7M19.5 6a9 9 0 0 1 0 12" /></> },
+  { title: "Qualificação de Clientes", text: "Antes de qualquer visita validamos motivação, orçamento, necessidade de financiamento e prazo de decisão. Menos visitas, mais qualidade.", icon: <><path d="M11 10.5a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z" /><path d="M4.2 19.5a6.9 6.9 0 0 1 10.4-5.9" /><path d="m14.5 18 2 2 4-4.3" /></> },
+  { title: "Negociação de Propostas", text: "Cada proposta é analisada e apresentada com contexto. Não cedemos por pressão — cedemos apenas quando os dados o justificam.", icon: <><path d="M12 4.5V20M8.5 20h7M4 8.5h16" /><path d="M4 8.5v3.9M20 8.5v3.9" /><path d="M1.6 12.4h4.8a2.4 2.4 0 0 1-4.8 0ZM17.6 12.4h4.8a2.4 2.4 0 0 1-4.8 0Z" /></> },
+  { title: "Preparação para Escritura", text: "CPCV, financiamento, IMT e articulação com advogados, bancos, solicitadores e cartórios. Sem surpresas de última hora.", icon: <><path d="M3.5 10h17M4 10 12 4.5 20 10" /><path d="M6.5 10v8M10 10v8M14 10v8M17.5 10v8" /><path d="M3 21h18" /></> },
+  { title: "Escritura", text: "Acompanhamo-lo até ao fim. Recebe o valor da sua venda com segurança, transparência e no menor tempo possível.", icon: <><path d="M6 3h8.5L19 7.5V20a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" /><path d="M14.5 3v4.5H19" /><path d="M12 14.2a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4Z" /><path d="m10.5 13.8-.5 3.7 2-1.1 2 1.1-.5-3.7" /></> },
+  { title: "Pós-Venda", text: "A nossa relação não acaba na escritura. Ajudamos na transferência dos contratos de água, luz, gás e telecomunicações e indicamos empresas de confiança para mudanças, limpezas e obras de remodelação — continuamos disponíveis para o que precisar.", icon: <><path d="M3.5 10.6 12 4l8.5 6.6V20a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1Z" /><path d="M12 18.2s-2.7-1.7-2.7-3.5a1.65 1.65 0 0 1 2.7-1.25 1.65 1.65 0 0 1 2.7 1.25c0 1.8-2.7 3.5-2.7 3.5Z" /></> }
 ];
 
 const pillars = [
@@ -51,12 +55,12 @@ const vsteps = [
 ];
 
 const cases = [
-  { ref: "FH2560", title: "Apartamento T1 em localização privilegiada · Figueira da Foz", badge: "sold", badgeLabel: "✓ Vendido", metrics: [["121", "leads gerados", true], ["8", "dias até proposta aceite", true], ["61", "compradores contactados", false], ["1", "visita presencial", false], ["0%", "negociação · vendido pelo preço pedido", false, true]], neverPortals: true, note: "Uma única visita presencial foi suficiente para gerar a proposta.", videoId: "d2JKQDHVWlA", filmLabel: "A campanha que vendeu este imóvel" },
-  { ref: "FH2562", title: "Apartamento · Oportunidade de Férias", badge: "sold", badgeLabel: "✓ Vendido", metrics: [["193", "leads gerados", true], ["15", "dias até proposta aceite", true], ["92", "compradores contactados", false], ["1", "visita presencial", false], ["-9,4%", "negociação face ao valor anunciado", false, true]], neverPortals: true, note: "193 leads e uma visita presencial bastaram para fechar em 15 dias.", videoId: "Zlvdk9bXINo", filmLabel: "A campanha que vendeu este imóvel" },
-  { ref: "FH2520", title: "Andar de Moradia T4 com Garagem e Anexo", badge: "sold", badgeLabel: "Reservado", metrics: [["350", "leads gerados", true], ["92", "dias até proposta aceite", true], ["178", "compradores contactados", false], ["3", "visitas presenciais", false], ["-5,5%", "negociação face ao valor anunciado", false, true]], neverPortals: false, note: "Imóvel de maior complexidade — ainda assim, negociação abaixo da média de mercado, que varia entre 3% e 10%.", videoId: "OxEWkBn9_MA", filmLabel: "A campanha que levou à reserva" },
-  { ref: "FH2550", title: "T3 Remodelado com Garagem · Praia de Buarcos", badge: "live", badgeLabel: "Em campanha", metrics: [["691", "leads gerados", true], ["49", "dias de campanha", true], ["252", "compradores contactados", false], ["6", "visitas presenciais", false]], neverPortals: false, note: "Em fase de pré-venda nas redes sociais, ainda antes de entrar nos portais.", videoId: "BKgx7KK7Eaw", filmLabel: "A campanha que está no ar agora" },
-  { ref: "FH2573", title: "T2 Vista Mar · Condomínio de Luxo · Frente à Praia", badge: "live", badgeLabel: "Em campanha", metrics: [["344", "leads gerados", true], ["34", "dias de campanha", true], ["156", "compradores contactados", false], ["420.000 €", "valor pedido", false]], neverPortals: false, note: "Imóvel de luxo — 344 leads qualificados em 34 dias, em pré-venda exclusiva.", videoId: "zFIIaplJ3Pc", filmLabel: "A campanha que está no ar agora" },
-  { ref: "FH2578", title: "T2 no Centro da Figueira da Foz · Pronto a Habitar", badge: "live", badgeLabel: "Em campanha", metrics: [["276", "leads gerados", true], ["27", "dias de campanha", true], ["95", "compradores contactados", false], ["2", "visitas presenciais", false]], neverPortals: false, note: "Em fase de qualificação de compradores antes de entrar nos portais.", videoId: "H4rUsvUGo5g", filmLabel: "A campanha que está no ar agora" }
+  { ref: "FH2560", title: "Apartamento T1 em localização privilegiada · Figueira da Foz", badge: "sold", badgeLabel: "✓ Vendido", metrics: [["121", "leads gerados", true], ["8", "dias até proposta aceite", true], ["1", "visita presencial", false], ["0%", "negociação · vendido pelo preço pedido", false]], neverPortals: true, note: "Uma única visita presencial foi suficiente para gerar a proposta.", videoId: "d2JKQDHVWlA", filmLabel: "A campanha que vendeu este imóvel" },
+  { ref: "FH2562", title: "Apartamento · Oportunidade de Férias", badge: "sold", badgeLabel: "✓ Vendido", metrics: [["193", "leads gerados", true], ["15", "dias até proposta aceite", true], ["1", "visita presencial", false], ["-9,4%", "negociação face ao valor anunciado", false]], neverPortals: true, note: "193 leads e uma visita presencial bastaram para fechar em 15 dias.", videoId: "Zlvdk9bXINo", filmLabel: "A campanha que vendeu este imóvel" },
+  { ref: "FH2520", title: "Andar de Moradia T4 com Garagem e Anexo", badge: "sold", badgeLabel: "Reservado", metrics: [["350", "leads gerados", true], ["92", "dias até proposta aceite", true], ["3", "visitas presenciais", false], ["-5,5%", "negociação face ao valor anunciado", false]], neverPortals: false, note: "Imóvel de maior complexidade — ainda assim, negociação abaixo da média de mercado, que varia entre 3% e 10%.", videoId: "OxEWkBn9_MA", filmLabel: "A campanha que levou à reserva" },
+  { ref: "FH2550", title: "T3 Remodelado com Garagem · Praia de Buarcos", badge: "live", badgeLabel: "Em campanha", metrics: [["691", "leads gerados", true], ["49", "dias de campanha", true], ["6", "visitas presenciais", false, true]], neverPortals: false, note: "Em fase de pré-venda nas redes sociais, ainda antes de entrar nos portais.", videoId: "BKgx7KK7Eaw", filmLabel: "A campanha que está no ar agora" },
+  { ref: "FH2573", title: "T2 Vista Mar · Condomínio de Luxo · Frente à Praia", badge: "live", badgeLabel: "Em campanha", metrics: [["344", "leads gerados", true], ["34", "dias de campanha", true], ["420.000 €", "valor pedido", false, true]], neverPortals: false, note: "Imóvel de luxo — 344 leads qualificados em 34 dias, em pré-venda exclusiva.", videoId: "zFIIaplJ3Pc", filmLabel: "A campanha que está no ar agora" },
+  { ref: "FH2578", title: "T2 no Centro da Figueira da Foz · Pronto a Habitar", badge: "live", badgeLabel: "Em campanha", metrics: [["276", "leads gerados", true], ["27", "dias de campanha", true], ["2", "visitas presenciais", false, true]], neverPortals: false, note: "Em fase de qualificação de compradores antes de entrar nos portais.", videoId: "H4rUsvUGo5g", filmLabel: "A campanha que está no ar agora" }
 ] as const;
 
 const videos = [
@@ -88,7 +92,7 @@ const techCards = [
   { icon: <><path d="M3.5 8.5 12 4l8.5 4.5v7L12 20l-8.5-4.5z" /><path d="M12 12v8M3.5 8.5 12 12l8.5-3.5" /></>, title: "Visita Virtual 3D", text: "O comprador percorre o seu imóvel a qualquer hora, de qualquer parte do mundo — e pode medir espaços no ambiente virtual para confirmar se os móveis cabem, antes sequer de o visitar." },
   { icon: <><circle cx="6" cy="7" r="2.5" /><circle cx="18" cy="17" r="2.5" /><path d="M8.5 7H13a3.5 3.5 0 0 1 3.5 3.5V15M15.5 17H11a3.5 3.5 0 0 1-3.5-3.5V9.5" /></>, title: "Matching por IA", text: "Cruzamento automático entre as características do seu imóvel e as preferências de todos os compradores em carteira. O comprador certo pode já estar na nossa base de dados." },
   { icon: <><rect x="4" y="7" width="16" height="12" rx="3.5" /><path d="M12 3v4M9 12v2M15 12v2M9.5 16.5h5" /></>, title: "Qualificação com IA", text: "Triagem automática de interessados 24/7, em qualquer idioma, com recolha da informação essencial antes de o contacto chegar ao consultor. Nenhuma oportunidade perdida.", badge: "Em desenvolvimento" },
-  { icon: <><rect x="3" y="4" width="18" height="16" rx="2.5" /><path d="M3 9h18M7.5 13h4M7.5 16.5h7" /></>, title: "Portal do Proprietário", text: "Toda a informação da venda em tempo real: estatísticas de visualizações, registo de contactos e visitas, feedback dos compradores e estado do processo.", badge: "Em breve" }
+  { icon: <><rect x="3" y="4" width="18" height="16" rx="2.5" /><path d="M3 9h18M7.5 13h4M7.5 16.5h7" /></>, title: "Portal do Proprietário", text: "Tudo o que está a ser feito pelo imóvel e o que já rendeu, em tempo real: campanhas a decorrer, contactos gerados, visitas realizadas e o que disse quem visitou a casa. Sem ter de telefonar a perguntar.", badge: "Em breve" }
 ];
 
 const ai247Cards = [
@@ -98,11 +102,25 @@ const ai247Cards = [
   { icon: <><circle cx="10.5" cy="10.5" r="6.5" /><path d="m15.5 15.5 5 5" /></>, title: "Contacto Proativo", text: "Além de responder, o agente contacta ativamente centenas de compradores da nossa base de dados cujo perfil corresponde ao seu imóvel." }
 ];
 
-const facts = [
-  { icon: <><path d="M12 3 3 7.5l9 4.5 9-4.5z" /><path d="M6.5 10.5V15c0 1.7 2.5 3 5.5 3s5.5-1.3 5.5-3v-4.5M21 7.5V13" /></>, title: "Formação contínua", text: "Mentorias ativas em IA aplicada ao imobiliário, legislação, fiscalidade e mercado — partilhadas com toda a equipa e reforçadas em eventos do setor." },
-  { icon: <><path d="M16 20v-1.5A3.5 3.5 0 0 0 12.5 15h-5A3.5 3.5 0 0 0 4 18.5V20" /><circle cx="10" cy="8" r="3.2" /><path d="M17 11.5a3 3 0 1 0-2-5.3M20 20v-1.5a3.5 3.5 0 0 0-2.6-3.4" /></>, title: "Quase 16.000 seguidores", text: "Uma voz de referência no imobiliário local, presente no Instagram, Facebook, LinkedIn e TikTok — audiência que trabalha a favor do seu imóvel." },
-  { icon: <><path d="M12 2.5 4.5 6v6.2c0 4.6 3.2 7.9 7.5 9.3 4.3-1.4 7.5-4.7 7.5-9.3V6z" /><path d="m8.8 12.2 2.2 2.2 4.3-4.6" /></>, title: "Licença AMI 7968", node: <>Segurança jurídica, seguro de responsabilidade civil obrigatório e idoneidade comprovada. Pode verificar a licença a qualquer momento em <a href="https://www.impic.pt" target="_blank" rel="noopener">impic.pt</a>.</> },
-  { icon: <><path d="M4 20V9.5L12 4l8 5.5V20" /><path d="M4 12.5h16M9 20v-4.5h6V20" /></>, title: "Montra na Avenida Marginal", text: "Painel LED e televisão em passagem contínua, numa das principais artérias da cidade. Exposição permanente do seu imóvel, 24 horas por dia, 7 dias por semana." }
+const aboutStats = [
+  { value: "+300 famílias", label: "Satisfeitas, desde 2009" },
+  { value: "62 dias", label: "Até à proposta aceite, a 97% do valor pedido. Medianas dos últimos 24 meses" },
+  { value: "0 escrituras falhadas", label: "Documentação sempre em ordem para a escritura" }
+];
+
+const team = [
+  { photo: "sofia-monteiro", role: "Sócia e Gerente", name: "Sofia Monteiro", bio: "Responsável pelo acompanhamento processual, documentação e preparação das escrituras." },
+  { photo: "miguel-germano", role: "Diretor Comercial", name: "Miguel Germano", bio: "Ligado à mediação imobiliária desde 2006, com experiência comercial e de gestão de agências." },
+  { photo: "alexandra-santos", role: "Consultora", name: "Alexandra Santos", bio: "Formação em Design de Comunicação e Produção Audiovisual; alia proximidade, escuta e comunicação clara." },
+  { photo: "giulia-almeida", role: "Audiovisual", name: "Giulia Almeida", bio: "Editora de vídeo com experiência em produção audiovisual para marcas e projetos tecnológicos." },
+  { photo: "alexsandra-ferreira", role: "Consultora", name: "Alexsandra Ferreira", bio: "Com experiência em vendas, acompanha cada cliente com transparência, honestidade e dedicação." },
+  { photo: "sandra-silva", role: "Consultora", name: "Sandra Silva", bio: "Consultora imobiliária dedicada a simplificar cada decisão com proximidade, confiança e transparência." }
+] as const;
+
+const precoNums = [
+  { value: "97%", label: "Do valor pedido obtido", note: "Mediana dos últimos 24 meses." },
+  { value: "62 dias", label: "Até à proposta aceite", note: "Mediana dos últimos 24 meses, da angariação até à proposta aceite." },
+  { value: "8 em 10", label: "Angariações vendidas", note: "Últimos 12 meses." }
 ];
 
 export default function ServicosPage() {
@@ -117,25 +135,31 @@ export default function ServicosPage() {
             <span className="hero__aura" aria-hidden="true" />
             <span className="hero__aura hero__aura--2" aria-hidden="true" />
             <div className="wrap hero__inner">
-              <span className="eyebrow"><span className="dot" /> Figueira da Foz · Mediação Imobiliária</span>
-              <h1>O Seu Imóvel nas <em>Melhores Mãos</em></h1>
-              <p className="hero__sub">A estratégia certa para vender bem e depressa.</p>
-              <div className="hero__actions">
-                <a href="#contacto" className="btn btn--gold">Falar com um consultor</a>
-                <a href="#resultados" className="btn btn--ghost">Ver resultados reais</a>
+              <div>
+                <span className="eyebrow"><span className="dot" /> Figueira da Foz · Mediação Imobiliária</span>
+                <h1>O Seu Imóvel nas <em>Melhores Mãos</em></h1>
+                <p className="hero__sub">A estratégia certa para vender bem e depressa.</p>
+                <div className="hero__actions">
+                  <a href="#contacto" className="btn btn--gold">Falar com um consultor</a>
+                  <a href="#resultados" className="btn btn--ghost">Ver resultados reais</a>
+                </div>
+                <a href="#contacto" className="hero__val" data-intent="avaliacao">
+                  <span className="hero__val__txt">
+                    <b>Quer saber o valor do seu imóvel?</b>
+                    <i>Avaliação gratuita e sem compromisso, por quem acompanha o mercado da Figueira da Foz todos os dias.</i>
+                  </span>
+                  <span className="btn btn--gold btn--sm">Pedir avaliação</span>
+                </a>
+                <div className="hero__badges">
+                  <div className="hero__badge"><b>97%</b><span>Do valor pedido obtido</span></div>
+                  <div className="hero__badge"><b>Desde 2009</b><span>Experiência local</span></div>
+                  <div className="hero__badge"><b>+300 Famílias</b><span>Já confiaram em nós</span></div>
+                </div>
               </div>
-              <a href="#contacto" className="hero__val">
-                <span className="hero__val__txt">
-                  <b>Quer saber o valor do seu imóvel?</b>
-                  <i>Avaliação gratuita e sem compromisso, por quem acompanha o mercado da Figueira da Foz todos os dias.</i>
-                </span>
-                <span className="btn btn--gold btn--sm">Pedir avaliação</span>
-              </a>
-              <div className="hero__badges">
-                <div className="hero__badge"><b>AMI 7968</b><span>Licença IMPIC</span></div>
-                <div className="hero__badge"><b>Desde 2009</b><span>Experiência local</span></div>
-                <div className="hero__badge"><b>+300 Famílias</b><span>Já confiaram em nós</span></div>
-              </div>
+              <figure className="hero__foto">
+                <Image src="/servicos/hero-vendido.webp" alt="Uma família a apertar a mão a dois consultores da Figueira Home à porta de uma moradia, com a placa Vendido no jardim" width={720} height={857} priority />
+                <figcaption>233 408 130 — custo de uma chamada para um operador fixo nacional.</figcaption>
+              </figure>
             </div>
             <div className="scroll-hint" aria-hidden="true"><span>Descer</span><i /></div>
           </section>
@@ -165,15 +189,18 @@ export default function ServicosPage() {
             <div className="wrap">
               <div className="section-head reveal">
                 <span className="eyebrow"><span className="dot" /> O Nosso Processo</span>
-                <h2>Oito etapas. Nenhuma deixada ao acaso.</h2>
-                <p className="lead">Da primeira conversa à assinatura da escritura, cada fase tem objetivos claros, responsáveis definidos e prazos acordados consigo.</p>
+                <h2>Nove etapas. Nenhuma deixada ao acaso.</h2>
+                <p className="lead">Da primeira conversa ao pós-venda, cada fase tem objetivos claros, responsáveis definidos e prazos acordados consigo.</p>
               </div>
               <div className="steps">
-                {steps.map(([title, text], index) => (
-                  <article key={title} className="step reveal">
-                    <div className="step__num">{String(index + 1).padStart(2, "0")}</div>
-                    <h3>{title}</h3>
-                    <p>{text}</p>
+                {steps.map((s, index) => (
+                  <article key={s.title} className="step reveal">
+                    <div className="step__head">
+                      <div className="step__num">{String(index + 1).padStart(2, "0")}</div>
+                      <span className="step__ico" aria-hidden="true"><svg viewBox="0 0 24 24">{s.icon}</svg></span>
+                    </div>
+                    <h3>{s.title}</h3>
+                    <p>{s.text}</p>
                   </article>
                 ))}
               </div>
@@ -253,29 +280,30 @@ export default function ServicosPage() {
               <div className="section-head section-head--center reveal">
                 <span className="eyebrow"><span className="dot" /> Resultados Reais</span>
                 <h2>O que estamos a conseguir — em números reais</h2>
-                <p className="lead">Dados das nossas campanhas de 2026. Cada imóvel, cada campanha — com resultados que falam por si.</p>
+                <p className="lead">Dados das escrituras de 2026. Cada imóvel, cada negócio — com resultados que falam por si.</p>
               </div>
 
+              <h3 className="leadbar__t">Como chegou o comprador</h3>
               <div className="leadbar reveal">
                 <div className="leadbar__item">
-                  <div className="leadbar__v" data-count="247">0</div>
-                  <div className="leadbar__l">Leads gerados por imóvel, em média</div>
-                  <div className="leadbar__c">campanhas ativas em 2026</div>
+                  <div className="leadbar__v" data-count="40" data-suffix="%">0</div>
+                  <div className="leadbar__l">Compradores das redes sociais</div>
+                  <div className="leadbar__c">campanhas e site próprio</div>
                 </div>
                 <div className="leadbar__item">
-                  <div className="leadbar__v" data-count="2700" data-prefix="+" data-group="1">0</div>
-                  <div className="leadbar__l">Leads gerados no total</div>
-                  <div className="leadbar__c">portfólio atual em campanha</div>
+                  <div className="leadbar__v" data-count="40" data-suffix="%">0</div>
+                  <div className="leadbar__l">Compradores vindos da agência</div>
+                  <div className="leadbar__c">contactos que chegam à agência</div>
                 </div>
                 <div className="leadbar__item">
-                  <div className="leadbar__v" data-count="38" data-suffix=" dias">0</div>
-                  <div className="leadbar__l">Tempo médio até proposta aceite</div>
-                  <div className="leadbar__c">nos imóveis vendidos em pré-venda</div>
+                  <div className="leadbar__v" data-count="20" data-suffix="%">0</div>
+                  <div className="leadbar__l">Entrada de loja</div>
+                  <div className="leadbar__c">quem entra pela porta</div>
                 </div>
                 <div className="leadbar__item">
-                  <div className="leadbar__v">24/7</div>
-                  <div className="leadbar__l">Agente de IA disponível</div>
-                  <div className="leadbar__c">sem clientes perdidos por falta de resposta</div>
+                  <div className="leadbar__v" data-count="20" data-suffix="%">0</div>
+                  <div className="leadbar__l">Vendidos sem contacto de portais</div>
+                  <div className="leadbar__c">nenhum contacto veio de um portal</div>
                 </div>
               </div>
 
@@ -342,9 +370,10 @@ export default function ServicosPage() {
                   <ul className="phase__list">
                     <li>Publicação em 33 países e mais de 70 portais nacionais e internacionais</li>
                     <li>Destaque nos lugares cimeiros do Idealista — pagamos para que seja visto primeiro</li>
+                    <li>Flyers de proximidade distribuídos na zona — muitas vezes quem compra mora a duas ruas</li>
+                    <li>Placa com QR Code — aponta-se o telemóvel e fala-se logo com o nosso agente de IA</li>
                     <li>Visita virtual 3D disponível — o comprador percorre o imóvel antes de visitar</li>
-                    <li>Placa com QR Code — acesso imediato à página do imóvel</li>
-                    <li>Agente de IA continua disponível 24/7 para qualquer dúvida</li>
+                    <li>Agente de IA 24/7 em qualquer língua — tira as dúvidas na hora e, havendo interesse real, encaminha para um consultor</li>
                   </ul>
                 </article>
               </div>
@@ -370,7 +399,7 @@ export default function ServicosPage() {
               <div className="countries">
                 {countries.map((c) => (
                   <article key={c.name} className="country reveal">
-                    <div className="country__head">{c.flags.map((f) => <span key={f} className="country__flag">{f}</span>)}<span className="country__name">{c.name}</span></div>
+                    <div className="country__head">{c.flags.map((f) => <span key={f} className={`country__flag ${notoEmoji.className}`}>{f}</span>)}<span className="country__name">{c.name}</span></div>
                     <ul className="portals">
                       {c.portals.map((p) => <li key={p}>{p}</li>)}
                       {"soon" in c && c.soon && <li className="is-soon">{c.soon}</li>}
@@ -379,10 +408,10 @@ export default function ServicosPage() {
                 ))}
 
                 <article className="country country--wide reveal">
-                  <div className="country__head"><span className="country__flag">🌍</span><span className="country__name">Mais 27 países via Properstar Global</span></div>
+                  <div className="country__head"><span className={`country__flag ${notoEmoji.className}`}>🌍</span><span className="country__name">Mais 27 países via Properstar Global</span></div>
                   <p style={{ fontSize: ".89rem", color: "var(--muted-fg)", margin: 0 }}>Uma única publicação, distribuída automaticamente pelos portais parceiros da rede internacional Properstar.</p>
                   <div className="flags" role="img" aria-label="Bandeiras dos países da rede Properstar Global">
-                    {properstarFlags.map(([name, flag]) => <span key={name} title={name}>{flag}</span>)}
+                    {properstarFlags.map(([name, flag]) => <span key={name} title={name} className={notoEmoji.className}>{flag}</span>)}
                   </div>
                   <div className="premium">
                     <span className="premium__label">Portais Premium Globais</span>
@@ -447,42 +476,71 @@ export default function ServicosPage() {
           </section>
 
           {/* 12. QUEM SOMOS */}
-          <section className="section" id="quem-somos">
+          <section className="section section--soft" id="quem-somos">
             <div className="wrap">
               <div className="about">
                 <div className="reveal">
                   <span className="eyebrow"><span className="dot" /> Quem Somos</span>
-                  <h2>Uma equipa local, com exigência internacional</h2>
-                  <p className="lead" style={{ marginTop: 18 }}>Desde 2009 na Figueira da Foz, com licença AMI 7968 emitida pelo IMPIC. Conhecemos cada rua, cada zona e cada tipo de comprador que procura esta cidade.</p>
-                  <ul className="facts">
-                    {facts.map((f) => (
-                      <li key={f.title}>
-                        <span className="facts__ico" aria-hidden="true"><svg viewBox="0 0 24 24">{f.icon}</svg></span>
-                        <div><b>{f.title}</b><p>{"node" in f ? f.node : f.text}</p></div>
-                      </li>
+                  <h2>Imobiliária local, com visão atual</h2>
+                  <p className="lead" style={{ marginTop: 18 }}>A Figueira Home nasceu em 2009 e é uma equipa local, licenciada pelo IMPIC com AMI 7968, que trabalha a compra, venda e arrendamento de imóveis — e, brevemente, também a intermediação de crédito. O que nos distingue é a forma como o fazemos: minifilmes e fotografia profissional em cada imóvel, e inteligência artificial no que ela faz melhor — tratar imagem, preparar apresentações, ler o mercado e responder depressa a quem pergunta.</p>
+                  <p className="lead">Somos dos primeiros a adotar cada ferramenta nova, mas só ficamos com a que se traduz num serviço melhor. E há uma linha que não passamos: <b>um negócio só é bom se servir as duas partes</b> — quem compra e quem vende. Preferimos perder um negócio a criar um problema a um cliente.</p>
+                  <div className="about__stats">
+                    {aboutStats.map((s) => (
+                      <div key={s.value} className="about__stat"><b>{s.value}</b><span>{s.label}</span></div>
                     ))}
-                  </ul>
-                </div>
-                <aside className="about__card reveal">
-                  <div className="about__card-inner">
-                    <div className="about__avatar">MG</div>
-                    <div className="about__name">Miguel Germano</div>
-                    <div className="about__role">Fundador · Direção</div>
-                    <p className="about__quote">O nosso trabalho não é conseguir a angariação. É conseguir a venda — pelo valor certo, no prazo certo e sem sobressaltos até à escritura.</p>
-                    <p>Acompanha pessoalmente a estratégia de cada imóvel e mantém a equipa na vanguarda do setor através de formação e mentorias contínuas em IA, legislação e fiscalidade.</p>
-                    <div className="about__stats">
-                      <div className="about__stat"><b>2009</b><span>Desde</span></div>
-                      <div className="about__stat"><b>7968</b><span>Licença AMI</span></div>
-                      <div className="about__stat"><b>+300</b><span>Famílias</span></div>
-                      <div className="about__stat"><b>16k</b><span>Seguidores</span></div>
-                    </div>
                   </div>
-                </aside>
+                </div>
+                <div className="reveal">
+                  <h3 className="team__title">Uma equipa que conhece o seu próximo passo</h3>
+                  <div className="team">
+                    {team.map((t) => (
+                      <article key={t.name} className="team__card">
+                        <Image className="team__photo" src={`/servicos/team-${t.photo}.webp`} alt="" width={84} height={84} />
+                        <div className="team__role">{t.role}</div>
+                        <div className="team__name">{t.name}</div>
+                        <p className="team__bio">{t.bio}</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </section>
 
-          {/* 13. FORMULÁRIO */}
+          {/* 13. O PREÇO CERTO */}
+          <section className="section dark" id="preco">
+            <div className="wrap">
+              <div className="section-head reveal" style={{ maxWidth: 820 }}>
+                <span className="eyebrow"><span className="dot" /> Antes de escolher</span>
+                <h2>O valor mais alto que lhe prometerem não é o valor que alguém vai pagar</h2>
+                <p className="preco__quote">Quem promete é a agência. Quem paga é o comprador — e o comprador nunca ouviu a promessa.</p>
+              </div>
+
+              <div className="preco__grid">
+                <div className="preco__txt reveal">
+                  <p>Há quem apresente um valor acima do mercado para conseguir a angariação — e depois passe meses a trazer-lhe propostas bem abaixo dele. Entretanto o seu imóvel perde o que tem de mais valioso: a novidade. Quando finalmente baixa o preço, já toda a gente o viu caro.</p>
+                  <p>Nós dizemos-lhe o valor que os dados sustentam, mesmo quando não é o que gostaria de ouvir. <b>Acertamos no preço à partida, para não termos de o descontar no fim</b> — e é por isso que as nossas negociações fecham perto do que foi pedido, e depressa.</p>
+                </div>
+
+                <figure className="preco__foto reveal">
+                  <Image src="/servicos/preco-negociacao.webp" alt="Uma vendedora diz que quer vender por 350.000 euros, um consultor propõe anunciar por 380.000 euros para haver margem de negociação, e o comprador responde que o banco avaliou a casa em 290.000 euros." width={760} height={760} />
+                  <figcaption>O preço que a agência aceita anunciar não é o preço que o comprador aceita pagar.</figcaption>
+                </figure>
+              </div>
+
+              <div className="preco__nums">
+                {precoNums.map((n) => (
+                  <article key={n.label} className="pnum reveal">
+                    <div className="pnum__v">{n.value}</div>
+                    <div className="pnum__l">{n.label}</div>
+                    <p className="pnum__n">{n.note}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* 14. FORMULÁRIO */}
           <section className="section contact" id="contacto">
             <div className="wrap">
               <div className="contact__grid">

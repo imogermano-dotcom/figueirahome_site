@@ -62,7 +62,19 @@ export function ServicosScrollEffects() {
       counters.forEach((el) => co?.observe(el));
     }
 
-    return () => { io?.disconnect(); co?.disconnect(); };
+    const gatilhos = Array.from(document.querySelectorAll<HTMLElement>('.servicos-page [data-intent="avaliacao"]'));
+    function onAvaliacaoClick() {
+      const msg = document.getElementById("mensagem") as HTMLTextAreaElement | null;
+      const nome = document.getElementById("nome") as HTMLInputElement | null;
+      if (msg && !msg.value.trim()) msg.value = "Gostaria de saber o valor do meu imóvel. Peço uma avaliação gratuita.";
+      if (nome) window.setTimeout(() => nome.focus({ preventScroll: true }), 700);
+    }
+    gatilhos.forEach((el) => el.addEventListener("click", onAvaliacaoClick));
+
+    return () => {
+      io?.disconnect(); co?.disconnect();
+      gatilhos.forEach((el) => el.removeEventListener("click", onAvaliacaoClick));
+    };
   }, []);
 
   return null;
