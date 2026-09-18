@@ -4,6 +4,7 @@ import { getSupabasePublicServerClient, getSupabaseServiceClient } from "./supab
 import { sampleAgents, sampleProperties } from "./sample-data";
 import { figueiraTeam } from "./team";
 import { sendLeadToEgo } from "./ego";
+import { sendEmail } from "./resend";
 import type { Agent, LeadInput, Property, PropertyFilters, PropertyImage } from "./types";
 
 let lastSuccessfulProperties: Property[] | null = null;
@@ -332,6 +333,15 @@ export async function createLead(input: LeadInput) {
     .select("nome")
     .single();
   if (error) throw error;
+
+  if (input.request_type === "servicos") {
+    const emailResult = await sendEmail({
+      to: "miguel.germano@figueirahome.pt",
+      subject: `Novo pedido — Quero Vender: ${input.name}`,
+      html: `<p><b>Nome:</b> ${input.name}</p><p><b>Email:</b> ${input.email || "—"}</p><p><b>Telefone:</b> ${input.phone || "—"}</p><p><b>Mensagem:</b><br>${input.message.replace(/\n/g, "<br>")}</p>`
+    });
+    if (emailResult.status === "erro") console.error("Aviso de lead (servicos) falhou", emailResult.error);
+  }
 
   if (input.property_id) {
     const { data: imovel } = await supabase
