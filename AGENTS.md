@@ -5,11 +5,12 @@ Handoff operacional. Reescrito em 2026-09-13 — estado consolidado num resumo �
 ## Estado atual
 
 - Site institucional e catálogo imobiliário: Next.js App Router, Supabase (Postgres/PostgREST), Cloudflare Workers (via OpenNext). Formulários de contacto, recrutamento (quiz + relatório de perfil por IA) e chat (widget externo do portal).
-- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true` em `wrangler.jsonc`). HEAD: `811fe38` (branch `teste/alteracao-cliente`). Último deploy: Version `da2a3a30` (2026-09-18) — reescrita de `/servicos` ("Quero Vender").
+- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true` em `wrangler.jsonc`). HEAD: `9beaaf7` (branch `teste/alteracao-cliente`). Último deploy: Version `dfd8186a` (2026-09-18) — email de aviso ao Miguel (Resend) para leads do `/servicos`.
 - Site antigo (WordPress) continua vivo no VPS CloudPanel (`165.22.31.75`), só deixou de ser apontado pelo domínio. Email (MX Microsoft 365 + SendGrid), `cloudpanel.`, `lp.`, `sip.` — todos intocados.
 - Dev local: `http://localhost:3000` (`npm run dev`, Turbopack). Bug recorrente: CSS/HMR fica preso em cache — fix: matar processo na porta 3000, `rm -rf .next` (às vezes 2x), reiniciar. Mudar `next.config.ts` exige sempre reiniciar o servidor (não recarrega sozinho).
 - Deploy: `npm run deploy` (`opennextjs-cloudflare build && deploy`). Nunca usar Turbopack para produção.
 - Segredos: `.env.local` local (gitignored) + `wrangler secret put <NOME>` para produção (nunca em `vars` do `wrangler.jsonc`). Nunca expor valores de Supabase/Anthropic/MailerLite/Cloudflare/Widget/eGO em texto. Chaves Supabase no formato novo `sb_publishable_...`/`sb_secret_...` (legacy JWT desligado pelo cliente em 2026-09-12) — ver "Decisões arquiteturais" sobre a armadilha do build-time.
+- Leads do `/servicos` ("Quero Vender") disparam email para `miguel.germano@figueirahome.pt` via Resend (`src/lib/resend.ts`, `RESEND_API_KEY`/`RESEND_REMETENTE` — remetente é `noreply@miguelgermano.com`, domínio verificado no Resend, não `figueirahome.pt`). Gate por `request_type === "servicos"` dentro de `createLead()`; falha de envio não bloqueia o lead (só regista erro).
 - `client-reference/` é gitignored — docs internos do cliente (briefings, PDFs) que nunca podem ficar em `public/`. `property-catalogue-local.png` e `tsconfig.tsbuildinfo` são ficheiros locais fora de escopo, não commitar.
 
 ## Implementado
