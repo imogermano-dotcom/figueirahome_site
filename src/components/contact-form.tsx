@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Send } from "lucide-react";
 import { useState } from "react";
+import { trackLead } from "@/lib/track";
 
 export function ContactForm({ source = "form", propertyId }: { source?: "form" | "property_detail"; propertyId?: string }) {
   const [state, setState] = useState<"idle" | "sending" | "success" | "error">("idle");
@@ -29,7 +30,7 @@ export function ContactForm({ source = "form", propertyId }: { source?: "form" |
       body: JSON.stringify(payload)
     });
     setState(res.ok ? "success" : "error");
-    if (res.ok) form.reset();
+    if (res.ok) { form.reset(); trackLead(); }
   }
 
   return (

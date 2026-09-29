@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2, ChevronLeft, Mail, Send, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { recruitmentQuestions, scoreRecruitmentAnswers } from "@/lib/recruitment";
+import { trackLead } from "@/lib/track";
 
 type QuizState = "questions" | "result";
 type FormState = "idle" | "sending" | "success" | "error";
@@ -165,7 +166,7 @@ export function RecruitmentLeadForm() {
       motivation: String(form.get("motivation") || ""), contact_preference: String(form.get("contact_preference") || TIME_OPTIONS[3]),
       whatsapp_consent: form.get("whatsapp_consent") === "on", privacy_consent: form.get("privacy_consent") === "on", website: String(form.get("website") || ""), answers: quizAnswers
     }) });
-    if (response.ok) setState("success"); else { setState("idle"); setError("Não foi possível enviar a candidatura. Confirme os dados e tente novamente."); }
+    if (response.ok) { setState("success"); trackLead(); } else { setState("idle"); setError("Não foi possível enviar a candidatura. Confirme os dados e tente novamente."); }
   }
 
   return (

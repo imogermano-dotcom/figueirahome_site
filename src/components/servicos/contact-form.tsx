@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
+import { trackLead } from "@/lib/track";
 
 type State = "idle" | "sending" | "success" | "error";
 
@@ -36,6 +37,7 @@ export function ServicosContactForm() {
       source: "form", name, email, phone, message, request_type: "servicos", privacy_consent: true
     }) });
     setState(response.ok ? "success" : "error");
+    if (response.ok) trackLead();
   }
 
   if (state === "success") {
