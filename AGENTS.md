@@ -5,7 +5,7 @@ Handoff operacional. Reescrito em 2026-09-13 — estado consolidado num resumo �
 ## Estado atual
 
 - Site institucional e catálogo imobiliário: Next.js App Router, Supabase (Postgres/PostgREST), Cloudflare Workers (via OpenNext). Formulários de contacto, recrutamento (quiz + relatório de perfil por IA) e chat (widget externo do portal).
-- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true` em `wrangler.jsonc`). HEAD: `2c28d05` (branch `teste/alteracao-cliente`). Último deploy: Version `2e0e0055` (2026-09-18) — preenche `tipo_contacto` nos leads.
+- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true` em `wrangler.jsonc`). HEAD: `7bc1bc0` (branch `teste/alteracao-cliente`, sem push p/ `origin`). Último deploy: Version `2e0e0055` (2026-09-18) — preenche `tipo_contacto` nos leads.
 - Site antigo (WordPress) continua vivo no VPS CloudPanel (`165.22.31.75`), só deixou de ser apontado pelo domínio. Email (MX Microsoft 365 + SendGrid), `cloudpanel.`, `lp.`, `sip.` — todos intocados.
 - Dev local: `http://localhost:3000` (`npm run dev`, Turbopack). Bug recorrente: CSS/HMR fica preso em cache — fix: matar processo na porta 3000, `rm -rf .next` (às vezes 2x), reiniciar. Mudar `next.config.ts` exige sempre reiniciar o servidor (não recarrega sozinho).
 - Deploy: `npm run deploy` (`opennextjs-cloudflare build && deploy`). Nunca usar Turbopack para produção.
@@ -49,7 +49,7 @@ Handoff operacional. Reescrito em 2026-09-13 — estado consolidado num resumo �
 
 ### Monitorização
 - Notificação Cloudflare "Site em baixo" criada (Manage account → Notifications, "Health Checks status notification", emails miguel.germano@gmail.com + jm.workflow2024@gmail.com, dispara em fica saudável/não saudável) — **mas inactiva**: plano `free` da zona inclui 0 Health Checks (precisa Pro). Fica pronta p/ activar automaticamente assim que o Health Check for criado (Traffic → Health Checks → `https://www.figueirahome.pt`).
-- Por agora: UptimeRobot (free, externo, por configurar) + 2º check a construir no `figueira-home-portal` (Fly.io, provider diferente do Cloudflare = mais independente) — fora deste repo.
+- Por agora: UptimeRobot (free, externo) **ativo** a monitorizar o site (confirmado 2026-09-29) + 2º check a construir no `figueira-home-portal` (Fly.io, provider diferente do Cloudflare = mais independente) — fora deste repo.
 
 ## Ficheiros principais
 
@@ -101,7 +101,7 @@ Handoff operacional. Reescrito em 2026-09-13 — estado consolidado num resumo �
 3. Confirmar junto do suporte eGO o mecanismo real de fallback para RID inválido.
 4. Favicon dedicado quando houver asset do cliente.
 5. Confirmar com o cliente: testemunhos da homepage (reais?) e quem implementa o opt-out "PARAR" do WhatsApp.
-6. Configurar UptimeRobot (free) a apontar a figueirahome.pt; construir 2º check no figueira-home-portal.
+6. Construir 2º check de uptime no figueira-home-portal (UptimeRobot já ativo).
 
 <!-- BEGIN:nextjs-agent-rules -->
 
