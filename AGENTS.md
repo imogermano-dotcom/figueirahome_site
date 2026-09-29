@@ -5,7 +5,7 @@ Handoff operacional. Reescrito em 2026-09-13 — estado consolidado num resumo �
 ## Estado atual
 
 - Site institucional e catálogo imobiliário: Next.js App Router, Supabase (Postgres/PostgREST), Cloudflare Workers (via OpenNext). Formulários de contacto, recrutamento (quiz + relatório de perfil por IA) e chat (widget externo do portal).
-- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true` em `wrangler.jsonc`). HEAD: `7bc1bc0` (branch `teste/alteracao-cliente`, sem push p/ `origin`). Último deploy: Version `2e0e0055` (2026-09-18) — preenche `tipo_contacto` nos leads.
+- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true` em `wrangler.jsonc`). HEAD: `1a6f583` (branch `teste/alteracao-cliente`, sem push p/ `origin`). Último deploy: Version `f3db5c29` (2026-09-29) — evento `Lead` do Meta Pixel nos formulários.
 - Site antigo (WordPress) continua vivo no VPS CloudPanel (`165.22.31.75`), só deixou de ser apontado pelo domínio. Email (MX Microsoft 365 + SendGrid), `cloudpanel.`, `lp.`, `sip.` — todos intocados.
 - Dev local: `http://localhost:3000` (`npm run dev`, Turbopack). Bug recorrente: CSS/HMR fica preso em cache — fix: matar processo na porta 3000, `rm -rf .next` (às vezes 2x), reiniciar. Mudar `next.config.ts` exige sempre reiniciar o servidor (não recarrega sozinho).
 - Deploy: `npm run deploy` (`opennextjs-cloudflare build && deploy`). Nunca usar Turbopack para produção.
@@ -35,7 +35,7 @@ Handoff operacional. Reescrito em 2026-09-13 — estado consolidado num resumo �
 - Chat AI interno foi **removido** — substituído pelo widget externo do cliente (`public/widget.js`, autocontido, monta bolha+painel via JS puro), que fala com os agentes do `figueira-home-portal` (FastAPI/Fly.io, Supabase próprio). Passa por `/api/site-chat` (proxy neste Worker) que injeta o header secreto `X-Widget-Key`/`WIDGET_CHAT_SECRET`.
 
 ### Consentimento, analytics e legal
-- Banner de cookies bloqueia GA4/Meta Pixel até "Aceitar". `/politica-privacidade` e `/politica-cookies` cobrem WhatsApp, profiling do quiz, Google Translate vs GA/Pixel. Emails de contacto uniformizados para `geral@figueirahome.pt`.
+- Banner de cookies bloqueia GA4/Meta Pixel até "Aceitar". Pixel confirmado ativo em produção (2026-09-29, `PageView` chega à Meta). Evento `Lead` (`trackLead()` em `src/lib/track.ts`, no-op sem consentimento) dispara após resposta ok de `/api/leads` (`contact-form.tsx`, cobre `/contacto` + ficha de imóvel; `servicos/contact-form.tsx`) e `/api/recrutamento` (`recruitment-form.tsx`); honeypot/erros não contam. **Ainda por testar ao vivo** (`ev=Lead` em `facebook.com/tr`). `/politica-privacidade` e `/politica-cookies` cobrem WhatsApp, profiling do quiz, Google Translate vs GA/Pixel. Emails de contacto uniformizados para `geral@figueirahome.pt`.
 - Footer (`video-footer.tsx`): vídeo de fundo substituído por imagem estática, pedido do cliente. Botões de âncora do footer em `/recrutamento` usam `jumpToAnchor()` (scroll instantâneo via JS) porque `scroll-behavior:smooth` global falha em silêncio em saltos muito longos (página tem ~23000px).
 
 ### Segurança
