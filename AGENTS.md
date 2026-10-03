@@ -1,107 +1,101 @@
 # AGENTS.md — Figueira Home
 
-Handoff operacional. Reescrito em 2026-09-13 — estado consolidado num resumo único, narrativa de fixes já resolvidos comprimida ao essencial (o quê + porquê, sem o passo-a-passo de debugging). Manter este ficheiro abaixo de 200 linhas; substituir informação ultrapassada em vez de acumular.
+Handoff operacional. Reescrito em 2026-10-03 — estado consolidado num resumo único; incidentes resolvidos comprimidos ao essencial (o quê + porquê). Manter este ficheiro abaixo de 200 linhas; substituir informação ultrapassada em vez de acumular.
 
 ## Estado atual
 
 - Site institucional e catálogo imobiliário: Next.js App Router, Supabase (Postgres/PostgREST), Cloudflare Workers (via OpenNext). Formulários de contacto, recrutamento (quiz + relatório de perfil por IA) e chat (widget externo do portal).
-- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true` em `wrangler.jsonc`). HEAD: `1a6f583` (branch `teste/alteracao-cliente`, sem push p/ `origin`). Último deploy: Version `f3db5c29` (2026-09-29) — evento `Lead` do Meta Pixel nos formulários.
+- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true`). Branch `teste/alteracao-cliente`, sem push p/ `origin`; último commit de código `1a6f583`. Último deploy: Version `f3db5c29` (2026-09-29) — evento `Lead` do Meta Pixel nos formulários.
 - Site antigo (WordPress) continua vivo no VPS CloudPanel (`165.22.31.75`), só deixou de ser apontado pelo domínio. Email (MX Microsoft 365 + SendGrid), `cloudpanel.`, `lp.`, `sip.` — todos intocados.
-- Dev local: `http://localhost:3000` (`npm run dev`, Turbopack). Bug recorrente: CSS/HMR fica preso em cache — fix: matar processo na porta 3000, `rm -rf .next` (às vezes 2x), reiniciar. Mudar `next.config.ts` exige sempre reiniciar o servidor (não recarrega sozinho).
+- Dev local: `http://localhost:3000` (`npm run dev`, Turbopack). CSS/HMR preso em cache: matar processo na porta 3000, `rm -rf .next` (às vezes 2x), reiniciar. Mudar `next.config.ts` exige reiniciar o servidor.
 - Deploy: `npm run deploy` (`opennextjs-cloudflare build && deploy`). Nunca usar Turbopack para produção.
-- Segredos: `.env.local` local (gitignored) + `wrangler secret put <NOME>` para produção (nunca em `vars` do `wrangler.jsonc`). Nunca expor valores de Supabase/Anthropic/MailerLite/Cloudflare/Widget/eGO em texto. Chaves Supabase no formato novo `sb_publishable_...`/`sb_secret_...` (legacy JWT desligado pelo cliente em 2026-09-12) — ver "Decisões arquiteturais" sobre a armadilha do build-time.
-- Leads do `/servicos` ("Quero Vender") disparam email para `miguel.germano@figueirahome.pt` via Resend (`src/lib/resend.ts`, `RESEND_API_KEY`/`RESEND_REMETENTE` — remetente é `noreply@miguelgermano.com`, domínio verificado no Resend, não `figueirahome.pt`). Gate por `request_type === "servicos"` dentro de `createLead()`; falha de envio não bloqueia o lead (só regista erro).
-- `contactos.tipo_contacto` (array, criado pelo cliente no Supabase para classificar comprador/vendedor/arrendatario/investidor/Senhorio/Procurador/Recrutamento) é preenchido a partir do `request_type` de cada lead — mapa em `REQUEST_TYPE_TO_TIPO_CONTACTO` (`src/lib/properties.ts`). `Senhorio`/`Procurador`/`investidor` ficam por atribuir — nenhum formulário do site gera esses casos ainda.
-- `client-reference/` é gitignored — docs internos do cliente (briefings, PDFs) que nunca podem ficar em `public/`. `property-catalogue-local.png` e `tsconfig.tsbuildinfo` são ficheiros locais fora de escopo, não commitar.
+- Segredos: `.env.local` local (gitignored) + `wrangler secret put <NOME>` em produção (nunca em `vars` do `wrangler.jsonc`). Nunca expor valores de Supabase/Anthropic/MailerLite/Cloudflare/Widget/eGO/Resend em texto. Chaves Supabase no formato novo `sb_publishable_...`/`sb_secret_...` (legacy JWT desligado em 2026-09-12; sem regressão verificada em 2026-09-17).
+- `client-reference/` é gitignored — docs internos do cliente que nunca podem ficar em `public/`. `property-catalogue-local.png`, `tsconfig.tsbuildinfo` e alterações soltas em `next-env.d.ts` são locais, não commitar.
 
 ## Implementado
 
 ### Catálogo e fichas de imóvel
-- Fonte runtime é a tabela `imoveis` (Supabase); só entram publicados, disponíveis, com referência e preço válidos. Dados (agente, área, WC, descrição, fotos) vêm do eGO (`images.egorealestate.com`) — preenchimento não se corrige neste repo.
-- SSR normal + fallback client-side (`PropertyDetailBrowserFallback`) quando o SSR não encontra o imóvel.
-- Foto principal (hero, `property-gallery.tsx`) usa `object-cover` (corte ligeiro, normal p/ preview) + lightbox usa `object-contain` (foto sempre inteira, margem preta se a proporção não bater — convenção padrão de visualizador de fotos). Testado `object-fill` (esticar) e rejeitado por distorcer. Miniaturas usam `object-cover`. Mapa só mostra zona/freguesia/concelho, nunca morada exacta.
-- `getPropertyBySlug` (`src/lib/properties.ts`) envolto em `React.cache()` — evita chamar Supabase 2x por pedido (`generateMetadata` + página), reduz CPU na rota mais pesada do site.
-- Vídeo de imóvel (`property-video.tsx`, `videoSourceFromUrl()`) reconhece YouTube/Vimeo e aceita qualquer outra URL https como iframe genérico — decisão de produto existente, relevante para a CSP (ver "Segurança").
+- Fonte runtime é a tabela `imoveis` (Supabase); só entram publicados, disponíveis, com referência e preço válidos. Dados (agente, área, WC, descrição, fotos) vêm do eGO — preenchimento não se corrige neste repo.
+- SSR + fallback client-side (`PropertyDetailBrowserFallback`) quando o SSR não encontra o imóvel. `getPropertyBySlug` com `React.cache()` (evita 2 chamadas Supabase por pedido).
+- Galeria: hero `object-cover`, lightbox `object-contain`, miniaturas `object-cover` (`object-fill` rejeitado por distorcer). Mapa só mostra zona/freguesia/concelho, nunca morada exacta.
+- Vídeo (`property-video.tsx`): YouTube/Vimeo + qualquer outra URL https como iframe genérico (decisão de produto, relevante para a CSP).
 
 ### Contactos, recrutamento e leads
-- 3 funis confirmados end-to-end em produção: `/contacto` → `/api/leads`, ficha de imóvel → `/api/leads` (`source:"property_detail"`), candidatura de recrutamento → `/api/recrutamento`. `createLead()` grava sempre em `contactos` (tabela de Pessoa do CRM eGO, sync unidirecional eGO→Supabase por scraper externo — nunca escrever à espera de roundtrip).
-- Quiz de recrutamento (`src/lib/recruitment.ts`, 10 perguntas, pontuação 0-30, 4 níveis): candidatura sem quiz deixa `pontuacao`/`nivel`/`quiz_respostas` `null` (colunas nullable desde migração `20260904000000`). Relatório de perfil por IA (`sendReport()` → `/api/quiz-report` → Anthropic → `quiz_reports` com token público RLS → `/recrutamento/relatorio?t=...` → upsert MailerLite por nível) confirmado ao vivo (email entregue/aberto/clicado).
-- Verificado 2026-09-17 pós-migração de chaves: `POST /api/recrutamento` em produção grava com sucesso em `recrutamento`/`contactos` via `SUPABASE_SERVICE_ROLE_KEY` novo (`sb_secret_...`) — nenhuma regressão da migração de chaves. Registo de teste criado e apagado na verificação.
-- **Push para eGO** (`src/lib/ego.ts`, `PUT websiteapi.egorealestate.com/v1/Lead`, secret `EGO_LEAD_API_TOKEN`) só dispara na ficha de imóvel, com o imóvel `publicado` e `ego_id` válido — gate nosso, não do eGO. Confirmado ao vivo: a API do eGO **não valida o RID** (aceita qualquer valor, sempre `Success:true`) e **não faz dedupe**. Um RID inválido cria um "Pedido de Informação" órfão com destino imprevisível — mecanismo real de fallback por confirmar junto do suporte eGO. `/contacto` e `/servicos` nunca enviam `property_id`, por isso nunca tocam no eGO.
-- Rate-limit Cloudflare (5 pedidos/10s por IP) cobre todos os endpoints `/api/*`.
-- `/servicos` (nav mostra "Quero Vender", rota mantém-se `/servicos`) reescrito 2026-09-18 a partir de nova entrega de conteúdo do cliente (`Figueira-Home-Servicos-entrega-dev/servicos.html`, HTML autónomo com imagens em base64 — extraídas para `public/servicos/*.webp` na integração). Mudou: 9 etapas (era 8, + Pós-Venda), leadbar passou de volume de leads para atribuição de origem do comprador, secção "Quem Somos" trocou o card único do fundador por grelha de 6 pessoas da equipa, nova secção `#preco` ("O Preço Certo"). WhatsApp manteve-se `913 702 002` (o HTML entregue trazia `928 318 953`, resíduo do subdomínio antigo — confirmado com o cliente para não mudar). QA pós-entrega (mesmo dia) apanhou 2 bugs de transcrição: flag `wide` (4º elemento do array `metrics` de cada `case`) mal distribuída — 3 casos com 4 métricas tinham `wide` a mais (grelha 2x2 partida em 2+1+1), 3 casos com 3 métricas faltava-lhes (valor "420.000 €" a quebrar linha); e bandeiras dos países a aparecer como texto ("PT", "GB") em vez de emoji — Windows/Chrome sem fonte de emoji a cores instalada, corrigido com `next/font/google` `Noto_Color_Emoji` aplicada só aos spans de bandeira (o HTML original carregava-a via Google Fonts externo).
+- 3 funis em produção: `/contacto` → `/api/leads`, ficha de imóvel → `/api/leads` (`source:"property_detail"`), recrutamento → `/api/recrutamento`. `createLead()` grava sempre em `contactos` (Pessoa do CRM eGO; sync unidirecional eGO→Supabase por scraper externo — nunca esperar roundtrip).
+- `/api/recrutamento` grava em `recrutamento` + `contactos` (`tipo_contacto:["Recrutamento"]`) e faz upsert MailerLite por nível, registando o estado na linha de `recrutamento`.
+- `contactos.tipo_contacto` (array, criado pelo cliente) preenchido a partir do `request_type` — mapa `REQUEST_TYPE_TO_TIPO_CONTACTO` (`src/lib/properties.ts`). `Senhorio`/`Procurador`/`investidor` por atribuir: nenhum formulário gera esses casos.
+- Quiz (`src/lib/recruitment.ts`, 10 perguntas, 0-30, 4 níveis): candidatura sem quiz deixa `pontuacao`/`nivel`/`quiz_respostas` `null`. Relatório por IA: `sendReport()` → `/api/quiz-report` → Anthropic → `quiz_reports` (token público RLS) → `/recrutamento/relatorio?t=...` → MailerLite. Confirmado ao vivo.
+- Leads do `/servicos` ("Quero Vender", rota `/servicos`) disparam email para `miguel.germano@figueirahome.pt` via Resend (`src/lib/resend.ts`, `RESEND_API_KEY`/`RESEND_REMETENTE`; remetente `noreply@miguelgermano.com`, domínio verificado no Resend). Gate `request_type === "servicos"` em `createLead()`; falha de envio não bloqueia o lead.
+- `/servicos` reescrito 2026-09-18 (9 etapas, leadbar de origem do comprador, grelha de 6 pessoas, secção `#preco`; imagens em `public/servicos/*.webp`). WhatsApp mantém-se `913 702 002` (o HTML do cliente trazia `928 318 953`, resíduo do subdomínio antigo — confirmado não mudar). Bandeiras via `next/font/google` `Noto_Color_Emoji` (Windows/Chrome sem fonte de emoji a cores mostra "PT"/"GB"). Flag `wide` dos `metrics` de cada `case` já corrigida.
+- **Push para eGO** (`src/lib/ego.ts`, `PUT websiteapi.egorealestate.com/v1/Lead`, `EGO_LEAD_API_TOKEN`) só dispara na ficha de imóvel, com imóvel `publicado` e `ego_id` válido. A API do eGO **não valida o RID** nem faz dedupe — RID inválido cria "Pedido de Informação" órfão. `/contacto` e `/servicos` nunca enviam `property_id`, nunca tocam no eGO.
+- Rate-limit Cloudflare (5 pedidos/10s por IP) cobre todos os `/api/*`.
 
 ### Chat
-- Chat AI interno foi **removido** — substituído pelo widget externo do cliente (`public/widget.js`, autocontido, monta bolha+painel via JS puro), que fala com os agentes do `figueira-home-portal` (FastAPI/Fly.io, Supabase próprio). Passa por `/api/site-chat` (proxy neste Worker) que injeta o header secreto `X-Widget-Key`/`WIDGET_CHAT_SECRET`.
+- Chat AI interno **removido**; widget externo (`public/widget.js`) fala com os agentes do `figueira-home-portal` (FastAPI/Fly.io, Supabase próprio) via `/api/site-chat` (proxy que injeta `X-Widget-Key`/`WIDGET_CHAT_SECRET`).
 
 ### Consentimento, analytics e legal
-- Banner de cookies bloqueia GA4/Meta Pixel até "Aceitar". Pixel confirmado ativo em produção (2026-09-29, `PageView` chega à Meta). Evento `Lead` (`trackLead()` em `src/lib/track.ts`, no-op sem consentimento) dispara após resposta ok de `/api/leads` (`contact-form.tsx`, cobre `/contacto` + ficha de imóvel; `servicos/contact-form.tsx`) e `/api/recrutamento` (`recruitment-form.tsx`); honeypot/erros não contam. **Ainda por testar ao vivo** (`ev=Lead` em `facebook.com/tr`). `/politica-privacidade` e `/politica-cookies` cobrem WhatsApp, profiling do quiz, Google Translate vs GA/Pixel. Emails de contacto uniformizados para `geral@figueirahome.pt`.
-- Footer (`video-footer.tsx`): vídeo de fundo substituído por imagem estática, pedido do cliente. Botões de âncora do footer em `/recrutamento` usam `jumpToAnchor()` (scroll instantâneo via JS) porque `scroll-behavior:smooth` global falha em silêncio em saltos muito longos (página tem ~23000px).
+- Banner de cookies bloqueia GA4/Meta Pixel até "Aceitar" (`analytics-scripts.tsx`). Pixel ativo em produção (confirmado 2026-09-29, `PageView` chega à Meta).
+- Evento `Lead`: `trackLead()` (`src/lib/track.ts`, no-op sem consentimento) dispara após resposta ok de `/api/leads` (`contact-form.tsx` — cobre `/contacto` e ficha de imóvel; `servicos/contact-form.tsx`) e `/api/recrutamento` (`recruitment-form.tsx`). Honeypot/erros não contam. **Ainda por testar ao vivo** (`ev=Lead` em `facebook.com/tr`).
+- `/politica-privacidade` e `/politica-cookies` cobrem WhatsApp, profiling do quiz, Google Translate vs GA/Pixel. Emails de contacto: `geral@figueirahome.pt`.
+- Footer (`video-footer.tsx`): imagem estática em vez de vídeo (pedido do cliente). `/recrutamento` usa `jumpToAnchor()` nas âncoras do footer (`scroll-behavior:smooth` falha em saltos muito longos, página ~23000px).
 
-### Segurança
-- Headers de segurança (`next.config.ts`, `headers()`): CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy. Ver "Decisões arquiteturais" para a lógica da política.
-- Fix de z-index: menu mobile fullscreen subiu para `z-100`, acima do `MobileCtaBar` (`z-95`) em `/recrutamento` (`site-chrome.tsx`).
-
-### Conteúdo e design
-- Blog: 68 artigos em `src/content/blog-archive.json` (import lazy, ver "Decisões"), tabelas verificadas contra o PDF original.
-- Fontes via `next/font` (self-hosted, sem dependência externa). `.section-title`/`.hero-title` é o único ponto de override de fonte sans, usado em todo o site.
-- Google Translate (pt/en/fr): `translate="no"` só no valor concreto (código energético, cargo), nunca no contentor.
+### Segurança e conteúdo
+- Headers (`next.config.ts`): CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy.
+- Menu mobile fullscreen em `z-100`, acima do `MobileCtaBar` (`z-95`) em `/recrutamento` (`site-chrome.tsx`).
+- Blog: 68 artigos em `src/content/blog-archive.json` (import lazy). Fontes via `next/font`; `.section-title`/`.hero-title` é o único override de fonte sans. Google Translate (pt/en/fr): `translate="no"` só no valor concreto, nunca no contentor.
 
 ### Monitorização
-- Notificação Cloudflare "Site em baixo" criada (Manage account → Notifications, "Health Checks status notification", emails miguel.germano@gmail.com + jm.workflow2024@gmail.com, dispara em fica saudável/não saudável) — **mas inactiva**: plano `free` da zona inclui 0 Health Checks (precisa Pro). Fica pronta p/ activar automaticamente assim que o Health Check for criado (Traffic → Health Checks → `https://www.figueirahome.pt`).
-- Por agora: UptimeRobot (free, externo) **ativo** a monitorizar o site (confirmado 2026-09-29) + 2º check a construir no `figueira-home-portal` (Fly.io, provider diferente do Cloudflare = mais independente) — fora deste repo.
+- UptimeRobot (free) **ativo** em `figueirahome.pt` (confirmado 2026-09-29). Falta 2º check no `figueira-home-portal` (Fly.io, provider diferente do Cloudflare) — fora deste repo.
+- Notificação Cloudflare "Site em baixo" criada mas **inactiva**: plano `free` tem 0 Health Checks (precisa Pro). Activa-se sozinha quando o Health Check for criado (Traffic → Health Checks → `https://www.figueirahome.pt`).
 
 ## Ficheiros principais
 
-- `src/lib/properties.ts` — consultas/filtros/mapeamento de `imoveis`, `getPropertyBySlug` com `React.cache()`.
+- `src/lib/properties.ts` — consultas/filtros/mapeamento de `imoveis`, `createLead()`, `getPropertyBySlug`.
 - `src/app/imoveis/[slug]/page.tsx` + `src/components/property-detail-browser-fallback.tsx` — ficha SSR e espelho client-side.
-- `src/components/property-gallery.tsx` — hero/lightbox/miniaturas do imóvel (object-fit).
-- `src/lib/recruitment.ts`, `src/components/recruitment-form.tsx` — quiz, pontuação, candidatura.
-- `src/app/api/quiz-report/route.ts`, `src/app/recrutamento/relatorio/page.tsx` — relatório de perfil por IA.
-- `src/components/recruitment/scroll-progress.tsx`, `mobile-cta-bar.tsx` — UX de conversão do `/recrutamento`.
-- `src/lib/mailerlite.ts` — upsert de subscriber (usado por `/api/recrutamento` e `/api/quiz-report`).
-- `src/lib/ego.ts` — push de lead para o eGO.
-- `public/widget.js` + `src/app/api/site-chat/route.ts` — widget de chat + proxy protegido.
-- `src/lib/supabase.ts` — clientes Supabase (browser/service/public-server); `NEXT_PUBLIC_SUPABASE_ANON_KEY` inlined no build.
-- `src/components/site-chrome.tsx` — nav + menu mobile (z-index partilhado com `MobileCtaBar`).
-- `next.config.ts` — headers de segurança (CSP e restantes).
-- `src/app/globals.css` — design tokens; `.recruitment-page` (`--r-*`) para toda a área de recrutamento.
+- `src/components/property-gallery.tsx` — hero/lightbox/miniaturas.
+- `src/components/contact-form.tsx`, `src/components/servicos/contact-form.tsx`, `src/components/recruitment-form.tsx` — formulários (disparam `trackLead()`).
+- `src/lib/track.ts`, `src/components/analytics-scripts.tsx` — Pixel/GA4 e evento `Lead`.
+- `src/app/api/leads/route.ts`, `src/app/api/recrutamento/route.ts`, `src/app/api/quiz-report/route.ts` — endpoints de leads, candidatura e relatório por IA.
+- `src/lib/recruitment.ts`, `src/app/recrutamento/relatorio/page.tsx` — quiz, pontuação, relatório.
+- `src/lib/mailerlite.ts`, `src/lib/resend.ts`, `src/lib/ego.ts` — MailerLite, email de leads do `/servicos`, push eGO.
+- `public/widget.js` + `src/app/api/site-chat/route.ts` — chat + proxy protegido.
+- `src/lib/supabase.ts` — clientes Supabase (browser/service/public-server).
+- `src/components/site-chrome.tsx` — nav + menu mobile; `src/components/recruitment/` — `mobile-cta-bar.tsx` e restante UX de conversão do `/recrutamento`.
+- `next.config.ts` — headers de segurança. `src/app/globals.css` — design tokens; `.recruitment-page` (`--r-*`).
 - `.impeccable/config.json` — supressões do detector de design (commitado, sem segredos).
 
 ## Decisões arquiteturais
 
-- `quiz_reports`: sem unique em `email`, `/api/quiz-report` sempre `insert()` — repetir o quiz gera relatório+token novos, o antigo continua válido. Intencional, confirmado com o cliente 2026-09-17 (não mudar para upsert sem pedido).
-
 - Nunca `import` estático de JSON/dados grandes no top-level de ficheiros partilhados pelo bundle do Worker — usar `await import()` preguiçoso (causou 503 por CPU-limit em cold start).
-- Rotas server-side seguem sempre: Zod valida → lógica → `fetch` directo a APIs externas (nunca SDKs pesados no bundle do Worker, ex. Anthropic/MailerLite via `fetch` puro).
-- Dedupe de data-fetching por pedido com `React.cache()` quando uma rota chama a mesma query em `generateMetadata` e no componente — evita CPU a dobrar (ver `getPropertyBySlug`).
-- Vars `NEXT_PUBLIC_*` (ex. `NEXT_PUBLIC_SUPABASE_ANON_KEY`) ficam **gravadas no bundle no momento do build** — trocar só o `.env.local` não chega, é preciso `npm run deploy` para o valor novo chegar a produção. Secrets sem esse prefixo (`wrangler secret put`) aplicam-se em runtime, sem rebuild.
-- CSP sem nonces: nonces exigiriam dynamic rendering em todas as páginas, incompatível com o Worker de CPU limitada (mesma razão do ponto anterior). `script-src`/`style-src` usam `'unsafe-inline'` + allowlist de domínios (GA4, Pixel, Google Translate, widget de chat). `img-src`/`frame-src` ficam largos (`https:`) de propósito — fotos vêm de CDN do eGO e o vídeo de imóvel já aceita qualquer iframe https por design.
-- Relatórios públicos partilháveis por link (`quiz_reports`) usam RLS "leitura pública por token" em vez de autenticação — sem política de INSERT, só `service_role` escreve.
-- Segredos partilhados com serviços externos usam header próprio (`X-Widget-Key`) com comparação constant-time — nunca confiar em CORS sozinho.
-- Analytics só carregam depois de consentimento explícito — exigência legal, não opcional de UX.
-- Não há CMS; blog é estático, catálogo é runtime Supabase. `imovel_ref` é a referência pública mais fiável para resolver fichas. Não existe tabela de agentes: responsáveis derivam de `angariador`/`vendedor` + `figueiraTeam`.
-- **Runbook — site em baixo com "CPU time limit"**: `npx wrangler tail figueira-home --format pretty` para apanhar em tempo real; `npx wrangler deployments list --name figueira-home` + `npx wrangler rollback --version-id <id>` para repor a version anterior conhecida-boa em segundos.
+- Rotas server-side: Zod valida → lógica → `fetch` directo a APIs externas (nunca SDKs pesados no bundle do Worker).
+- `React.cache()` quando uma rota chama a mesma query em `generateMetadata` e no componente.
+- `NEXT_PUBLIC_*` ficam **gravadas no bundle no build** — mudar `.env.local` não chega, é preciso `npm run deploy`. Secrets (`wrangler secret put`) aplicam-se em runtime, sem rebuild.
+- CSP sem nonces (exigiriam dynamic rendering, incompatível com o Worker de CPU limitada): `script-src`/`style-src` com `'unsafe-inline'` + allowlist (GA4, Pixel, Google Translate, widget). `img-src`/`frame-src` largos (`https:`) de propósito — fotos do CDN do eGO e vídeo com iframe https arbitrário.
+- `quiz_reports`: sem unique em `email`, `/api/quiz-report` sempre `insert()` — repetir o quiz gera relatório+token novos (confirmado com o cliente 2026-09-17; não mudar para upsert sem pedido). Leitura pública por token via RLS, sem política de INSERT (só `service_role` escreve).
+- Segredos partilhados com serviços externos: header próprio (`X-Widget-Key`) com comparação constant-time — nunca confiar em CORS sozinho.
+- Analytics só após consentimento explícito — exigência legal.
+- Sem CMS: blog estático, catálogo runtime Supabase. `imovel_ref` é a referência pública mais fiável. Não existe tabela de agentes: responsáveis derivam de `angariador`/`vendedor` + `figueiraTeam`.
+- **Runbook — "CPU time limit"**: `npx wrangler tail figueira-home --format pretty`; `npx wrangler deployments list --name figueira-home` + `npx wrangler rollback --version-id <id>` repõem a version anterior.
 
 ## Bugs conhecidos e dívida técnica
 
-- **CRÍTICO, por resolver — `contactos` e `imoveis` sem Row Level Security.** Chave `anon` pública lê as duas tabelas na íntegra. Migração pronta (`supabase/migrations/20260831210000_rls_contactos_imoveis.sql`) — **NÃO APLICADA**: bloqueada porque `figueira-home-portal` (repo externo) usa a mesma chave `anon` directamente do browser. Correção real: portal passar a usar `service_role`/auth própria — decisão do cliente.
-- Cold-start CPU-limit pode voltar a acontecer esporadicamente (arquitectura de CPU limitada do Worker) — já aconteceu uma vez (2026-09-11, resolvido por rollback + dedupe de `getPropertyBySlug`), ver runbook em "Decisões arquiteturais" se repetir.
-- Fallback do eGO para RID inválido é imprevisível (ver "Contactos, recrutamento e leads") — confirmar mecanismo real junto do suporte eGO.
-- QA mobile: revisão de código feita (achou e corrigiu o bug de z-index), mas sem confirmação visual ao vivo — Claude-in-Chrome não consegue emular viewport mobile neste ambiente (`resize_window` fica preso ao estado maximizado da janela). Confirmar `/recrutamento` (`MobileCtaBar`) num telemóvel real.
-- Favicon em falta (404): ícone da marca fundido com o texto no logo, sem recorte quadrado limpo — precisa de asset dedicado do cliente/designer.
-- Opt-out "PARAR" prometido na política de privacidade (§9) sem implementação no backend do agente WhatsApp (repo externo) — decisão de quem implementa fica com o cliente.
-- Testemunhos da homepage ("Ana Carvalho", "Ricardo Silva", "Luísa Monteiro") por confirmar com o cliente se são reais/autorizados ou placeholder.
-- 6 leads de teste ficaram no eGO CRM (`Teste eGO QA`, `Teste eGO QA2`, `Teste eGO Direto`, `Teste Node Fetch`, `Teste RID Invalido`, `Teste RID Invalido 2`) — API não tem endpoint de delete, apagar manualmente na UI do eGO.
+- **CRÍTICO — `contactos` e `imoveis` sem Row Level Security.** Chave `anon` pública lê as duas tabelas na íntegra (inclui dados pessoais de leads e candidatos). Migração pronta (`supabase/migrations/20260831210000_rls_contactos_imoveis.sql`) **NÃO APLICADA**: `figueira-home-portal` (repo externo) usa a mesma `anon` no browser. Correção: portal passar a `service_role`/auth própria — decisão do cliente. Estado de RLS da tabela `recrutamento` por verificar.
+- Cold-start CPU-limit pode voltar (aconteceu 2026-09-11; resolvido por rollback + dedupe) — ver runbook.
+- Fallback do eGO para RID inválido imprevisível — confirmar com suporte eGO.
+- QA mobile só por revisão de código; Claude-in-Chrome não emula viewport mobile (`resize_window` preso ao estado maximizado). Confirmar `/recrutamento` (`MobileCtaBar`) num telemóvel real.
+- Favicon em falta (404): precisa de asset dedicado do cliente/designer.
+- Opt-out "PARAR" prometido na política de privacidade (§9) sem implementação no agente WhatsApp (repo externo).
+- Testemunhos da homepage ("Ana Carvalho", "Ricardo Silva", "Luísa Monteiro") por confirmar se são reais/autorizados ou placeholder.
+- 6 leads de teste no eGO CRM (`Teste eGO QA`, `Teste eGO QA2`, `Teste eGO Direto`, `Teste Node Fetch`, `Teste RID Invalido`, `Teste RID Invalido 2`) — sem endpoint de delete, apagar na UI do eGO.
 
 ## Próximos passos
 
-1. QA responsivo mobile num telemóvel físico real (`/recrutamento` e `MobileCtaBar` em particular).
-2. Decidir com o cliente o futuro do `figueira-home-portal` (trocar `anon` por `service_role`) para poder aplicar a migração RLS com segurança.
-3. Confirmar junto do suporte eGO o mecanismo real de fallback para RID inválido.
-4. Favicon dedicado quando houver asset do cliente.
-5. Confirmar com o cliente: testemunhos da homepage (reais?) e quem implementa o opt-out "PARAR" do WhatsApp.
-6. Construir 2º check de uptime no figueira-home-portal (UptimeRobot já ativo).
+1. Testar o `Lead` ao vivo: submeter `/recrutamento` ou `/servicos` (não tocam no eGO) e confirmar `ev=Lead` em `facebook.com/tr`; apagar o registo de teste.
+2. Decidir com o cliente o futuro do `figueira-home-portal` (`anon` → `service_role`) para aplicar a migração RLS; verificar RLS de `recrutamento`.
+3. Mensagem única ao cliente com pendentes: RLS/portal, testemunhos, opt-out "PARAR", favicon.
+4. QA mobile num telemóvel físico (`/recrutamento`, `MobileCtaBar`).
+5. Confirmar com suporte eGO o fallback para RID inválido.
+6. 2º check de uptime no `figueira-home-portal`; push da branch / merge para `main` quando o cliente aprovar.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
