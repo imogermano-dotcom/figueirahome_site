@@ -338,6 +338,7 @@ export async function createLead(input: LeadInput) {
       telemovel: input.phone || null,
       tipos: [input.request_type, input.source],
       tipo_contacto: tipoContacto ? [tipoContacto] : null,
+      origem: "site",
       mensagem: input.property_id ? `[Imóvel ${input.property_id}]\n${input.message}` : input.message,
       criado_em: new Date().toISOString().slice(0, 10)
     })
