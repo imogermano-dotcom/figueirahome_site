@@ -5,6 +5,7 @@ import "./globals.css";
 import { SiteChrome } from "@/components/site-chrome";
 import { AnalyticsScripts } from "@/components/analytics-scripts";
 import { CookieConsentBanner } from "@/components/cookie-consent-banner";
+import { COOKIE_CONSENT_KEY } from "@/lib/consent";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -53,10 +54,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   };
 
   return (
-    <html lang="pt-PT" className={`${dmSans.variable} ${displaySerif.variable}`}>
+    <html lang="pt-PT" className={`${dmSans.variable} ${displaySerif.variable}`} suppressHydrationWarning>
       <body>
         <SiteChrome>{children}</SiteChrome>
         <Script src="/widget.js" strategy="afterInteractive" />
+        <script dangerouslySetInnerHTML={{ __html: `try{var c=localStorage.getItem(${JSON.stringify(COOKIE_CONSENT_KEY)});if(c==="accepted"||c==="rejected")document.documentElement.setAttribute("data-consent","1")}catch(e){}` }} />
         <CookieConsentBanner />
         <AnalyticsScripts />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />

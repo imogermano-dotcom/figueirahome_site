@@ -492,3 +492,6 @@ html.translated-rtl body { top: 0 !important; }
     padding-inline: 14px;
   }
 }
+
+/* Banner de cookies: escondido antes da pintura para quem já decidiu (script no layout). */
+html[data-consent] .cookie-banner { display: none; }
