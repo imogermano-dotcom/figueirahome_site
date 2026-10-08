@@ -30,26 +30,27 @@ export type BlogPost = {
   publishedAt?: string;
   coverImage?: string;
   coverImageAlt?: string;
-  content: string;
   images: string[];
   blocks: BlogBlock[];
 };
 
-// Lazy-loaded: blog-archive.json is ~3MB, and importing it at module top-level
-// forces every cold Worker isolate to parse it even for requests that never
-// touch the blog (OpenNext bundles all routes into one script). Loading it
-// only when a blog function actually runs keeps non-blog cold starts fast.
-let cachedPosts: BlogPost[] | null = null;
-async function loadBlogPosts(): Promise<BlogPost[]> {
-  if (!cachedPosts) {
-    const archive = await import("@/content/blog-archive.json");
-    cachedPosts = archive.default as BlogPost[];
+export type BlogPostMeta = Omit<BlogPost, "images" | "blocks">;
+
+// Split in an index (metadata only, ~50KB) plus one JSON per article. The old
+// single 3MB archive was parsed by every cold Worker isolate that served any
+// blog page, and a burst of blog requests hit "Worker exceeded CPU time limit"
+// (error 1102, 2026-10-08). Both are lazy so non-blog cold starts stay fast.
+let cachedIndex: BlogPostMeta[] | null = null;
+async function loadBlogIndex(): Promise<BlogPostMeta[]> {
+  if (!cachedIndex) {
+    const index = await import("@/content/blog/index.json");
+    cachedIndex = index.default as BlogPostMeta[];
   }
-  return cachedPosts;
+  return cachedIndex;
 }
 
 export async function getAllBlogPosts() {
-  return loadBlogPosts();
+  return loadBlogIndex();
 }
 
 function splitTableLine(line: string, columnCount: number) {
@@ -135,12 +136,15 @@ export function mergeBlogTableBlocks(blocks: BlogBlock[]) {
 }
 
 export async function getBlogPost(slug: string) {
-  const posts = await loadBlogPosts();
-  return posts.find((post) => post.slug === slug);
+  // Checking the index first keeps the dynamic import limited to known slugs.
+  const posts = await loadBlogIndex();
+  if (!posts.some((post) => post.slug === slug)) return undefined;
+  const post = await import(`@/content/blog/posts/${slug}.json`);
+  return post.default as BlogPost;
 }
 
 export async function getRelatedBlogPosts(slug: string, max = 3) {
-  const posts = await loadBlogPosts();
+  const posts = await loadBlogIndex();
   const currentPost = posts.find((post) => post.slug === slug);
   if (!currentPost) return [];
 

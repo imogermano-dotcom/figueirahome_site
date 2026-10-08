@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, BookOpen, ChevronRight } from "lucide-react";
 import { VideoFooter } from "@/components/video-footer";
-import { getAllBlogPosts, formatBlogDate } from "@/lib/blog";
+import { getAllBlogPosts, getBlogPost, formatBlogDate } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -15,7 +15,7 @@ export default async function BlogPage() {
   const blogPosts = await getAllBlogPosts();
   const featuredPost = [...blogPosts].sort((first, second) => (second.publishedAt ?? "").localeCompare(first.publishedAt ?? ""))[0];
   const remainingPosts = blogPosts.filter((post) => post.slug !== featuredPost.slug);
-  const featuredParagraphs = featuredPost.blocks.filter((block) => block.type === "paragraph").slice(0, 2);
+  const featuredParagraphs = ((await getBlogPost(featuredPost.slug))?.blocks ?? []).filter((block) => block.type === "paragraph").slice(0, 2);
 
   return (
     <>
