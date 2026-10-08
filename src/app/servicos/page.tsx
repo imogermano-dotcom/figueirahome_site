@@ -575,7 +575,7 @@ export default function ServicosPage() {
         <div className="wrap">
           <div className="footer__top">
             <div>
-              <Link href="#top" aria-label="Figueira Home"><Image className="footer__logo" src="/logo-figueirahome-2026.png" alt="Figueira Home" width={190} height={51} style={{ height: 38, width: "auto" }} /></Link>
+              <Link href="#top" aria-label="Figueira Home"><Image className="footer__logo" src="/logo-figueirahome-2026.webp" alt="Figueira Home" width={190} height={51} style={{ height: 38, width: "auto" }} /></Link>
               <p>Desde 2009 a acompanhar proprietários da Figueira da Foz na venda do seu imóvel — com estratégia, tecnologia e transparência do primeiro contacto até à escritura.</p>
             </div>
             <div>

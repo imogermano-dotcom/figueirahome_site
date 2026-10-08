@@ -399,7 +399,7 @@ export default function RecruitmentPage() {
         <section className="bg-[var(--r-bg)] py-20 lg:py-28">
           <div className="container mx-auto max-w-3xl px-6">
             <div className="flex items-center gap-4">
-              <div className="relative h-16 w-16 overflow-hidden rounded-full"><Image src="/founder-miguel-germano.png" alt="Miguel Germano" fill sizes="64px" className="object-cover" /></div>
+              <div className="relative h-16 w-16 overflow-hidden rounded-full"><Image src="/founder-miguel-germano.webp" alt="Miguel Germano" fill sizes="64px" className="object-cover" /></div>
               <div><p className="font-extrabold text-[var(--r-primary)]">Miguel Germano</p><p className="text-sm text-[var(--r-muted-fg)]">Fundador da FigueiraHome · ~20 anos no imobiliário</p></div>
             </div>
             <span className="mt-8 inline-block text-sm font-bold uppercase tracking-wider text-[var(--r-accent-fg)]">Mensagem do fundador</span>

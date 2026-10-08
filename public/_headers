@@ -1,0 +1,14 @@
+/equipa/*
+  Cache-Control: public, max-age=2592000
+/services/*
+  Cache-Control: public, max-age=2592000
+/about/*
+  Cache-Control: public, max-age=2592000
+/formadores/*
+  Cache-Control: public, max-age=2592000
+/servicos/*
+  Cache-Control: public, max-age=2592000
+/blog/archive/*
+  Cache-Control: public, max-age=2592000
+/*.webp
+  Cache-Control: public, max-age=2592000

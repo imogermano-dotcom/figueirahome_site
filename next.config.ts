@@ -30,6 +30,10 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   images: {
+    // O /_next/image não otimiza no Worker (devolve o original, sem Cache-Control)
+    // e gasta CPU do Worker. As imagens de public/ já estão redimensionadas em WebP
+    // e são servidas direto como ficheiros estáticos.
+    unoptimized: true,
     remotePatterns: [
       { protocol: "https", hostname: "figueirahome.pt" },
       { protocol: "https", hostname: "**.supabase.co" }

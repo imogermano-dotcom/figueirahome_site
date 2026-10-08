@@ -14,7 +14,7 @@ export const figueiraTeam: TeamMember[] = [
     role: "Sócia e Gerente",
     phone: null,
     email: null,
-    photo_url: "/equipa/SOFIA%20MONTEIRO.png",
+    photo_url: "/equipa/SOFIA%20MONTEIRO.webp",
     bio: "Responsável pelo acompanhamento processual, documentação e preparação das escrituras."
   },
   {
@@ -23,7 +23,7 @@ export const figueiraTeam: TeamMember[] = [
     role: "Diretor Comercial",
     phone: "+351 913 702 002",
     email: "geral@figueirahome.pt",
-    photo_url: "/equipa/MIGUEL%20GERMANO.png",
+    photo_url: "/equipa/MIGUEL%20GERMANO.webp",
     bio: "Ligado à mediação imobiliária desde 2006, com experiência comercial e de gestão de agências."
   },
   {
@@ -32,7 +32,7 @@ export const figueiraTeam: TeamMember[] = [
     role: "Consultora",
     phone: "+351 968 215 290",
     email: "alexandra.santos@figueirahome.pt",
-    photo_url: "/equipa/ALEXANDRA%20SANTOS.png",
+    photo_url: "/equipa/ALEXANDRA%20SANTOS.webp",
     bio: "Consultora com formação em Design de Comunicação e Produção Audiovisual, alia proximidade, escuta e comunicação clara.",
     aliases: ["Alexandra"],
     profile_bio: [
@@ -48,7 +48,7 @@ export const figueiraTeam: TeamMember[] = [
     role: "Audiovisual",
     phone: null,
     email: null,
-    photo_url: "/equipa/GIULIA%20ALMEIDA.png",
+    photo_url: "/equipa/GIULIA%20ALMEIDA.webp",
     bio: "Editora de vídeo com experiência em produção audiovisual para marcas e projetos tecnológicos."
   },
   {
@@ -57,7 +57,7 @@ export const figueiraTeam: TeamMember[] = [
     role: "Consultora",
     phone: "+351 913 135 252",
     email: "alexsandra.ferreira@figueirahome.pt",
-    photo_url: "/equipa/ALEXSANDRA%20FERREIRA.png",
+    photo_url: "/equipa/ALEXSANDRA%20FERREIRA.webp",
     bio: "Com experiência em vendas, acompanha cada cliente com transparência, honestidade e dedicação.",
     profile_bio: [
       "Mãe de duas crianças e imigrante brasileira em Portugal, a Alexsandra Ferreira recomeçou a sua vida com o objetivo de dar o melhor à sua família.",
@@ -72,7 +72,7 @@ export const figueiraTeam: TeamMember[] = [
     role: "Consultora",
     phone: "+351 936 703 516",
     email: "sandra.silva@figueirahome.pt",
-    photo_url: "/equipa/SANDRA%20SILVA.png",
+    photo_url: "/equipa/SANDRA%20SILVA.webp",
     bio: "Consultora imobiliária dedicada a simplificar cada decisão com proximidade, confiança e transparência.",
     profile_bio: [
       "Mãe de dois rapazes, consultora imobiliária e apaixonada por ajudar pessoas a encontrar o lugar onde novas histórias começam.",
