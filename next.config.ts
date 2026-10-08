@@ -42,7 +42,9 @@ const nextConfig: NextConfig = {
   // 603 "404" + 214 "noindex"), e www → domínio canónico sem www.
   async redirects() {
     return [
-      { source: "/:path*", has: [{ type: "host", value: "www.figueirahome.pt" }], destination: "https://figueirahome.pt/:path*", permanent: true },
+      // `/` à parte: com :path* vazio o Next deixa ":path*" literal num destino externo.
+      { source: "/", has: [{ type: "host", value: "www.figueirahome.pt" }], destination: "https://figueirahome.pt/", permanent: true },
+      { source: "/:path+", has: [{ type: "host", value: "www.figueirahome.pt" }], destination: "https://figueirahome.pt/:path+", permanent: true },
       // Artigos do blog viviam na raiz (/<slug>/); agora em /blog/<slug>.
       ...blogIndex.map(({ slug }) => ({ source: `/${slug}`, destination: `/blog/${slug}`, permanent: true })),
       { source: "/:type(imovel|imovel-caracteristicas|imovel-tipo|imovel-cidade)/:path*", destination: "/imoveis", permanent: true },
