@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import blogIndex from "./src/content/blog/index.json";
 
 // Sem nonces (dynamic rendering em todas as páginas seria incompatível com o
 // site estático + Cloudflare Worker de CPU limitada — ver AGENTS.md). 'unsafe-inline'
@@ -36,6 +37,18 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
+  },
+  // URLs do WordPress antigo que o Google ainda tem (Search Console, 2026-10-08:
+  // 603 "404" + 214 "noindex"), e www → domínio canónico sem www.
+  async redirects() {
+    return [
+      { source: "/:path*", has: [{ type: "host", value: "www.figueirahome.pt" }], destination: "https://figueirahome.pt/:path*", permanent: true },
+      // Artigos do blog viviam na raiz (/<slug>/); agora em /blog/<slug>.
+      ...blogIndex.map(({ slug }) => ({ source: `/${slug}`, destination: `/blog/${slug}`, permanent: true })),
+      { source: "/:type(imovel|imovel-caracteristicas|imovel-tipo|imovel-cidade)/:path*", destination: "/imoveis", permanent: true },
+      { source: "/:type(category|tag)/:path*", destination: "/blog", permanent: true },
+      { source: "/feed", destination: "/blog", permanent: true }
+    ];
   }
 };
 
