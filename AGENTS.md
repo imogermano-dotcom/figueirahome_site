@@ -5,7 +5,7 @@ Handoff operacional. Reescrito em 2026-10-03 — estado consolidado num resumo �
 ## Estado atual
 
 - Site institucional e catálogo imobiliário: Next.js App Router, Supabase (Postgres/PostgREST), Cloudflare Workers (via OpenNext). Formulários de contacto, recrutamento (quiz + relatório de perfil por IA) e chat (widget externo do portal).
-- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true`). Branch `teste/alteracao-cliente` enviada p/ `origin` (GitHub `imogermano-dotcom/figueirahome_site`) a 2026-10-08, `main` por atualizar até o cliente aprovar; último commit de código (redirects) a seguir ao `9b52ec7`. Último deploy: Version `0a93c7bb` (2026-10-08) — redirects 308 do WordPress antigo + `www` → apex, blog partido em índice + 1 JSON por artigo, `origem:"site"` em `contactos`.
+- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true`). Branch `teste/alteracao-cliente` enviada p/ `origin` (GitHub `imogermano-dotcom/figueirahome_site`) a 2026-10-08, `main` por atualizar até o cliente aprovar; último commit de código `93f86e7`. Último deploy: Version `76594c89` (2026-10-08) — imagens WebP + cache dos estáticos; antes: redirects 308 do WordPress antigo + `www` → apex, blog partido em índice + 1 JSON por artigo, `origem:"site"` em `contactos`.
 - Site antigo (WordPress) continua vivo no VPS CloudPanel (`165.22.31.75`), só deixou de ser apontado pelo domínio. Email (MX Microsoft 365 + SendGrid), `cloudpanel.`, `lp.`, `sip.` — todos intocados.
 - Dev local: `http://localhost:3000` (`npm run dev`, Turbopack). CSS/HMR preso em cache: matar processo na porta 3000, `rm -rf .next` (às vezes 2x), reiniciar. Mudar `next.config.ts` exige reiniciar o servidor.
 - Deploy: `npm run deploy` (`opennextjs-cloudflare build && deploy`). Nunca usar Turbopack para produção.
@@ -67,6 +67,8 @@ Handoff operacional. Reescrito em 2026-10-03 — estado consolidado num resumo �
 
 ## Decisões arquiteturais
 
+- **Imagens (performance):** o `/_next/image` no Worker **não otimiza** (devolvia o PNG original, sem `Cache-Control`; GTmetrix 2026-10-08: home com 12,1MB, 11,6MB em imagens, nota C, LCP 2,6s, TTFB 1,9s em Seattle). Por isso `images.unoptimized: true` e as imagens grandes de `public/` são **WebP já redimensionado** (script `sharp` pontual: equipa 720px, banners 1600px, fundo 1920px; 29MB → 1,5MB). Novas imagens: converter para WebP no tamanho de uso antes de pôr em `public/`; nunca PNG/JPG de vários MB. `public/_headers` dá `Cache-Control` de 30 dias aos estáticos. Os PNG/JPG originais ficam em `public/` porque podem estar referenciados fora do repo (MailerLite, Google Business) — apagar só depois de confirmar. `public/Video/hero-web.mp4` (17MB) não é usado pelo código.
+
 - Nunca `import` estático de JSON/dados grandes no top-level de ficheiros partilhados pelo bundle do Worker — usar `await import()` preguiçoso (causou 503 por CPU-limit em cold start).
 - Rotas server-side: Zod valida → lógica → `fetch` directo a APIs externas (nunca SDKs pesados no bundle do Worker).
 - `React.cache()` quando uma rota chama a mesma query em `generateMetadata` e no componente.
@@ -92,6 +94,7 @@ Handoff operacional. Reescrito em 2026-10-03 — estado consolidado num resumo �
 
 ## Próximos passos
 
+0. Repetir o GTmetrix da home (baseline acima) e das fichas de imóvel/`/imoveis`. Fase 2 de performance: TTFB do HTML (home dinâmica com Supabase + `no-store`, que também bloqueia o bfcache) — exige cache no Worker, risco de CPU-limit (ver runbook), testar com cuidado.
 1. (Opcional) Confirmar `ev=Lead` também em `/contacto` e `/servicos` com cookies aceites; `/servicos` envia email ao Miguel.
 2. Decidir com o cliente o futuro do `figueira-home-portal` (`anon` → `service_role`) para aplicar a migração RLS; verificar RLS de `recrutamento`.
 3. Mensagem única ao cliente com pendentes: RLS/portal, testemunhos, opt-out "PARAR", favicon.
