@@ -5,7 +5,7 @@ Handoff operacional. Reescrito em 2026-10-03 — estado consolidado num resumo �
 ## Estado atual
 
 - Site institucional e catálogo imobiliário: Next.js App Router, Supabase (Postgres/PostgREST), Cloudflare Workers (via OpenNext). Formulários de contacto, recrutamento (quiz + relatório de perfil por IA) e chat (widget externo do portal).
-- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true`). Branch `teste/alteracao-cliente`, sem push p/ `origin`; último commit de código `0868f83`. Último deploy: Version `c64a6f39` (2026-10-08) — `origem:"site"` em `contactos`; antes `f3db5c29` (2026-09-29, evento `Lead` do Meta Pixel).
+- Produção: `https://figueirahome.pt` e `https://www.figueirahome.pt` (Worker Custom Domains). Preview/backup: `https://figueira-home.miguel-germano.workers.dev` (`workers_dev: true`). Branch `teste/alteracao-cliente`, sem push p/ `origin`; último commit de código `3d17dfe`. Último deploy: Version `f7b17c0a` (2026-10-08) — blog partido em índice + 1 JSON por artigo e `origem:"site"` em `contactos`.
 - Site antigo (WordPress) continua vivo no VPS CloudPanel (`165.22.31.75`), só deixou de ser apontado pelo domínio. Email (MX Microsoft 365 + SendGrid), `cloudpanel.`, `lp.`, `sip.` — todos intocados.
 - Dev local: `http://localhost:3000` (`npm run dev`, Turbopack). CSS/HMR preso em cache: matar processo na porta 3000, `rm -rf .next` (às vezes 2x), reiniciar. Mudar `next.config.ts` exige reiniciar o servidor.
 - Deploy: `npm run deploy` (`opennextjs-cloudflare build && deploy`). Nunca usar Turbopack para produção.
@@ -43,7 +43,7 @@ Handoff operacional. Reescrito em 2026-10-03 — estado consolidado num resumo �
 ### Segurança e conteúdo
 - Headers (`next.config.ts`): CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy.
 - Menu mobile fullscreen em `z-100`, acima do `MobileCtaBar` (`z-95`) em `/recrutamento` (`site-chrome.tsx`).
-- Blog: 68 artigos em `src/content/blog-archive.json` (import lazy). Fontes via `next/font`; `.section-title`/`.hero-title` é o único override de fonte sans. Google Translate (pt/en/fr): `translate="no"` só no valor concreto, nunca no contentor.
+- Blog: 68 artigos, `src/content/blog/index.json` (metadados, 52KB) + `src/content/blog/posts/<slug>.json` (1 por artigo), ambos com import lazy em `src/lib/blog.ts`. Para editar/acrescentar um artigo: criar/editar o JSON do slug **e** a entrada no índice (sem `blocks`/`images`). Fontes via `next/font`; `.section-title`/`.hero-title` é o único override de fonte sans. Google Translate (pt/en/fr): `translate="no"` só no valor concreto, nunca no contentor.
 
 ### Monitorização
 - UptimeRobot (free) **ativo** em `figueirahome.pt` (confirmado 2026-09-29). Falta 2º check no `figueira-home-portal` (Fly.io, provider diferente do Cloudflare) — fora deste repo.
@@ -81,7 +81,8 @@ Handoff operacional. Reescrito em 2026-10-03 — estado consolidado num resumo �
 ## Bugs conhecidos e dívida técnica
 
 - **CRÍTICO — `contactos` e `imoveis` sem Row Level Security.** Chave `anon` pública lê as duas tabelas na íntegra (inclui dados pessoais de leads e candidatos). Migração pronta (`supabase/migrations/20260831210000_rls_contactos_imoveis.sql`) **NÃO APLICADA**: `figueira-home-portal` (repo externo) usa a mesma `anon` no browser. Correção: portal passar a `service_role`/auth própria — decisão do cliente. Estado de RLS da tabela `recrutamento` por verificar.
-- Cold-start CPU-limit pode voltar (aconteceu 2026-09-11; resolvido por rollback + dedupe) — ver runbook.
+- Cold-start CPU-limit (erro 1102, 503 em todo o site) já aconteceu 2x: 2026-09-11 (rollback + dedupe) e 2026-10-08 (~25 min em baixo, rajada de 126 pedidos a artigos do blog; cada isolate frio fazia parse do `blog-archive.json` de 3,2MB; resolvido por rollback + divisão do blog). Provável origem dos erros 5xx no Search Console. Pode voltar noutra rota — ver runbook. **Nunca correr loops/rajadas de pedidos contra produção**; testar com pedidos espaçados + `wrangler tail`.
+- SEO: `www.figueirahome.pt` responde 200 sem redirecionar, mas canonical/sitemap usam o domínio sem `www` — falta redirect `www` → apex (risco de "duplicada, Google escolheu outra canónica"). `lastmod` do sitemap é sempre "agora". Pedir ao Miguel captura dos erros do Search Console para confirmar o tipo (5xx vs outro).
 - Fallback do eGO para RID inválido imprevisível — confirmar com suporte eGO.
 - QA mobile só por revisão de código; Claude-in-Chrome não emula viewport mobile (`resize_window` preso ao estado maximizado). Confirmar `/recrutamento` (`MobileCtaBar`) num telemóvel real.
 - Favicon em falta (404): precisa de asset dedicado do cliente/designer.
