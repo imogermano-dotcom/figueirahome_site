@@ -4,7 +4,11 @@ import type { Property } from "@/lib/types";
 import { formatArea, formatCurrency } from "@/lib/format";
 import { getPrimaryPropertyImage } from "@/lib/property-images";
 
-export function PropertyCard({ property, dark = false }: { property: Property; dark?: boolean }) {
+// O CDN do eGO serve a mesma foto em vários tamanhos (Z<largura>x<altura>); o cartão só
+// precisa de ~400px, e Z640x480 pesa ~1/3 de Z1280x1024 (testado: 82KB vs 256KB).
+const cardImageUrl = (url: string) => url.replace(/(images\.egorealestate\.com\/)Z\d+x\d+\//, "$1Z640x480/");
+
+export function PropertyCard({ property, dark = false, priority = false }: { property: Property; dark?: boolean; priority?: boolean }) {
   const primaryImage = getPrimaryPropertyImage(property);
 
   return (
@@ -13,7 +17,7 @@ export function PropertyCard({ property, dark = false }: { property: Property; d
         <div className="property-media relative flex h-[210px] items-center justify-center overflow-hidden">
           {primaryImage ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img className="zoom-layer h-full w-full object-cover" src={primaryImage.url} alt={primaryImage.alt || property.title} loading="lazy" />
+            <img className="zoom-layer h-full w-full object-cover" src={cardImageUrl(primaryImage.url)} alt={primaryImage.alt || property.title} loading={priority ? "eager" : "lazy"} fetchPriority={priority ? "high" : undefined} />
           ) : (
             <PropertyFallback property={property} />
           )}
