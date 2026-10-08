@@ -117,7 +117,7 @@ export default function RecruitmentPage() {
             </div>
             <div className="relative">
               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-[var(--r-shadow-elegant)]">
-                <Image src="/hero-team-recrutamento.jpg" alt="Equipa FigueiraHome em sessão de formação sobre o mercado imobiliário" fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" priority />
+                <Image src="/hero-team-recrutamento.webp" alt="Equipa FigueiraHome em sessão de formação sobre o mercado imobiliário" fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" priority />
               </div>
               <div className="absolute bottom-4 left-4 right-4 rounded-xl bg-[var(--r-primary)]/90 px-5 py-3 text-sm font-bold backdrop-blur-sm">Começa com método, não sozinho.</div>
             </div>
