@@ -24,7 +24,7 @@ Handoff operacional. Reescrito em 2026-10-03 — estado consolidado num resumo �
 - 3 funis em produção: `/contacto` → `/api/leads`, ficha de imóvel → `/api/leads` (`source:"property_detail"`), recrutamento → `/api/recrutamento`. `createLead()` grava sempre em `contactos` (Pessoa do CRM eGO; sync unidirecional eGO→Supabase por scraper externo — nunca esperar roundtrip).
 - `/api/recrutamento` grava em `recrutamento` + `contactos` (`tipo_contacto:["Recrutamento"]`) e faz upsert MailerLite por nível, registando o estado na linha de `recrutamento`.
 - `contactos.tipo_contacto` (array, criado pelo cliente) preenchido a partir do `request_type` — mapa `REQUEST_TYPE_TO_TIPO_CONTACTO` (`src/lib/properties.ts`). `Senhorio`/`Procurador`/`investidor` por atribuir: nenhum formulário gera esses casos.
-- `contactos.origem` = `"site"` gravado por `createLead()` e pelo insert em `contactos` de `/api/recrutamento` (desde 2026-10-08, verificado ao vivo em `/contacto`; recrutamento por testar). Sem constraint na coluna. Leads anteriores têm `origem` vazio — distinguir pelo array `tipos`. O chat (widget do portal) não grava em `contactos` por este repo.
+- `contactos.origem` = `"site"` gravado por `createLead()` e pelo insert em `contactos` de `/api/recrutamento` (desde 2026-10-08, verificado ao vivo em `/contacto` e `/recrutamento`). Sem constraint na coluna. Leads anteriores têm `origem` vazio — distinguir pelo array `tipos`. O chat (widget do portal) não grava em `contactos` por este repo.
 - Quiz (`src/lib/recruitment.ts`, 10 perguntas, 0-30, 4 níveis): candidatura sem quiz deixa `pontuacao`/`nivel`/`quiz_respostas` `null`. Relatório por IA: `sendReport()` → `/api/quiz-report` → Anthropic → `quiz_reports` (token público RLS) → `/recrutamento/relatorio?t=...` → MailerLite. Confirmado ao vivo.
 - Leads do `/servicos` ("Quero Vender", rota `/servicos`) disparam email para `miguel.germano@figueirahome.pt` via Resend (`src/lib/resend.ts`, `RESEND_API_KEY`/`RESEND_REMETENTE`; remetente `noreply@miguelgermano.com`, domínio verificado no Resend). Gate `request_type === "servicos"` em `createLead()`; falha de envio não bloqueia o lead.
 - `/servicos` reescrito 2026-09-18 (9 etapas, leadbar de origem do comprador, grelha de 6 pessoas, secção `#preco`; imagens em `public/servicos/*.webp`). WhatsApp mantém-se `913 702 002` (o HTML do cliente trazia `928 318 953`, resíduo do subdomínio antigo — confirmado não mudar). Bandeiras via `next/font/google` `Noto_Color_Emoji` (Windows/Chrome sem fonte de emoji a cores mostra "PT"/"GB"). Flag `wide` dos `metrics` de cada `case` já corrigida.
@@ -36,7 +36,7 @@ Handoff operacional. Reescrito em 2026-10-03 — estado consolidado num resumo �
 
 ### Consentimento, analytics e legal
 - Banner de cookies bloqueia GA4/Meta Pixel até "Aceitar" (`analytics-scripts.tsx`). Pixel ativo em produção (confirmado 2026-09-29, `PageView` chega à Meta).
-- Evento `Lead`: `trackLead()` (`src/lib/track.ts`, no-op sem consentimento) dispara após resposta ok de `/api/leads` (`contact-form.tsx` — cobre `/contacto` e ficha de imóvel; `servicos/contact-form.tsx`) e `/api/recrutamento` (`recruitment-form.tsx`). Honeypot/erros não contam. **Ainda por testar ao vivo** (`ev=Lead` em `facebook.com/tr`).
+- Evento `Lead`: `trackLead()` (`src/lib/track.ts`, no-op sem consentimento) dispara após resposta ok de `/api/leads` (`contact-form.tsx` — cobre `/contacto` e ficha de imóvel; `servicos/contact-form.tsx`) e `/api/recrutamento` (`recruitment-form.tsx`). Honeypot/erros não contam. Confirmado ao vivo em `/recrutamento` (2026-10-08: `ev=Lead` em `facebook.com/tr`, pixel `821222191626360`); `/contacto` e `/servicos` não testados com consentimento. Ao testar candidaturas: o formulário lê o quiz de `localStorage` (`quiz_perfil`), por isso um browser com quiz anterior grava pontuação sem o utilizador o repetir; a candidatura entra no MailerLite — apagar também o subscritor de teste.
 - `/politica-privacidade` e `/politica-cookies` cobrem WhatsApp, profiling do quiz, Google Translate vs GA/Pixel. Emails de contacto: `geral@figueirahome.pt`.
 - Footer (`video-footer.tsx`): imagem estática em vez de vídeo (pedido do cliente). `/recrutamento` usa `jumpToAnchor()` nas âncoras do footer (`scroll-behavior:smooth` falha em saltos muito longos, página ~23000px).
 
@@ -91,7 +91,7 @@ Handoff operacional. Reescrito em 2026-10-03 — estado consolidado num resumo �
 
 ## Próximos passos
 
-1. Testar o `Lead` ao vivo: submeter `/recrutamento` ou `/servicos` (não tocam no eGO) e confirmar `ev=Lead` em `facebook.com/tr`; apagar o registo de teste.
+1. (Opcional) Confirmar `ev=Lead` também em `/contacto` e `/servicos` com cookies aceites; `/servicos` envia email ao Miguel.
 2. Decidir com o cliente o futuro do `figueira-home-portal` (`anon` → `service_role`) para aplicar a migração RLS; verificar RLS de `recrutamento`.
 3. Mensagem única ao cliente com pendentes: RLS/portal, testemunhos, opt-out "PARAR", favicon.
 4. QA mobile num telemóvel físico (`/recrutamento`, `MobileCtaBar`).
