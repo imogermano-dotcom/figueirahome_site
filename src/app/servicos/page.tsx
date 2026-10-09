@@ -2,10 +2,7 @@ import type { Metadata } from "next";
 import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Noto_Color_Emoji } from "next/font/google";
 import "./servicos.css";
-
-const notoEmoji = Noto_Color_Emoji({ weight: "400", subsets: ["emoji"], display: "swap" });
 import { ServicosScrollEffects } from "@/components/servicos/scroll-effects";
 import { VideoLightboxProvider, VideoCard, CaseFilmButton } from "@/components/servicos/video-lightbox";
 import { ServicosContactForm } from "@/components/servicos/contact-form";
@@ -72,20 +69,27 @@ const videos = [
   { id: "LMtjiYwZG8A", ref: "FH2580", title: "T3 Novo para Arrendar · Buarcos", flag: "Reservado" }
 ] as const;
 
+// Bandeiras como imagens WebP de <1KB em public/servicos/flags/<iso2>.webp (de flagcdn.com).
+// Antes eram emoji com a fonte Noto Color Emoji (~900KiB no caminho crítico: FCP 5,9s e
+// LCP 7,0s no PageSpeed mobile, 2026-10-09).
+function Flag({ code, name }: { code: string; name?: string }) {
+  return <Image src={`/servicos/flags/${code}.webp`} alt="" width={24} height={16} title={name} />;
+}
+
 const countries = [
-  { flags: ["🇵🇹"], name: "Portugal", portals: ["Figueira Home", "Supercasa", "Idealista", "Imovirtual", "Casas na Web", "Net Anúncio", "Mitula", "OLX"] },
-  { flags: ["🇬🇧"], name: "Reino Unido", portals: ["propertiesinportugal.uk", "Zoopla", "Primelocation"], soon: "Rightmove — em análise" },
-  { flags: ["🇫🇷"], name: "França", portals: ["immobilierportugal.fr", "Propriétés Le Figaro"] },
-  { flags: ["🇩🇪", "🇦🇹"], name: "Alemanha / Áustria", portals: ["Immowelt", "Immonet"] },
-  { flags: ["🇺🇸"], name: "Estados Unidos", portals: ["Realtor.com"] },
-  { flags: ["🇧🇷"], name: "Brasil", portals: ["portugalcasas.com.br"] }
+  { flags: ["pt"], name: "Portugal", portals: ["Figueira Home", "Supercasa", "Idealista", "Imovirtual", "Casas na Web", "Net Anúncio", "Mitula", "OLX"] },
+  { flags: ["gb"], name: "Reino Unido", portals: ["propertiesinportugal.uk", "Zoopla", "Primelocation"], soon: "Rightmove — em análise" },
+  { flags: ["fr"], name: "França", portals: ["immobilierportugal.fr", "Propriétés Le Figaro"] },
+  { flags: ["de", "at"], name: "Alemanha / Áustria", portals: ["Immowelt", "Immonet"] },
+  { flags: ["us"], name: "Estados Unidos", portals: ["Realtor.com"] },
+  { flags: ["br"], name: "Brasil", portals: ["portugalcasas.com.br"] }
 ] as const;
 
 const properstarFlags = [
-  ["Bélgica", "🇧🇪"], ["Países Baixos", "🇳🇱"], ["Suíça", "🇨🇭"], ["Polónia", "🇵🇱"], ["Roménia", "🇷🇴"], ["Grécia", "🇬🇷"],
-  ["Chipre", "🇨🇾"], ["Suécia", "🇸🇪"], ["Dinamarca", "🇩🇰"], ["Luxemburgo", "🇱🇺"], ["Canadá", "🇨🇦"], ["México", "🇲🇽"],
-  ["China", "🇨🇳"], ["Índia", "🇮🇳"], ["Japão", "🇯🇵"], ["Singapura", "🇸🇬"], ["Malásia", "🇲🇾"], ["Emirados Árabes Unidos", "🇦🇪"],
-  ["Catar", "🇶🇦"], ["Hong Kong", "🇭🇰"], ["Filipinas", "🇵🇭"], ["Austrália", "🇦🇺"], ["Nova Zelândia", "🇳🇿"], ["África do Sul", "🇿🇦"], ["Maurícia", "🇲🇺"]
+  ["Bélgica", "be"], ["Países Baixos", "nl"], ["Suíça", "ch"], ["Polónia", "pl"], ["Roménia", "ro"], ["Grécia", "gr"],
+  ["Chipre", "cy"], ["Suécia", "se"], ["Dinamarca", "dk"], ["Luxemburgo", "lu"], ["Canadá", "ca"], ["México", "mx"],
+  ["China", "cn"], ["Índia", "in"], ["Japão", "jp"], ["Singapura", "sg"], ["Malásia", "my"], ["Emirados Árabes Unidos", "ae"],
+  ["Catar", "qa"], ["Hong Kong", "hk"], ["Filipinas", "ph"], ["Austrália", "au"], ["Nova Zelândia", "nz"], ["África do Sul", "za"], ["Maurícia", "mu"]
 ] as const;
 
 const techCards = [
@@ -399,7 +403,7 @@ export default function ServicosPage() {
               <div className="countries">
                 {countries.map((c) => (
                   <article key={c.name} className="country reveal">
-                    <div className="country__head">{c.flags.map((f) => <span key={f} className={`country__flag ${notoEmoji.className}`}>{f}</span>)}<span className="country__name">{c.name}</span></div>
+                    <div className="country__head">{c.flags.map((f) => <span key={f} className="country__flag"><Flag code={f} /></span>)}<span className="country__name">{c.name}</span></div>
                     <ul className="portals">
                       {c.portals.map((p) => <li key={p}>{p}</li>)}
                       {"soon" in c && c.soon && <li className="is-soon">{c.soon}</li>}
@@ -408,10 +412,10 @@ export default function ServicosPage() {
                 ))}
 
                 <article className="country country--wide reveal">
-                  <div className="country__head"><span className={`country__flag ${notoEmoji.className}`}>🌍</span><span className="country__name">Mais 27 países via Properstar Global</span></div>
+                  <div className="country__head"><span className="country__flag"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" /></svg></span><span className="country__name">Mais 27 países via Properstar Global</span></div>
                   <p style={{ fontSize: ".89rem", color: "var(--muted-fg)", margin: 0 }}>Uma única publicação, distribuída automaticamente pelos portais parceiros da rede internacional Properstar.</p>
                   <div className="flags" role="img" aria-label="Bandeiras dos países da rede Properstar Global">
-                    {properstarFlags.map(([name, flag]) => <span key={name} title={name} className={notoEmoji.className}>{flag}</span>)}
+                    {properstarFlags.map(([name, code]) => <span key={name}><Flag code={code} name={name} /></span>)}
                   </div>
                   <div className="premium">
                     <span className="premium__label">Portais Premium Globais</span>
