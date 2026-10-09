@@ -2,11 +2,10 @@ import Link from "next/link";
 import { Bath, BedDouble, MapPin, MoveRight, Ruler } from "lucide-react";
 import type { Property } from "@/lib/types";
 import { formatArea, formatCurrency } from "@/lib/format";
-import { getPrimaryPropertyImage } from "@/lib/property-images";
+import { egoImage, getPrimaryPropertyImage } from "@/lib/property-images";
 
-// O CDN do eGO serve a mesma foto em vários tamanhos (Z<largura>x<altura>); o cartão só
-// precisa de ~400px, e Z640x480 pesa ~1/3 de Z1280x1024 (testado: 82KB vs 256KB).
-const cardImageUrl = (url: string) => url.replace(/(images\.egorealestate\.com\/)Z\d+x\d+\//, "$1Z640x480/");
+// O cartão só precisa de ~400px: Z640x480 pesa ~1/3 de Z1280x1024 (testado: 82KB vs 256KB).
+const cardImageUrl = (url: string) => egoImage(url, "Z640x480");
 
 export function PropertyCard({ property, dark = false, priority = false }: { property: Property; dark?: boolean; priority?: boolean }) {
   const primaryImage = getPrimaryPropertyImage(property);

@@ -3,6 +3,7 @@
 import { ChevronLeft, ChevronRight, Expand, FileText, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import type { PropertyImage } from "@/lib/types";
+import { egoImage, egoSrcSet } from "@/lib/property-images";
 
 function isPdfUrl(url: string) {
   return /\.pdf($|\?)/i.test(url);
@@ -54,8 +55,9 @@ export function PropertyGallery({ images, title, contentLabel = "fotografia" }: 
             <span className="text-sm font-extrabold">Abrir planta em PDF</span>
           </a>
         ) : (
+          // Imagem principal com srcset (o browser escolhe 640 a 1280px) e prioridade alta (é o LCP).
           // eslint-disable-next-line @next/next/no-img-element
-          <img className={`h-full w-full ${mainFit}`} src={activeImage.url} alt={activeImage.alt || title} />
+          <img className={`h-full w-full ${mainFit}`} src={egoImage(activeImage.url, "Z1024x768")} srcSet={egoSrcSet(activeImage.url)} sizes="(min-width: 1024px) 780px, 100vw" fetchPriority="high" alt={activeImage.alt || title} />
         )}
         {!isPdfUrl(activeImage.url) && (
           <button
@@ -84,8 +86,10 @@ export function PropertyGallery({ images, title, contentLabel = "fotografia" }: 
               {isPdfUrl(image.url) ? (
                 <span className="grid h-full w-full place-items-center bg-white text-[var(--navy)]"><FileText size={22} aria-hidden="true" /></span>
               ) : (
+                // Miniaturas (112x80px): Z320x240 e lazy. Antes eram Z1280x1024 sem lazy, e o React
+                // pré-carregava ~50 fotos de 256KB com prioridade alta (LCP 4,8s / 3,2s no PageSpeed).
                 // eslint-disable-next-line @next/next/no-img-element
-                <img className={`h-full w-full ${thumbFit}`} src={image.url} alt="" />
+                <img className={`h-full w-full ${thumbFit}`} src={egoImage(image.url, "Z320x240")} width={112} height={80} loading="lazy" decoding="async" alt="" />
               )}
             </button>
           ))}
