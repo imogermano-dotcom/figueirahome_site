@@ -97,7 +97,7 @@ export function HeroExperience({ properties }: { properties: HeroProperty[] }) {
   return (
     <section className="hero-section hero-experience relative -mt-0 overflow-hidden bg-[var(--navy)] pt-[72px]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="hero-video absolute inset-0 h-full w-full object-cover" src="/foto%20fundo.webp" alt="Figueira da Foz" />
+      <img className="hero-video absolute inset-0 h-full w-full object-cover" src="/foto%20fundo.webp" srcSet="/foto-fundo-800.webp 800w, /foto-fundo-1280.webp 1280w, /foto%20fundo.webp 1920w" sizes="100vw" fetchPriority="high" alt="Figueira da Foz" />
       <div className="hero-video-tint absolute inset-0" />
       <div className="hero-copy-shade absolute inset-y-0 left-0" />
       <div className="container hero-layout relative z-10 grid min-h-[800px] items-center gap-12 py-14 lg:grid-cols-[minmax(0,1.08fr)_minmax(460px,0.82fr)] lg:gap-16">
@@ -135,7 +135,7 @@ export function HeroExperience({ properties }: { properties: HeroProperty[] }) {
                 <button type="button" className={index === activeIndex ? "active" : ""} onClick={() => selectItem(index)} aria-label={`Selecionar vídeo de ${item.title}`}>
                   {item.video.kind === "file" ? <video muted loop autoPlay playsInline preload="metadata"><source src={item.video.src} /></video> : item.video.thumbnailSrc ? <>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={item.video.thumbnailSrc} alt="" />
+                    <img src={item.video.thumbnailSrc} alt="" loading="lazy" decoding="async" />
                   </> : <span className="hero-thumb-fallback" />}
                   <span className="hero-thumb-play"><Play size={14} fill="currentColor" aria-hidden="true" /></span>
                 </button>
