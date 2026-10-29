@@ -67,6 +67,22 @@ export const figueiraTeam: TeamMember[] = [
     ]
   },
   {
+    id: "leticia-carvalho",
+    name: "Letícia Carvalho",
+    role: "Consultora",
+    phone: "+351 935 312 753",
+    email: "leticia.carvalho@figueirahome.pt",
+    photo_url: "/equipa/leticia-carvalho.webp",
+    bio: "Ligada à Figueira da Foz, acompanha cada cliente com proximidade, transparência e dedicação.",
+    profile_bio: [
+      "Mãe de cinco filhos, mulher determinada e apaixonada pelas pessoas, Letícia Carvalho construiu o seu percurso pessoal e profissional com dedicação, coragem e um profundo sentido de responsabilidade.",
+      "Com mais de 30 anos de experiência em diferentes áreas profissionais, onde o contacto humano sempre teve um papel fundamental, aprendeu que saber ouvir, compreender e criar relações de confiança faz toda a diferença.",
+      "Ligada à Figueira da Foz e às suas gentes, encontrou no setor imobiliário uma nova forma de colocar a sua experiência e sensibilidade ao serviço dos outros. Para Letícia, uma casa é muito mais do que quatro paredes: é um lugar de afetos, memórias e novos começos.",
+      "Na Figueira Home, assume o compromisso de acompanhar cada cliente com proximidade, transparência e dedicação, porque acredita que cada pessoa tem uma história e cada sonho merece atenção.",
+      "“Mais do que vender casas, quero ajudar pessoas a encontrar o seu lugar, construir novas histórias e realizar sonhos.”"
+    ]
+  },
+  {
     id: "sandra-silva",
     name: "Sandra Silva",
     role: "Consultora",
