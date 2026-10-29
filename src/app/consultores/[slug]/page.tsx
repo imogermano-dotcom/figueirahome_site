@@ -43,7 +43,7 @@ export default async function ConsultantPage({ params }: { params: Promise<{ slu
           <Link href="/quem-somos#equipa" className="inline-flex items-center gap-2 text-sm font-extrabold text-[var(--blue)] hover:text-[var(--navy)]"><ArrowLeft size={17} /> Equipa Figueira Home</Link>
           <div className="mt-8 overflow-hidden rounded-md border border-[var(--border)] bg-white lg:grid lg:grid-cols-[minmax(300px,0.72fr)_1.28fr]">
             <div className="relative min-h-[340px] bg-[var(--navy)] sm:min-h-[420px]">
-              <Image src={member.photo_url} alt={`Retrato de ${member.name}`} fill priority sizes="(min-width: 1024px) 38vw, 100vw" className="object-contain p-8" />
+              {member.id === "leticia-carvalho" ? <div className="absolute inset-8 flex items-center justify-center"><div className="relative aspect-square w-full max-w-full max-h-full overflow-hidden rounded-full"><Image src={member.photo_url} alt={`Retrato de ${member.name}`} fill priority sizes="(min-width: 1024px) 38vw, 100vw" className="object-cover object-[center_30%]" /></div></div> : <Image src={member.photo_url} alt={`Retrato de ${member.name}`} fill priority sizes="(min-width: 1024px) 38vw, 100vw" className="object-contain p-8" />}
             </div>
             <div className="p-8 sm:p-12">
               <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--blue)]">Equipa Figueira Home</p>

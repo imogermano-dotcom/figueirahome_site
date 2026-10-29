@@ -132,7 +132,7 @@ export default async function HomePage() {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {figueiraTeam.map((member) => (
               <Link key={member.id} href={`/consultores/${member.id}`} className="fade group rounded-md border border-[var(--border)] bg-white p-6 text-center transition hover:-translate-y-1 hover:border-[var(--gold)]">
-                <div className="relative mx-auto mb-4 h-20 w-20 overflow-hidden rounded-full border-[3px] border-[var(--blue)] bg-[var(--offwhite)]"><Image src={member.photo_url} alt={`Retrato de ${member.name}`} fill sizes="80px" className="object-contain p-1" /></div>
+                <div className="relative mx-auto mb-4 h-20 w-20 overflow-hidden rounded-full border-[3px] border-[var(--blue)] bg-[var(--offwhite)]"><Image src={member.photo_url} alt={`Retrato de ${member.name}`} fill sizes="80px" className={member.id === "leticia-carvalho" ? "rounded-full object-cover object-[center_30%] p-1" : "object-contain p-1"} /></div>
                 <h3 className="font-extrabold group-hover:text-[var(--blue)]">{member.name}</h3>
                 <p className="mt-1 text-xs font-extrabold uppercase tracking-wide text-[var(--blue)]" translate="no">{member.role}</p>
               </Link>
