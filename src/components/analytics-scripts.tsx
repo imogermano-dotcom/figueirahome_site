@@ -6,9 +6,9 @@ import { getStoredConsent } from "@/lib/consent";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 // Píxeis Meta: o da variável (821222191626360, portfólio "01", usado pelas campanhas) + o "Figueira Home - Site"
-// (1681752026858581, portfólio ImoGermano, criado a 2026-11-18). A variável aceita vários separados por vírgula.
+// (2099212427379707, portfólio ImoGermano, criado a 2026-11-18). A variável aceita vários separados por vírgula.
 const PIXEL_IDS = Array.from(new Set(
-  [...(process.env.NEXT_PUBLIC_META_PIXEL_ID ?? "").split(","), "1681752026858581"].map((s) => s.trim()).filter(Boolean)
+  [...(process.env.NEXT_PUBLIC_META_PIXEL_ID ?? "").split(","), "2099212427379707"].map((s) => s.trim()).filter(Boolean)
 ));
 
 export function AnalyticsScripts() {
